@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:weatherapp/model/appservice.dart';
+import 'package:weatherapp/view/setting_screen/setting_screen.dart';
 
 class Homepage extends StatefulWidget {
   const Homepage({super.key});
@@ -115,7 +116,9 @@ class _HomepageState extends State<Homepage> {
                           color: Colors.white,
                         ),
                         child: InkWell(
-                            onTap: () {},
+                            onTap: () {
+                              Navigator.push(context, MaterialPageRoute(builder: (_)=> SettingScreen()));
+                            },
                             child: Icon(
                               Icons.settings,
                               color: Color(0xff0A2958),
@@ -159,14 +162,11 @@ class _HomepageState extends State<Homepage> {
                                       image: AssetImage(
                                           'assets/images/framethermometer1.png'))),
                             ),
-                            Text(
-                              '30oC/80oF',
-                              style: TextStyle(
-                                color: Color(0xff0A2958),
-                                fontSize: 13,
-                                fontWeight: FontWeight.w600,
-                              ),
+                            Text('30oC/80oF',style: TextStyle(
+                                  color: Color(0xff0A2958),
+                                  fontWeight: FontWeight.w600,
                             ),
+                              ),
                             Text(
                               'Feel like',
                               style: TextStyle(
