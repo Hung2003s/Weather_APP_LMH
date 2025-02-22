@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:weatherapp/model/language.dart';
-import 'package:weatherapp/view/language_screen/language_screen_item.dart';
+
+import 'language_screen_item.dart';
 
 class LanguageScreen extends StatefulWidget {
   const LanguageScreen({super.key});

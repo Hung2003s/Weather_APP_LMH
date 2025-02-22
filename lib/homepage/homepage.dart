@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:weatherapp/model/appservice.dart';
-import 'package:weatherapp/view/setting_screen/setting_screen.dart';
+import '../setting_screen/setting_screen.dart';
 
 class Homepage extends StatefulWidget {
   const Homepage({super.key});

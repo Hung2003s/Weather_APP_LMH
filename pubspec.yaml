@@ -72,6 +72,7 @@ flutter:
     - assets/images/themeimage/
     - assets/images/homepageimage/
     - assets/images/thermometerimage/
+    - assets/images/pollenimage/
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

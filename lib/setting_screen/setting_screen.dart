@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:weatherapp/model/setting_item.dart';
-import 'package:weatherapp/view/setting_screen/setting_screen_item.dart';
+import 'package:weatherapp/setting_screen/setting_screen_item.dart';
+
 
 class SettingScreen extends StatefulWidget {
   const SettingScreen({super.key});

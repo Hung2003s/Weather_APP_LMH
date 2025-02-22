@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:weatherapp/model/thermometer.dart';
-import 'package:weatherapp/view/therometer_screen/thermometer_screen_item.dart';
+import 'package:weatherapp/therometer_screen/thermometer_screen_item.dart';
+
 
 class ThermometerScreen extends StatefulWidget {
   const ThermometerScreen({super.key});

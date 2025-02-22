@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:weatherapp/model/theme_item.dart';
-import 'package:weatherapp/view/theme_screen/theme_item_screen.dart';
+import 'package:weatherapp/theme_screen/theme_item_screen.dart';
+
 
 class ThemeScreen extends StatefulWidget {
   const ThemeScreen({super.key});
