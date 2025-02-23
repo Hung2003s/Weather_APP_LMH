@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_compass/flutter_compass.dart';
 import 'dart:math';
 import 'package:flutter/services.dart';
+import 'package:weatherapp/components/appbar_setting.dart';
 
 class CompassScreen extends StatefulWidget {
   const CompassScreen({super.key});
@@ -28,28 +29,7 @@ class _CompassScreenState extends State<CompassScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text(
-          'Compass',
-          style: TextStyle(
-            color: Color(0xff12203A),
-            fontSize: 18,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-        leading: Container(
-          margin: EdgeInsets.all(15),
-          decoration: BoxDecoration(
-              color: Colors.white, borderRadius: BorderRadius.circular(40)),
-          child: InkWell(
-              onTap: () {},
-              child: Icon(
-                Icons.arrow_back_ios_new,
-                size: 16,
-              )),
-        ),
-      ),
+      appBar: AppbarSetting(titletext: 'Compass'),
       body: Container(
         padding: EdgeInsets.symmetric(horizontal: 20),
         child: Column(

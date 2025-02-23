@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:weatherapp/Pollutants_screen/pollutants_screen_item.dart';
+import 'package:weatherapp/components/appbar_setting.dart';
 import 'package:weatherapp/model/pollutants.dart';
 
 class PollutantsScreen extends StatefulWidget {
@@ -22,28 +23,7 @@ class _PollutantsScreenState extends State<PollutantsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text(
-          'Pollutants',
-          style: TextStyle(
-            color: Color(0xff12203A),
-            fontSize: 18,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-        leading: Container(
-          margin: EdgeInsets.all(15),
-          decoration: BoxDecoration(
-              color: Colors.white, borderRadius: BorderRadius.circular(40)),
-          child: InkWell(
-              onTap: () {},
-              child: Icon(
-                Icons.arrow_back_ios_new,
-                size: 16,
-              )),
-        ),
-      ),
+      appBar: AppbarSetting(titletext: 'Pollutants'),
       backgroundColor: Color(0xffF5F6FC),
       body: SingleChildScrollView(
         child: Container(

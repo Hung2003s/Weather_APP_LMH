@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:weatherapp/components/appbar_setting.dart';
 import 'package:weatherapp/model/language.dart';
 
 import 'language_screen_item.dart';
@@ -26,34 +27,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text(
-          'Language',
-          style: TextStyle(
-            color: Color(0xff12203A),
-            fontSize: 18,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-        leading: Container(
-          margin: EdgeInsets.all(15),
-          decoration: BoxDecoration(
-              color: Colors.white, borderRadius: BorderRadius.circular(40)),
-          child: InkWell(
-              onTap: () {},
-              child: Icon(
-                Icons.arrow_back_ios_new,
-                size: 16,
-              )),
-        ),
-        actions: [
-          IconButton(
-              onPressed: () {},
-              icon: Icon(Icons.check_circle, color: Color(0xff0F2842),)
-          )
-        ],
-      ),
+      appBar: AppbarSetting(titletext: 'Language',),
       backgroundColor: Color(0xffF5F6FC),
       body: SafeArea(
           child: Container(

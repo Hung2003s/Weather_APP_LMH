@@ -26,6 +26,7 @@ class CirclePage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset('assets/images/locationicon.png'),
+            SizedBox(width: 5,),
             Center(
               child: Text(
                 located,

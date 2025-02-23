@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:weatherapp/components/appbar_setting.dart';
 import 'package:weatherapp/model/setting_item.dart';
 import 'package:weatherapp/setting_screen/setting_screen_item.dart';
 
@@ -29,28 +30,7 @@ class _SettingScreenState extends State<SettingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text(
-          'Setting',
-          style: TextStyle(
-            color: Color(0xff12203A),
-            fontSize: 18,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-        leading: Container(
-          margin: EdgeInsets.all(15),
-          decoration: BoxDecoration(
-              color: Colors.white, borderRadius: BorderRadius.circular(40)),
-          child: InkWell(
-              onTap: () {},
-              child: Icon(
-                Icons.arrow_back_ios_new,
-                size: 16,
-              )),
-        ),
-      ),
+      appBar: AppbarSetting(titletext: 'Setting'),
       backgroundColor: Color(0xffF5F6FC),
       body: SafeArea(
           child: Container(

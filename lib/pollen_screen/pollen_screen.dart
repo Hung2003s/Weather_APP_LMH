@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:weatherapp/components/appbar_setting.dart';
 import 'package:weatherapp/model/pollen.dart';
 import 'package:weatherapp/pollen_screen/pollen_screen_item.dart';
 
@@ -23,28 +24,7 @@ class _PollenScreenState extends State<PollenScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          centerTitle: true,
-          title: Text(
-            'Pollen',
-            style: TextStyle(
-              color: Color(0xff12203A),
-              fontSize: 18,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-          leading: Container(
-            margin: EdgeInsets.all(15),
-            decoration: BoxDecoration(
-                color: Colors.white, borderRadius: BorderRadius.circular(40)),
-            child: InkWell(
-                onTap: () {},
-                child: Icon(
-                  Icons.arrow_back_ios_new,
-                  size: 16,
-                )),
-          ),
-        ),
+        appBar: AppbarSetting(titletext: 'Pollen'),
         backgroundColor: Color(0xffF5F6FC),
       body: SingleChildScrollView(
         child: Container(
