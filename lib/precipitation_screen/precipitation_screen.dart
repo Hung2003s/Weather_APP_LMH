@@ -33,7 +33,7 @@ class _PrecipitationScreenState extends State<PrecipitationScreen> {
         begin: Alignment.topLeft,
         stops: stops);
     return Scaffold(
-      appBar: AppbarSetting(titletext: 'Precipitation'),
+      appBar: AppbarSetting(titletext: 'Precipitation',link: '/'),
       body: Container(
         padding: EdgeInsets.all(20),
         child: Column(

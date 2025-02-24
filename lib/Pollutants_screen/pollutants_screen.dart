@@ -23,7 +23,7 @@ class _PollutantsScreenState extends State<PollutantsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppbarSetting(titletext: 'Pollutants'),
+      appBar: AppbarSetting(titletext: 'Pollutants',link: '/'),
       backgroundColor: Color(0xffF5F6FC),
       body: SingleChildScrollView(
         child: Container(

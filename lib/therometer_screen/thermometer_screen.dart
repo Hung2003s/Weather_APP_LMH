@@ -46,7 +46,7 @@ class _ThermometerScreenState extends State<ThermometerScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppbarSetting(titletext: 'Thermometers'),
+      appBar: AppbarSetting(titletext: 'Thermometers',link: '/'),
       backgroundColor: Color(0xffF5F6FC),
       body: SafeArea(
           child: Container(

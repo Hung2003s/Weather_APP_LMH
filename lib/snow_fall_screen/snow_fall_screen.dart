@@ -33,7 +33,7 @@ class _SnowFallScreenState extends State<SnowFallScreen> {
         begin: Alignment.topLeft,
         stops: stops);
     return Scaffold(
-      appBar: AppbarSetting(titletext: 'Snow'),
+      appBar: AppbarSetting(titletext: 'Snow',link: '/'),
       body: Container(
         padding: EdgeInsets.all(20),
         child: Column(

@@ -14,7 +14,7 @@ class _AirQualityScreenState extends State<AirQualityScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppbarSetting(titletext: 'Air Quality'),
+      appBar: AppbarSetting(titletext: 'Air Quality', link: '/'),
       backgroundColor: Color(0xffF5F6FC),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,

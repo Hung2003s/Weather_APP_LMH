@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:weatherapp/model/appservice.dart';
 import '../setting_screen/setting_screen.dart';
 
@@ -13,18 +14,18 @@ class Homepage extends StatefulWidget {
 class _HomepageState extends State<Homepage> {
   int currentindex = 0;
   final List<Appservice> _listservice = [
-    Appservice('UV Index', 'assets/images/homepageimage/uvlogo.png', 0xffFFF8B5),
-    Appservice('Humidity', 'assets/images/homepageimage/humiditylogo.png',0xffD5EAFF ),
-    Appservice('Air Quality', 'assets/images/homepageimage/airqualitylogo.png',0xffF9D5D3 ),
-    Appservice('Weather Forecast', 'assets/images/homepageimage/weatherforecastlogo.png', 0xffE9E3FA),
-    Appservice('Visibility', 'assets/images/homepageimage/visibilitylogo.png',0xffC8F0DA ),
-    Appservice('Wind', 'assets/images/homepageimage/windlogo.png',0xffFAE3E3 ),
-    Appservice('Snow Fall', 'assets/images/homepageimage/snowfalllogo.png', 0xffE7E8EC),
-    Appservice('Compass', 'assets/images/homepageimage/compasslogo.png', 0xffF9F0E3),
-    Appservice('Precipitation', 'assets/images/homepageimage/precipitationlogo.png',0xffD3F9F9 ),
-    Appservice('Sun Time', 'assets/images/homepageimage/suntimelogo.png',0xffFAD4F8 ),
-    Appservice('Pollen', 'assets/images/homepageimage/pollenlogo.png', 0xffD4DAFA),
-    Appservice('Wave', 'assets/images/homepageimage/wavelogo.png',0xffF9FFD8 ),
+    Appservice('UV Index', 'assets/images/homepageimage/uvlogo.png', 0xffFFF8B5,'/uvindex'),
+    Appservice('Humidity', 'assets/images/homepageimage/humiditylogo.png',0xffD5EAFF, '/humidity'),
+    Appservice('Air Quality', 'assets/images/homepageimage/airqualitylogo.png',0xffF9D5D3,'/airquality'),
+    Appservice('Weather Forecast', 'assets/images/homepageimage/weatherforecastlogo.png', 0xffE9E3FA,'/weather'),
+    Appservice('Visibility', 'assets/images/homepageimage/visibilitylogo.png',0xffC8F0DA,'/visibility' ),
+    Appservice('Wind', 'assets/images/homepageimage/windlogo.png',0xffFAE3E3 ,'/wind'),
+    Appservice('Snow Fall', 'assets/images/homepageimage/snowfalllogo.png', 0xffE7E8EC,'/snowfall'),
+    Appservice('Compass', 'assets/images/homepageimage/compasslogo.png', 0xffF9F0E3,'/compass'),
+    Appservice('Precipitation', 'assets/images/homepageimage/precipitationlogo.png',0xffD3F9F9 ,'/precipitation'),
+    Appservice('Sun Time', 'assets/images/homepageimage/suntimelogo.png',0xffFAD4F8,'/suntime' ),
+    Appservice('Pollen', 'assets/images/homepageimage/pollenlogo.png', 0xffD4DAFA,'/pollen'),
+    Appservice('Wave', 'assets/images/homepageimage/wavelogo.png',0xffF9FFD8 ,''),
   ];
 
   @override
@@ -117,7 +118,7 @@ class _HomepageState extends State<Homepage> {
                         ),
                         child: InkWell(
                             onTap: () {
-                              Navigator.push(context, MaterialPageRoute(builder: (_)=> SettingScreen()));
+                              GoRouter.of(context).go('/setting');
                             },
                             child: Icon(
                               Icons.settings,
@@ -346,52 +347,57 @@ class OneeElementService extends StatelessWidget {
   const OneeElementService({super.key, required this.appservice});
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.only(bottom: 5),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Container(
-            padding: EdgeInsets.all(6),
-            decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: Colors.white,
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withValues(alpha: 0.1),
-                    spreadRadius: 0,
-                    blurRadius: 4,
-                    offset: Offset(0, 4),
-                  ),
-                ]),
-            child: Container(
-              padding: EdgeInsets.all(10),
+    return GestureDetector(
+      onTap: (){
+        GoRouter.of(context).go(appservice.link);
+      },
+      child: Container(
+        margin: EdgeInsets.only(bottom: 5),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Container(
+              padding: EdgeInsets.all(6),
               decoration: BoxDecoration(
-                  color: Color(appservice.color), shape: BoxShape.circle),
+                  shape: BoxShape.circle,
+                  color: Colors.white,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withValues(alpha: 0.1),
+                      spreadRadius: 0,
+                      blurRadius: 4,
+                      offset: Offset(0, 4),
+                    ),
+                  ]),
               child: Container(
                 padding: EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                    image: DecorationImage(image: AssetImage(appservice.logo))),
+                    color: Color(appservice.color), shape: BoxShape.circle),
+                child: Container(
+                  padding: EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                      image: DecorationImage(image: AssetImage(appservice.logo))),
+                ),
               ),
             ),
-          ),
-          SizedBox(
-            height: 5,
-          ),
-          Container(
-            child: Text(
-              appservice.name,
-              style: TextStyle(
-                  color: Color(0xff081D3F),
-                  fontSize: 12,
-                  fontWeight: FontWeight.w500,
-                height: 0.9
-              ),
-              textAlign: TextAlign.center,
+            SizedBox(
+              height: 5,
             ),
-          )
-        ],
+            Container(
+              child: Text(
+                appservice.name,
+                style: TextStyle(
+                    color: Color(0xff081D3F),
+                    fontSize: 12,
+                    fontWeight: FontWeight.w500,
+                  height: 0.9
+                ),
+                textAlign: TextAlign.center,
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

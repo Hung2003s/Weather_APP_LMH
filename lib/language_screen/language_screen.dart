@@ -27,7 +27,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppbarSetting(titletext: 'Language',),
+      appBar: AppbarSetting(titletext: 'Language',link: '/setting'),
       backgroundColor: Color(0xffF5F6FC),
       body: SafeArea(
           child: Container(

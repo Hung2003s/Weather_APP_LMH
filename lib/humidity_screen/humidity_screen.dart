@@ -14,7 +14,7 @@ class _HumidityScreenState extends State<HumidityScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppbarSetting(titletext: 'Humidity'),
+      appBar: AppbarSetting(titletext: 'Humidity', link: '/'),
       body: Column(
         children: [
           CirclePage(

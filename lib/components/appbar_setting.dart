@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class AppbarSetting extends StatelessWidget implements PreferredSizeWidget {
   final String titletext;
-  const AppbarSetting({super.key, required this.titletext});
+  final String link;
+  const AppbarSetting({super.key, required this.titletext, required this.link});
 
   @override
   // TODO: implement preferredSize
@@ -26,7 +28,9 @@ class AppbarSetting extends StatelessWidget implements PreferredSizeWidget {
         decoration: BoxDecoration(
             color: Colors.white, borderRadius: BorderRadius.circular(40)),
         child: InkWell(
-            onTap: () {},
+            onTap: () {
+              GoRouter.of(context).go(link);
+            },
             child: Icon(
               Icons.arrow_back_ios_new,
               size: 16,

@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       routerConfig: _router,
-
+      debugShowCheckedModeBanner: false,
     );
   }
 }
@@ -46,13 +46,11 @@ final GoRouter _router = GoRouter(
   initialLocation: "/",
     routes: [
       GoRoute(path: "/", builder: ((context, state)=> const Homepage())),
-      GoRoute(path: "/theme", builder: ((context, state)=> const ThemeScreen())),
       GoRoute(path: "/airquality", builder: ((context, state)=> const AirQualityScreen())),
       GoRoute(path: "/compass", builder: ((context, state)=> const CompassScreen())),
       GoRoute(path: "/humidity", builder: ((context, state)=> const HumidityScreen())),
       GoRoute(path: "/intro1", builder: ((context, state)=> const IntroScreen1())),
       GoRoute(path: "/intro2", builder: ((context, state)=> const IntroScreen2())),
-      GoRoute(path: "/language", builder: ((context, state)=> const LanguageScreen())),
       GoRoute(path: "/pollen", builder: ((context, state)=> const PollenScreen())),
       GoRoute(path: "/pollutants", builder: ((context, state)=> const PollutantsScreen())),
       GoRoute(path: "/precipitation", builder: ((context, state)=> const PrecipitationScreen())),
@@ -64,6 +62,7 @@ final GoRouter _router = GoRouter(
       GoRoute(path: "/weather", builder: ((context, state)=> const WeatherforecastScreen())),
       GoRoute(path: "/suntime", builder: ((context, state)=> const SunTimeScreen())),
       GoRoute(path: "/wind", builder: ((context, state)=> const WindScreen())),
-
+      GoRoute(path: "/theme", builder: ((context, state)=> const ThemeScreen())),
+      GoRoute(path: "/language", builder: ((context, state)=> const LanguageScreen())),
     ]
 );

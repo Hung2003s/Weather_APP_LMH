@@ -4,9 +4,10 @@ class SettingItem {
    bool _acronym;
    bool _isCelcius;
    bool _istemper;
+   String _linksetting;
 
 
-   SettingItem(this._title, this._image, this._istemper,this._acronym, this._isCelcius, );
+   SettingItem(this._title, this._image, this._istemper,this._acronym, this._isCelcius,this._linksetting );
 
    bool get isCelcius => _isCelcius;
 
@@ -36,5 +37,11 @@ class SettingItem {
 
   set istemper(bool value) {
     _istemper = value;
+  }
+
+   String get linksetting => _linksetting;
+
+  set linksetting(String value) {
+    _linksetting = value;
   }
 }

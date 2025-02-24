@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../model/setting_item.dart';
 
@@ -34,28 +35,33 @@ class _OneElementSettingScreenState extends State<OneElementSettingScreen> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 16),
-            margin: EdgeInsets.only(left: 16),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  height: 20,
-                  padding: EdgeInsets.symmetric(horizontal: 10),
-                  decoration: BoxDecoration(
-                      image: DecorationImage(
-                          image: AssetImage(
-                              widget.settingItem.image))),
-                ),
-                SizedBox(width: 16,),
-                Text(widget.settingItem.title, style: TextStyle(
-                    fontWeight: FontWeight.w400,
-                    fontSize: 14,
-                    color: Color(0xff12203A)
-                ),),
-
-              ],
+          GestureDetector(
+            onTap: (){
+              GoRouter.of(context).go(widget.settingItem.linksetting);
+            },
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 16),
+              margin: EdgeInsets.only(left: 16),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    height: 20,
+                    padding: EdgeInsets.symmetric(horizontal: 10),
+                    decoration: BoxDecoration(
+                        image: DecorationImage(
+                            image: AssetImage(
+                                widget.settingItem.image))),
+                  ),
+                  SizedBox(width: 16,),
+                  Text(widget.settingItem.title, style: TextStyle(
+                      fontWeight: FontWeight.w400,
+                      fontSize: 14,
+                      color: Color(0xff12203A)
+                  ),),
+            
+                ],
+              ),
             ),
           ),
           SizedBox(width: 40,),

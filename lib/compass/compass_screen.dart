@@ -29,7 +29,7 @@ class _CompassScreenState extends State<CompassScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppbarSetting(titletext: 'Compass'),
+      appBar: AppbarSetting(titletext: 'Compass', link: '/'),
       body: Container(
         padding: EdgeInsets.symmetric(horizontal: 20),
         child: Column(

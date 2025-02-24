@@ -20,7 +20,7 @@ class _VisibilityScreenState extends State<VisibilityScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppbarSetting(titletext: 'Visiblity'),
+      appBar: AppbarSetting(titletext: 'Visiblity',link: '/'),
       backgroundColor: Color(0xffF5F6FC),
       body: Stack(
         children: [

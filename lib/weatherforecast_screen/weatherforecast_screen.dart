@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class WeatherforecastScreen extends StatefulWidget {
   const WeatherforecastScreen({super.key});
@@ -30,7 +31,9 @@ class _WeatherforecastScreenState extends State<WeatherforecastScreen> {
           decoration: BoxDecoration(
               color: Colors.white, borderRadius: BorderRadius.circular(40)),
           child: InkWell(
-              onTap: () {},
+              onTap: () {
+                GoRouter.of(context).go('/');
+              },
               child: Icon(
                 Icons.arrow_back_ios_new,
                 size: 16,

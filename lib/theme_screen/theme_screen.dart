@@ -36,7 +36,7 @@ class _ThemeScreenState extends State<ThemeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppbarSetting(titletext: 'Theme'),
+      appBar: AppbarSetting(titletext: 'Theme',link: '/setting'),
       backgroundColor: Color(0xffF5F6FC),
       body: SafeArea(
           child: Container(

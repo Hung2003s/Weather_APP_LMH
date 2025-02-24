@@ -24,7 +24,7 @@ class _PollenScreenState extends State<PollenScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppbarSetting(titletext: 'Pollen'),
+        appBar: AppbarSetting(titletext: 'Pollen',link: '/'),
         backgroundColor: Color(0xffF5F6FC),
       body: SingleChildScrollView(
         child: Container(

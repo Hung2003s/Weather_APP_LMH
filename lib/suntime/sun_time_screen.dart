@@ -13,7 +13,7 @@ class _SunTimeScreenState extends State<SunTimeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppbarSetting(titletext: 'SunTime'),
+      appBar: AppbarSetting(titletext: 'SunTime',link: '/'),
       body: Container(
         child: Column(
           children: <Widget>[

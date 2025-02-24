@@ -29,7 +29,7 @@ class _WindScreenState extends State<WindScreen> {
     final LinearGradient gradientColors =
         LinearGradient(colors: color, stops: stops);
     return Scaffold(
-      appBar: AppbarSetting(titletext: 'Wind'),
+      appBar: AppbarSetting(titletext: 'Wind',link: '/'),
       body: Container(
         padding: EdgeInsets.all(20),
         child: Column(
