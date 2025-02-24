@@ -13,18 +13,18 @@ class Homepage extends StatefulWidget {
 class _HomepageState extends State<Homepage> {
   int currentindex = 0;
   final List<Appservice> _listservice = [
-    Appservice('UV Index', 'assets/images/uvlogo.png', 0xffFFF8B5),
-    Appservice('Humidity', 'assets/images/humiditylogo.png',0xffD5EAFF ),
-    Appservice('Air Quality', 'assets/images/airqualitylogo.png',0xffF9D5D3 ),
-    Appservice('Weather Forecast', 'assets/images/weatherforecastlogo.png', 0xffE9E3FA),
-    Appservice('Visibility', 'assets/images/visibilitylogo.png',0xffC8F0DA ),
-    Appservice('Wind', 'assets/images/windlogo.png',0xffFAE3E3 ),
-    Appservice('Snow Fall', 'assets/images/snowfalllogo.png', 0xffE7E8EC),
-    Appservice('Compass', 'assets/images/compasslogo.png', 0xffF9F0E3),
-    Appservice('Precipitation', 'assets/images/precipitationlogo.png',0xffD3F9F9 ),
-    Appservice('Sun Time', 'assets/images/suntimelogo.png',0xffFAD4F8 ),
-    Appservice('Pollen', 'assets/images/pollenlogo.png', 0xffD4DAFA),
-    Appservice('Wave', 'assets/images/wavelogo.png',0xffF9FFD8 ),
+    Appservice('UV Index', 'assets/images/homepageimage/uvlogo.png', 0xffFFF8B5),
+    Appservice('Humidity', 'assets/images/homepageimage/humiditylogo.png',0xffD5EAFF ),
+    Appservice('Air Quality', 'assets/images/homepageimage/airqualitylogo.png',0xffF9D5D3 ),
+    Appservice('Weather Forecast', 'assets/images/homepageimage/weatherforecastlogo.png', 0xffE9E3FA),
+    Appservice('Visibility', 'assets/images/homepageimage/visibilitylogo.png',0xffC8F0DA ),
+    Appservice('Wind', 'assets/images/homepageimage/windlogo.png',0xffFAE3E3 ),
+    Appservice('Snow Fall', 'assets/images/homepageimage/snowfalllogo.png', 0xffE7E8EC),
+    Appservice('Compass', 'assets/images/homepageimage/compasslogo.png', 0xffF9F0E3),
+    Appservice('Precipitation', 'assets/images/homepageimage/precipitationlogo.png',0xffD3F9F9 ),
+    Appservice('Sun Time', 'assets/images/homepageimage/suntimelogo.png',0xffFAD4F8 ),
+    Appservice('Pollen', 'assets/images/homepageimage/pollenlogo.png', 0xffD4DAFA),
+    Appservice('Wave', 'assets/images/homepageimage/wavelogo.png',0xffF9FFD8 ),
   ];
 
   @override
@@ -43,7 +43,7 @@ class _HomepageState extends State<Homepage> {
                     scale: 2,
                     alignment: Alignment.bottomCenter,
                     child: Image(
-                      image: AssetImage('assets/images/homepage_image.jpg'),
+                      image: AssetImage('assets/images/homepageimage/homepage_image.jpg'),
                       fit: BoxFit.cover,
                       width: MediaQuery.of(context).size.width,
                       height: 440,
@@ -160,7 +160,7 @@ class _HomepageState extends State<Homepage> {
                               decoration: BoxDecoration(
                                   image: DecorationImage(
                                       image: AssetImage(
-                                          'assets/images/framethermometer1.png'))),
+                                          'assets/images/homepageimage/framethermometer1.png'))),
                             ),
                             Text('30oC/80oF',style: TextStyle(
                                   color: Color(0xff0A2958),
@@ -212,7 +212,7 @@ class _HomepageState extends State<Homepage> {
                                     decoration: BoxDecoration(
                                         image: DecorationImage(
                                             image: AssetImage(
-                                                'assets/images/uvlogo.png'))),
+                                                'assets/images/homepageimage/uvlogo.png'))),
                                   ),
                                   SizedBox(
                                     width: 10,
@@ -263,7 +263,7 @@ class _HomepageState extends State<Homepage> {
                                     decoration: BoxDecoration(
                                         image: DecorationImage(
                                             image: AssetImage(
-                                                'assets/images/humiditylogo.png'))),
+                                                'assets/images/homepageimage/humiditylogo.png'))),
                                   ),
                                   SizedBox(
                                     width: 10,

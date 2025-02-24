@@ -1,19 +1,28 @@
 class SettingItem {
    String _title;
    String _image;
-   String _acronym;
+   bool _acronym;
+   bool _isCelcius;
+   bool _istemper;
 
-  SettingItem(this._title, this._image, this._acronym);
 
-  String get acronym => _acronym;
+   SettingItem(this._title, this._image, this._istemper,this._acronym, this._isCelcius, );
 
-  set acronym(String value) {
+   bool get isCelcius => _isCelcius;
+
+  set isCelcius(bool value) {
+    _isCelcius = value;
+  }
+
+  bool get acronym => _acronym;
+
+  set acronym(bool value) {
     _acronym = value;
   }
 
-  String get imgae => _image;
+  String get image => _image;
 
-  set imgae(String value) {
+  set image(String value) {
     _image = value;
   }
 
@@ -23,8 +32,9 @@ class SettingItem {
     _title = value;
   }
 
-   @override
-  String toString() {
-    return 'SettingItem{_title: $_title, _imgae: $_image, _acronym: $_acronym}';
+   bool get istemper => _istemper;
+
+  set istemper(bool value) {
+    _istemper = value;
   }
 }
