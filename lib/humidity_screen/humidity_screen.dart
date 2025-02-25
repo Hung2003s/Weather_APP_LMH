@@ -18,12 +18,15 @@ class _HumidityScreenState extends State<HumidityScreen> {
       body: Column(
         children: [
           CirclePage(
-              color1: Color(0xff4BCFF9),
-              textParameter: '100%',
-              color2: Color(0xff5363F3),
-              located: 'Hoài Đức, Hà Nội',
-              textAirQuality: '',
-              textState: '')
+            color1: Color(0xff4BCFF9),
+            parameter: 100,
+            color2: Color(0xff5363F3),
+            located: 'Hoài Đức, Hà Nội',
+            textAirQuality: '',
+            textState: '',
+            unit: '%',
+            isUnit: true,
+          )
         ],
       ),
     );

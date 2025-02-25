@@ -1,12 +1,11 @@
 import 'dart:ui';
 
 class ChartData {
-String _month;
-double _value;
+String _xvalue;
+double _yvalue;
 Color _color;
 
-ChartData(this._month, this._value, this._color);
-
+ChartData(this._xvalue, this._yvalue, this._color);
 
 Color get color => _color;
 
@@ -14,15 +13,15 @@ Color get color => _color;
     _color = value;
   }
 
-  double get value => _value;
+  double get yvalue => _yvalue;
 
-  set value(double value) {
-    _value = value;
+  set yvalue(double value) {
+    _yvalue = value;
   }
 
-  String get month => _month;
+  String get xvalue => _xvalue;
 
-  set month(String value) {
-    _month = value;
+  set xvalue(String value) {
+    _xvalue = value;
   }
 }

@@ -1,24 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:weatherapp/Pollutants_screen/pollutants_screen.dart';
-import 'package:weatherapp/Visibility/visibility_screen.dart';
+import 'package:weatherapp/Pollutants_screen/view/pollutants_screen.dart';
+import 'package:weatherapp/Visibility/view/visibility_screen.dart';
 import 'package:weatherapp/air_quality/air_quality_screen.dart';
 import 'package:weatherapp/compass/compass_screen.dart';
-import 'package:weatherapp/homepage/homepage.dart';
+import 'package:weatherapp/homepage/view/homepage.dart';
 import 'package:weatherapp/humidity_screen/humidity_screen.dart';
 import 'package:weatherapp/intro/intro_screen_1.dart';
 import 'package:weatherapp/intro/intro_screen_2.dart';
-import 'package:weatherapp/language_screen/language_screen.dart';
-import 'package:weatherapp/pollen_screen/pollen_screen.dart';
-import 'package:weatherapp/precipitation_screen/precipitation_screen.dart';
-import 'package:weatherapp/setting_screen/setting_screen.dart';
-import 'package:weatherapp/snow_fall_screen/snow_fall_screen.dart';
-import 'package:weatherapp/suntime/sun_time_screen.dart';
-import 'package:weatherapp/theme_screen/theme_screen.dart';
-import 'package:weatherapp/therometer_screen/thermometer_screen.dart';
-import 'package:weatherapp/uv_index/ultraviolet_screen.dart';
-import 'package:weatherapp/weatherforecast_screen/weatherforecast_screen.dart';
-import 'package:weatherapp/wind_screen/wind_screen.dart';
+import 'package:weatherapp/language_screen/view/language_screen.dart';
+import 'package:weatherapp/pollen_screen/view/pollen_screen.dart';
+import 'package:weatherapp/precipitation_screen/view/precipitation_screen.dart';
+import 'package:weatherapp/setting_screen/view/setting_screen.dart';
+import 'package:weatherapp/snow_fall_screen/view/snow_fall_screen.dart';
+import 'package:weatherapp/suntime/view/sun_time_screen.dart';
+import 'package:weatherapp/theme_screen/view/theme_screen.dart';
+import 'package:weatherapp/therometer_screen/view/thermometer_screen.dart';
+import 'package:weatherapp/uv_index/view/ultraviolet_screen.dart';
+import 'package:weatherapp/weatherforecast_screen/view/weatherforecast_screen.dart';
+import 'package:weatherapp/wind_screen/view/wind_screen.dart';
 
 
 void main() {
@@ -64,5 +64,6 @@ final GoRouter _router = GoRouter(
       GoRoute(path: "/wind", builder: ((context, state)=> const WindScreen())),
       GoRoute(path: "/theme", builder: ((context, state)=> const ThemeScreen())),
       GoRoute(path: "/language", builder: ((context, state)=> const LanguageScreen())),
+      GoRoute(path: "/pollutant", builder: ((context, state)=> const PollutantsScreen())),
     ]
 );

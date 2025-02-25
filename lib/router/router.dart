@@ -1,24 +1,23 @@
 import 'package:go_router/go_router.dart';
-
-import '../Pollutants_screen/pollutants_screen.dart';
-import '../Visibility/visibility_screen.dart';
+import '../Pollutants_screen/view/pollutants_screen.dart';
+import '../Visibility/view/visibility_screen.dart';
 import '../air_quality/air_quality_screen.dart';
 import '../compass/compass_screen.dart';
-import '../homepage/homepage.dart';
+import '../homepage/view/homepage.dart';
 import '../humidity_screen/humidity_screen.dart';
 import '../intro/intro_screen_1.dart';
 import '../intro/intro_screen_2.dart';
-import '../language_screen/language_screen.dart';
-import '../pollen_screen/pollen_screen.dart';
-import '../precipitation_screen/precipitation_screen.dart';
-import '../setting_screen/setting_screen.dart';
-import '../snow_fall_screen/snow_fall_screen.dart';
-import '../suntime/sun_time_screen.dart';
-import '../theme_screen/theme_screen.dart';
-import '../therometer_screen/thermometer_screen.dart';
-import '../uv_index/ultraviolet_screen.dart';
-import '../weatherforecast_screen/weatherforecast_screen.dart';
-import '../wind_screen/wind_screen.dart';
+import '../language_screen/view/language_screen.dart';
+import '../pollen_screen/view/pollen_screen.dart';
+import '../precipitation_screen/view/precipitation_screen.dart';
+import '../setting_screen/view/setting_screen.dart';
+import '../snow_fall_screen/view/snow_fall_screen.dart';
+import '../suntime/view/sun_time_screen.dart';
+import '../theme_screen/view/theme_screen.dart';
+import '../therometer_screen/view/thermometer_screen.dart';
+import '../uv_index/view/ultraviolet_screen.dart';
+import '../weatherforecast_screen/view/weatherforecast_screen.dart';
+import '../wind_screen/view/wind_screen.dart';
 
 class RouterItem {
   final GoRouter _router = GoRouter(
