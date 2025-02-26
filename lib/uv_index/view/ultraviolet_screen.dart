@@ -13,17 +13,17 @@ class _UltravioletScreenState extends State<UltravioletScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppbarSetting(titletext: 'UV Index',link: '/'),
+      appBar: AppbarSetting(titletext: 'UV Index', link: '/'),
       backgroundColor: Color(0xffF5F6FC),
       body: Column(
         children: [
           CirclePage(
-              color1: Color(0xffF36253),
-              parameter: 0.75,
-              color2: Color(0xffF9ED4B),
-              located: 'Hoài Đức, Hà Nội',
-              textAirQuality: 'Low',
-              textState: 'Good',
+            color1: Color(0xffF36253),
+            parameter: 0.75,
+            color2: Color(0xffF9ED4B),
+            located: 'Hoài Đức, Hà Nội',
+            textAirQuality: 'Low',
+            textState: 'Good',
             unit: '',
             isUnit: false,
           )

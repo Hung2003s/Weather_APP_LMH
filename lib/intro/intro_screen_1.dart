@@ -1,7 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:weatherapp/intro/curveline.dart';
+
 
 class IntroScreen1 extends StatefulWidget {
   const IntroScreen1({super.key});

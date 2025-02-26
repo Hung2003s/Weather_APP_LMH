@@ -1,6 +1,7 @@
-
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:weatherapp/app_bloc/app_bloc.dart';
 import '../component/home_item.dart';
 import '../home_controller/home_controller.dart';
 
@@ -13,6 +14,7 @@ class Homepage extends StatefulWidget {
 
 class _HomepageState extends State<Homepage> {
   HomeController homeController = HomeController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,18 +26,21 @@ class _HomepageState extends State<Homepage> {
             padding: EdgeInsets.all(0),
             child: Column(
               children: [
-                ClipRect(
-                  child: Transform.scale(
-                    scale: 2,
-                    alignment: Alignment.bottomCenter,
-                    child: Image(
-                      image: AssetImage('assets/images/homepageimage/homepage_image.jpg'),
-                      fit: BoxFit.cover,
-                      width: MediaQuery.of(context).size.width,
-                      height: 440,
-                    ),
-                  ),
-
+                BlocBuilder<AppBloc, AppState>(
+                  builder: (context, state) {
+                    return ClipRect(
+                      child: Transform.scale(
+                        scale: 2,
+                        alignment: Alignment.bottomCenter,
+                        child: Image(
+                          image: AssetImage(state.theme),
+                          fit: BoxFit.cover,
+                          width: MediaQuery.of(context).size.width,
+                          height: 440,
+                        ),
+                      ),
+                    );
+                  },
                 ),
               ],
             ),
@@ -47,12 +52,10 @@ class _HomepageState extends State<Homepage> {
             ),
             child: Container(
               decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                      begin: Alignment.bottomCenter,
-                      colors: [
-                        Colors.white.withValues(alpha: 0.1),
-                        Color(0xffF4FAFA).withValues(alpha: 0.2),
-
+                  gradient:
+                      LinearGradient(begin: Alignment.bottomCenter, colors: [
+                Colors.white.withValues(alpha: 0.1),
+                Color(0xffF4FAFA).withValues(alpha: 0.2),
               ])),
             ),
           ),
@@ -140,31 +143,39 @@ class _HomepageState extends State<Homepage> {
                         padding: EdgeInsets.all(7),
                         child: Column(
                           children: [
-                            Container(
-                              height: 151,
-                              width: 60,
-                              decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                      image: AssetImage(
-                                          'assets/images/homepageimage/framethermometer1.png'))),
+                            BlocBuilder<AppBloc, AppState>(
+                              builder: (context, state) {
+                                return Container(
+                                  height: 151,
+                                  width: 60,
+                                  decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                          image: AssetImage(
+                                              state.thermometer))),
+                                );
+                              },
                             ),
-                            Text('30oC/80oF',style: TextStyle(
-                                  color: Color(0xff0A2958),
-                                  fontWeight: FontWeight.w600,
-                            ),
+                            Text(
+                              '30°C/80°F',
+                              style: TextStyle(
+                                color: Color(0xff0A2958),
+                                fontWeight: FontWeight.w600,
                               ),
+                            ),
                             Text(
                               'Feel like',
                               style: TextStyle(
-                                color: Color(0xff0A2958BF).withValues(alpha: 0.75),
+                                color:
+                                    Color(0xff0A2958BF).withValues(alpha: 0.75),
                                 fontSize: 11,
                                 fontWeight: FontWeight.w400,
                               ),
                             ),
                             Text(
-                              '28oC/28oF',
+                              '28°C/28°F',
                               style: TextStyle(
-                                color: Color(0xff0A2958BF).withValues(alpha: 0.75),
+                                color:
+                                    Color(0xff0A2958BF).withValues(alpha: 0.75),
                                 fontSize: 11,
                                 fontWeight: FontWeight.w500,
                               ),
@@ -174,7 +185,7 @@ class _HomepageState extends State<Homepage> {
                       ),
                       Container(
                         height: 72,
-                        padding: EdgeInsets.symmetric(horizontal: 20 ),
+                        padding: EdgeInsets.symmetric(horizontal: 20),
                         decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(15),
@@ -231,7 +242,9 @@ class _HomepageState extends State<Homepage> {
                                 ],
                               ),
                             ),
-                            SizedBox(width: 15,),
+                            SizedBox(
+                              width: 15,
+                            ),
                             Container(
                               margin: EdgeInsets.symmetric(vertical: 10),
                               width: 1,
@@ -239,7 +252,9 @@ class _HomepageState extends State<Homepage> {
                                 color: Color(0xffCED9DC),
                               ),
                             ),
-                            SizedBox(width: 15,),
+                            SizedBox(
+                              width: 15,
+                            ),
                             Container(
                               child: Row(
                                 children: [
@@ -312,7 +327,8 @@ class _HomepageState extends State<Homepage> {
                     physics: NeverScrollableScrollPhysics(),
                     itemCount: homeController.listhomeitem.length,
                     itemBuilder: (BuildContext context, int index) {
-                      return OneeElementService(homeitem: homeController.listhomeitem[index]);
+                      return OneeElementService(
+                          homeitem: homeController.listhomeitem[index]);
                     },
                   ),
                 )
@@ -324,5 +340,3 @@ class _HomepageState extends State<Homepage> {
     );
   }
 }
-
-

@@ -29,7 +29,7 @@ class AppbarSetting extends StatelessWidget implements PreferredSizeWidget {
             color: Colors.white, borderRadius: BorderRadius.circular(40)),
         child: InkWell(
             onTap: () {
-              GoRouter.of(context).go(link);
+              GoRouter.of(context).pop();
             },
             child: Icon(
               Icons.arrow_back_ios_new,

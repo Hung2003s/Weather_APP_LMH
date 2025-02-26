@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:weatherapp/components/appbar_setting.dart';
 import 'package:weatherapp/setting_screen/controller/setting_controller.dart';
 import 'package:weatherapp/setting_screen/component/setting_screen_item.dart';
@@ -31,7 +32,11 @@ class _SettingScreenState extends State<SettingScreen> {
               child: ListView.builder(
                   itemCount: settingController.listSettingItem.length,
                   itemBuilder: (BuildContext context, int index) {
-                    return OneElementSettingScreen(settingItem: settingController.listSettingItem[index],);
+                    return GestureDetector(
+                      onTap: () {
+                        GoRouter.of(context).go(settingController.listSettingItem[index].linksetting);
+                      },
+                        child: OneElementSettingScreen(settingItem: settingController.listSettingItem[index],));
                   }),
             )
           ],

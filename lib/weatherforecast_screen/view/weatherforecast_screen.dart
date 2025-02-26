@@ -64,7 +64,7 @@ class _WeatherforecastScreenState extends State<WeatherforecastScreen> {
                     child: Container(
                       padding: EdgeInsets.symmetric(horizontal: 4, vertical: 4),
                       child: Text(
-                        'C',
+                        '°C',
                         style: TextStyle(
                             fontWeight: FontWeight.w600,
                             fontSize: 24,
@@ -93,7 +93,7 @@ class _WeatherforecastScreenState extends State<WeatherforecastScreen> {
                     child: Container(
                       padding: EdgeInsets.symmetric(horizontal: 4, vertical: 4),
                       child: Text(
-                        'F',
+                        '°F',
                         style: TextStyle(
                             fontWeight: FontWeight.w600,
                             fontSize: 24,
@@ -160,13 +160,13 @@ class _WeatherforecastScreenState extends State<WeatherforecastScreen> {
                       ),
                     ),
                     SizedBox(height: 10,),
-                    Text('25oC',style: TextStyle(
+                    Text('25°C',style: TextStyle(
                       fontWeight: FontWeight.w700,
                       fontSize: 64,
                       color: Color(0xff12203A)
                     ),),
                     SizedBox(height: 10,),
-                    Text('Feel like 28OC', style: TextStyle(
+                    Text('Feel like 28°C', style: TextStyle(
                       color: Color(0xff12203A).withValues(alpha: 0.54),
                       fontSize: 16,
                       fontWeight: FontWeight.w400,
@@ -243,13 +243,13 @@ class _WeatherforecastScreenState extends State<WeatherforecastScreen> {
             Container(
               child:Row(
                 children: [
-                  Text('25o', style: TextStyle(
+                  Text('25°', style: TextStyle(
                     color: Color(0xff12203A),
                     fontWeight: FontWeight.w700,
                     fontSize: 14
                   ),),
                   SizedBox(width: 4,),
-                  Text('28o', style: TextStyle(
+                  Text('28°', style: TextStyle(
                       color: Color(0xff12203A).withValues(alpha: 0.54),
                       fontWeight: FontWeight.w400,
                       fontSize: 12

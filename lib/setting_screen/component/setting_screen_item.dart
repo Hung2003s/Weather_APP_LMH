@@ -14,7 +14,14 @@ class OneElementSettingScreen extends StatefulWidget {
 }
 
 class _OneElementSettingScreenState extends State<OneElementSettingScreen> {
-  late bool isTemperature; 
+  late bool isTemperature;
+  void changebuttoncolor() {
+    if (widget.settingItem.isCelcius == true ) {
+      widget.settingItem.isCelcius =false;
+    } else {
+      widget.settingItem.isCelcius =true;
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -37,7 +44,7 @@ class _OneElementSettingScreenState extends State<OneElementSettingScreen> {
         children: [
           GestureDetector(
             onTap: (){
-              GoRouter.of(context).go(widget.settingItem.linksetting);
+              // GoRouter.of(context).go(widget.settingItem.linksetting);
             },
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: 10, vertical: 16),
@@ -72,49 +79,63 @@ class _OneElementSettingScreenState extends State<OneElementSettingScreen> {
               padding: EdgeInsets.symmetric(vertical: 6),
               child: Row(
                 children: [
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 8),
-                    decoration: BoxDecoration(
-                        color: widget.settingItem.isCelcius ? Color(0xff0A2958) : Color(0xffFFFFFF),
-                        borderRadius: BorderRadius.circular(8),
-                        boxShadow: [
-                          BoxShadow(
-                              color: Color(0xff000514).withValues(alpha: 0.1),
-                              spreadRadius: 0,
-                              blurRadius: 0,
-                              offset: Offset(2, 2)
-                          )
-                        ]
-                    ),
-                    child: Center(
-                      child: Text('oC', style: TextStyle(
-                          color: widget.settingItem.isCelcius ? Color(0xffFFFFFF) : Color(0xff0A2958),
-                          fontSize: 16,
-                          fontWeight: FontWeight.w700
-                      ),),
+                  GestureDetector(
+                    onTap: (){
+                      setState(() {
+                        changebuttoncolor();
+                      });
+                    },
+                    child: Container(
+                      padding: EdgeInsets.symmetric(horizontal: 8),
+                      decoration: BoxDecoration(
+                          color: widget.settingItem.isCelcius ? Color(0xff0A2958) : Color(0xffFFFFFF),
+                          borderRadius: BorderRadius.circular(8),
+                          boxShadow: [
+                            BoxShadow(
+                                color: Color(0xff000514).withValues(alpha: 0.1),
+                                spreadRadius: 0,
+                                blurRadius: 0,
+                                offset: Offset(2, 2)
+                            )
+                          ]
+                      ),
+                      child: Center(
+                        child: Text('oC', style: TextStyle(
+                            color: widget.settingItem.isCelcius ? Color(0xffFFFFFF) : Color(0xff0A2958),
+                            fontSize: 16,
+                            fontWeight: FontWeight.w700
+                        ),),
+                      ),
                     ),
                   ),
                   SizedBox(width: 5,),
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 8),
-                    decoration: BoxDecoration(
-                        color: widget.settingItem.isCelcius ? Color(0xffFFFFFF) : Color(0xff0A2958),
-                        borderRadius: BorderRadius.circular(8),
-                        boxShadow: [
-                          BoxShadow(
-                              color: Color(0xff000514).withValues(alpha: 0.1),
-                              spreadRadius: 0,
-                              blurRadius: 0,
-                              offset: Offset(0, 2)
-                          )
-                        ]
-                    ),
-                    child: Center(
-                      child: Text('oF', style: TextStyle(
-                          color: widget.settingItem.isCelcius ? Color(0xff0A2958) : Color(0xffFFFFFF),
-                          fontSize: 16,
-                          fontWeight: FontWeight.w700
-                      ),),
+                  GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        changebuttoncolor();
+                      });
+                    },
+                    child: Container(
+                      padding: EdgeInsets.symmetric(horizontal: 8),
+                      decoration: BoxDecoration(
+                          color: widget.settingItem.isCelcius ? Color(0xffFFFFFF) : Color(0xff0A2958),
+                          borderRadius: BorderRadius.circular(8),
+                          boxShadow: [
+                            BoxShadow(
+                                color: Color(0xff000514).withValues(alpha: 0.1),
+                                spreadRadius: 0,
+                                blurRadius: 0,
+                                offset: Offset(0, 2)
+                            )
+                          ]
+                      ),
+                      child: Center(
+                        child: Text('oF', style: TextStyle(
+                            color: widget.settingItem.isCelcius ? Color(0xff0A2958) : Color(0xffFFFFFF),
+                            fontSize: 16,
+                            fontWeight: FontWeight.w700
+                        ),),
+                      ),
                     ),
                   ),
                 ],
