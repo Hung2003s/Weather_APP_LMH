@@ -1,3 +1,4 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -5,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:weatherapp/setting_screen/bloc/setting_event.dart';
 import 'package:weatherapp/setting_screen/bloc/setting_state.dart';
 import 'package:weatherapp/setting_screen/bloc/settting_bloc.dart';
+import 'package:weatherapp/weatherforecast_screen/component/weather_item_2.dart';
 import 'package:weatherapp/weatherforecast_screen/component/weatherforecast_item.dart';
 
 class WeatherforecastScreen extends StatefulWidget {
@@ -20,6 +22,8 @@ class _WeatherforecastScreenState extends State<WeatherforecastScreen> {
 
   @override
   Widget build(BuildContext context) {
+
+    final PageController _pageController = PageController(viewportFraction: 0.2, initialPage: 0);
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -178,7 +182,8 @@ class _WeatherforecastScreenState extends State<WeatherforecastScreen> {
                           decoration: BoxDecoration(
                               color: Color(0xffFFD900).withValues(alpha: 0.1)),
                           child: Image(
-                            image: AssetImage('assets/images/weather_forecast/sunshine.png'),
+                            image: AssetImage(
+                                'assets/images/weather_forecast/sunshine.png'),
                           ),
                         ),
                         SizedBox(
@@ -211,27 +216,37 @@ class _WeatherforecastScreenState extends State<WeatherforecastScreen> {
                       children: [
                         Row(
                           children: [
-                            Container(
-                              height: 60,
-                            width: MediaQuery.of(context).size.width,
-                            child: ListView.builder(
-                              itemCount: 5,
-                                itemBuilder: (BuildContext context, int index) {
-                                return Container();
-                            }),
-                          )],
+                            Center(
+                              child: Container(
+                                height: 60,
+                                width: MediaQuery.of(context).size.width,
+                                child:
+                                PageView.builder(
+                                  controller: _pageController,
+                                  itemCount: 5,
+                                  pageSnapping: true,
+                                  itemBuilder: (context, index) {
+                                    return WeatherItem2();
+                                  },
+                                ),
+                              ),
+                            )
+                          ],
                         ),
                         Container(
                           height: 30,
                           child: Image(
-                              image: AssetImage('assets/images/weather_forecast/scroll.png'),
+                            image: AssetImage(
+                                'assets/images/weather_forecast/scroll.png'),
                             fit: BoxFit.cover,
                           ),
                         )
                       ],
                     ),
                   ),
-                  SizedBox(height: 10,),
+                  SizedBox(
+                    height: 10,
+                  ),
                   Container(
                     child: Column(
                       children: [
