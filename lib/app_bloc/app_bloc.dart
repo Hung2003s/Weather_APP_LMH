@@ -1,6 +1,5 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:weatherapp/router/router.dart';
 import 'package:weatherapp/theme_screen/controller/theme_controller.dart';
 import 'package:weatherapp/therometer_screen/controller/thermometer_controller.dart';
 
@@ -19,4 +18,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   void _onChangeThermometerImage(SetThermometerEvent event, Emitter<AppState> emit) {
     emit(state.copyWith(thermometer: event.imageThermometer));
   }
+
 }
+
+

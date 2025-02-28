@@ -14,7 +14,7 @@ class ThermometerScreen extends StatefulWidget {
 
 class _ThermometerScreenState extends State<ThermometerScreen> {
   ThermometerController thermometerController = ThermometerController();
-
+  int selectindex = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,8 +38,14 @@ class _ThermometerScreenState extends State<ThermometerScreen> {
                 onTap: () {
                   context.read<AppBloc>().add(
                       SetThermometerEvent(imageThermometer: thermometerlist));
+                  setState(() {
+                    selectindex = index;
+                  });
                 },
-                child: OneElementThermometerScreen(image: thermometerlist.toString()));
+                child: OneElementThermometerScreen(
+                    image: thermometerlist.toString(),
+                  choose: selectindex == index,),
+            );
           },
         ),
       )),

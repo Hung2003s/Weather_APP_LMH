@@ -22,5 +22,4 @@ final class SetThermometerEvent extends AppEvent {
   @override
   // TODO: implement props
   List<Object?> get props => [imageThermometer];
-
 }

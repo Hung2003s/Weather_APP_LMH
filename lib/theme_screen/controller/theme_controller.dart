@@ -1,6 +1,5 @@
 import 'package:weatherapp/util/images.dart';
 
-import '../model/theme_item.dart';
 
 class ThemeController {
   final List<String> listThemeItem =[

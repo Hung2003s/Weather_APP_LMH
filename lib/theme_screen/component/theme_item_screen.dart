@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:weatherapp/theme_screen/model/theme_item.dart';
 
 class OneElementThemeScreen extends StatefulWidget {
   final String image;
@@ -15,9 +14,9 @@ class _OneElementThemeScreenState extends State<OneElementThemeScreen> {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(15),
+        borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          width: 4,
+          width: 2,
           color: widget.choose ? Color(0xff8FA940) : Color(0xffFFFFFF),
         )
       ),

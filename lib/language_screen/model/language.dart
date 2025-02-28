@@ -1,6 +1,6 @@
 class Language {
   String name;
   String logo;
-
-  Language(this.name, this.logo);
+  String acronym;
+  Language(this.name, this.logo, this.acronym);
 }

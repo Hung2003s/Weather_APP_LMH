@@ -1,11 +1,9 @@
 
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:weatherapp/app_bloc/app_bloc.dart';
 import 'package:weatherapp/components/appbar_setting.dart';
 import 'package:weatherapp/theme_screen/component/theme_item_screen.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../router/router.dart';
 import '../controller/theme_controller.dart';
 
 
@@ -43,7 +41,10 @@ class _ThemeScreenState extends State<ThemeScreen> {
             return GestureDetector(
               onTap: () {
                 context.read<AppBloc>().add(SetThemeEvent(imageTheme: theme));
-                GoRouter.of(context).go(AppRouter.homeScreen);
+                // GoRouter.of(context).go(AppRouter.homeScreen);
+                setState(() {
+                  selectedIndex = index;
+                });
               },
               child: OneElementThemeScreen(
                 image: themeController.listThemeItem[index].toString(),

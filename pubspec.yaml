@@ -45,6 +45,7 @@ flutter:
     - assets/images/pollenimage/
     - assets/images/suntimeimage/
     - assets/images/visibilityimage/
+    - assets/images/weather_forecast/
   # fonts:
   #   - family: Schyler
   #     fonts:

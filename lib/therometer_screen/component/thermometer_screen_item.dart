@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:weatherapp/therometer_screen/model/thermometer.dart';
 
 class OneElementThermometerScreen extends StatefulWidget {
   final String image;
-  const OneElementThermometerScreen({super.key, required this.image});
+  final bool choose;
+  const OneElementThermometerScreen({super.key, required this.image, required this.choose});
   @override
   State<OneElementThermometerScreen> createState() => _OneElementThermometerScreenState();
 }
@@ -12,24 +12,24 @@ class _OneElementThermometerScreenState extends State<OneElementThermometerScree
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+      // padding: EdgeInsets.all(2),
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15),
-          color: Colors.white,
+        border: widget.choose ? Border.all(color: Color(0xff8FA940,), width: 1) : Border(),
+        borderRadius: BorderRadius.circular(15),
+        color: Colors.white,
       ),
       child: Container(
-
+        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
         decoration: BoxDecoration(
-          image: DecorationImage(
-              image: AssetImage(widget.image))
+            borderRadius: BorderRadius.circular(15),
+            color: Colors.white,
         ),
-
-        // child: ClipRect(
-        //   child: Image(
-        //       image: AssetImage('assets/images/themeimage/themepic1.jpg'),
-        //       fit: BoxFit.cover,
-        //   ),
-        // ),
+        child: Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage(widget.image))
+          ),
+        ),
       ),
     );
   }

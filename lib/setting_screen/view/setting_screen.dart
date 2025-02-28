@@ -34,7 +34,7 @@ class _SettingScreenState extends State<SettingScreen> {
                   itemBuilder: (BuildContext context, int index) {
                     return GestureDetector(
                       onTap: () {
-                        GoRouter.of(context).go(settingController.listSettingItem[index].linksetting);
+                        GoRouter.of(context).push(settingController.listSettingItem[index].linksetting);
                       },
                         child: OneElementSettingScreen(settingItem: settingController.listSettingItem[index],));
                   }),

@@ -1,13 +1,12 @@
 import 'package:equatable/equatable.dart';
 
-class SettingState extends Equatable {
-  final String isTemperature;
-  final String isLanguage;
+enum TemperatureUnit { celsius, fahrenheit }
 
-  SettingState(this.isTemperature, this.isLanguage);
+class TemperatureUnitState extends Equatable {
+  final TemperatureUnit unit;
+
+  const TemperatureUnitState({required this.unit});
 
   @override
-  // TODO: implement props
-  List<Object?> get props => [isTemperature];
-
+  List<Object> get props => [unit];
 }
