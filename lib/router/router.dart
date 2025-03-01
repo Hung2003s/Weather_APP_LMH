@@ -155,6 +155,10 @@ class AppRouter {
               name: windName,
               path: windPath,
               builder: ((context, state) => const WindScreen())),
+          GoRoute(
+              name: wavePath,
+              path: waveName,
+              builder: ((context, state) => const PollutantsScreen())),
         ]),
   ]);
 }

@@ -1,4 +1,3 @@
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -226,7 +225,10 @@ class _WeatherforecastScreenState extends State<WeatherforecastScreen> {
                                   itemCount: 5,
                                   pageSnapping: true,
                                   itemBuilder: (context, index) {
-                                    return WeatherItem2();
+                                    return Padding(
+                                      padding: const EdgeInsets.symmetric(horizontal: 0),
+                                      child: WeatherItem2(),
+                                    );
                                   },
                                 ),
                               ),

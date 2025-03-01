@@ -327,8 +327,13 @@ class _HomepageState extends State<Homepage> {
                     physics: NeverScrollableScrollPhysics(),
                     itemCount: homeController.listhomeitem.length,
                     itemBuilder: (BuildContext context, int index) {
-                      return OneeElementService(
-                          homeitem: homeController.listhomeitem[index]);
+                      return GestureDetector(
+                        onTap: () {
+                          GoRouter.of(context).push(homeController.listhomeitem[index].link);
+                        },
+                        child: OneeElementService(
+                            homeitem: homeController.listhomeitem[index]),
+                      );
                     },
                   ),
                 )

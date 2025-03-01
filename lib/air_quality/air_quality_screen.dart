@@ -55,8 +55,8 @@ class _AirQualityScreenState extends State<AirQualityScreen> {
               parameter: textParameter,
               color2: color2,
               located: 'Hoài Đức, Hà Nội',
-              textAirQuality: 'Low',
-              textState: 'Good',
+              textAirQuality: textAirQuality,
+              textState: textState,
             unit: '',
             isUnit: false,
           )

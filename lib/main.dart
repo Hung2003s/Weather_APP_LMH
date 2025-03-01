@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:weatherapp/Visibility/bloc/visibility_unit_bloc.dart';
 import 'package:weatherapp/app_bloc/app_bloc.dart';
 import 'package:weatherapp/language_screen/language_bloc/language_bloc.dart';
 import 'package:weatherapp/router/router.dart';
@@ -21,6 +22,7 @@ class MyApp extends StatelessWidget {
         BlocProvider<AppBloc>( create: (context) => AppBloc(),),
         BlocProvider<TemperatureUnitBloc>( create: (context) => TemperatureUnitBloc()),
         BlocProvider<LanguageBloc>( create: (context) => LanguageBloc()),
+        BlocProvider<VisibilityUnitBloc>( create: (context) => VisibilityUnitBloc()),
       ],
       child: MaterialApp.router(
         routerConfig: AppRouter.router,
