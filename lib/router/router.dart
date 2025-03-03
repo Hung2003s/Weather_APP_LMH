@@ -1,23 +1,24 @@
 import 'package:go_router/go_router.dart';
-import '../Pollutants_screen/view/pollutants_screen.dart';
-import '../Visibility/view/visibility_screen.dart';
-import '../air_quality/air_quality_screen.dart';
-import '../compass/compass_screen.dart';
-import '../homepage/view/homepage.dart';
-import '../humidity_screen/humidity_screen.dart';
-import '../intro/intro_screen_1.dart';
-import '../intro/intro_screen_2.dart';
-import '../language_screen/view/language_screen.dart';
-import '../pollen_screen/view/pollen_screen.dart';
-import '../precipitation_screen/view/precipitation_screen.dart';
-import '../setting_screen/view/setting_screen.dart';
-import '../snow_fall_screen/view/snow_fall_screen.dart';
-import '../suntime/view/sun_time_screen.dart';
-import '../theme_screen/view/theme_screen.dart';
-import '../therometer_screen/view/thermometer_screen.dart';
-import '../uv_index/view/ultraviolet_screen.dart';
-import '../weatherforecast_screen/view/weatherforecast_screen.dart';
-import '../wind_screen/view/wind_screen.dart';
+
+import '../screen/Pollutants_screen/view/pollutants_screen.dart';
+import '../screen/Visibility/view/visibility_screen.dart';
+import '../screen/air_quality/air_quality_screen.dart';
+import '../screen/compass/compass_screen.dart';
+import '../screen/homepage/view/homepage.dart';
+import '../screen/humidity_screen/humidity_screen.dart';
+import '../screen/intro/intro_screen_1.dart';
+import '../screen/intro/intro_screen_2.dart';
+import '../screen/language_screen/view/language_screen.dart';
+import '../screen/pollen_screen/view/pollen_screen.dart';
+import '../screen/precipitation_screen/view/precipitation_screen.dart';
+import '../screen/setting_screen/view/setting_screen.dart';
+import '../screen/snow_fall_screen/view/snow_fall_screen.dart';
+import '../screen/suntime/view/sun_time_screen.dart';
+import '../screen/theme_screen/view/theme_screen.dart';
+import '../screen/therometer_screen/view/thermometer_screen.dart';
+import '../screen/uv_index/view/ultraviolet_screen.dart';
+import '../screen/weatherforecast_screen/view/weatherforecast_screen.dart';
+import '../screen/wind_screen/view/wind_screen.dart';
 
 class AppRouter {
   static String homeScreen = "/";

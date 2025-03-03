@@ -106,10 +106,11 @@ class CirclePage extends StatelessWidget {
         SizedBox(height: 32),
         // classVisibility is VisibilityView
         //     ? Visibility_button()
-        //     : Text(
-        //   textState,
-        //   style: TextStyle(fontWeight: FontWeight.w600, fontSize: 20),
-        // ),
+        //     :
+        Text(
+          textState,
+          style: TextStyle(fontWeight: FontWeight.w600, fontSize: 20),
+        ),
       ],
     );
   }

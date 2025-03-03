@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:weatherapp/theme_screen/controller/theme_controller.dart';
-import 'package:weatherapp/therometer_screen/controller/thermometer_controller.dart';
+import '../screen/theme_screen/controller/theme_controller.dart';
+import '../screen/therometer_screen/controller/thermometer_controller.dart';
 
 part 'app_event.dart';
 part 'app_state.dart';

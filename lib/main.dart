@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:weatherapp/Visibility/bloc/visibility_unit_bloc.dart';
 import 'package:weatherapp/app_bloc/app_bloc.dart';
-import 'package:weatherapp/language_screen/language_bloc/language_bloc.dart';
 import 'package:weatherapp/router/router.dart';
-import 'package:weatherapp/setting_screen/bloc/settting_bloc.dart';
+import 'package:weatherapp/screen/Visibility/bloc/visibility_unit_bloc.dart';
+import 'package:weatherapp/screen/language_screen/language_bloc/language_bloc.dart';
+import 'package:weatherapp/screen/setting_screen/bloc/settting_bloc.dart';
+
 
 
 void main() {

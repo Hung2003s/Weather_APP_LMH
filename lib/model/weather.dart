@@ -49,6 +49,22 @@ class Weather extends Equatable {
     );
   }
 
+  Map<String, dynamic> toJson() => {
+    "latitude": latitude,
+    "longitude": longitude,
+    "generationtime_ms": generationtimeMs,
+    "utc_offset_seconds": utcOffsetSeconds,
+    "timezone": timezone,
+    "timezone_abbreviation": timezoneAbbreviation,
+    "elevation": elevation,
+    "current_units": currentUnits?.toJson(),
+    "current": current?.toJson(),
+    "hourly_units": hourlyUnits?.toJson(),
+    "hourly": hourly?.toJson(),
+    "daily_units": dailyUnits?.toJson(),
+    "daily": daily?.toJson(),
+  };
+
   @override
   List<Object?> get props => [
     latitude, longitude, generationtimeMs, utcOffsetSeconds, timezone, timezoneAbbreviation, elevation, currentUnits, current, hourlyUnits, hourly, dailyUnits, daily, ];
@@ -76,6 +92,13 @@ class Current extends Equatable {
     );
   }
 
+  Map<String, dynamic> toJson() => {
+    "time": time,
+    "interval": interval,
+    "snowfall": snowfall,
+    "weather_code": weatherCode,
+  };
+
   @override
   List<Object?> get props => [
     time, interval, snowfall, weatherCode, ];
@@ -102,6 +125,13 @@ class CurrentUnits extends Equatable {
       weatherCode: json["weather_code"],
     );
   }
+
+  Map<String, dynamic> toJson() => {
+    "time": time,
+    "interval": interval,
+    "snowfall": snowfall,
+    "weather_code": weatherCode,
+  };
 
   @override
   List<Object?> get props => [
@@ -139,6 +169,16 @@ class Daily extends Equatable {
     );
   }
 
+  Map<String, dynamic> toJson() => {
+    "time": time.map((x) => "${x.year.toString().padLeft(4,'0')}-${x.month.toString().padLeft(2,'0')}-${x.day.toString().padLeft(2,'0')}").toList(),
+    "weather_code": weatherCode.map((x) => x).toList(),
+    "sunrise": sunrise.map((x) => x).toList(),
+    "sunset": sunset.map((x) => x).toList(),
+    "uv_index_max": uvIndexMax.map((x) => x).toList(),
+    "precipitation_sum": precipitationSum.map((x) => x).toList(),
+    "snowfall_sum": snowfallSum.map((x) => x).toList(),
+  };
+
   @override
   List<Object?> get props => [
     time, weatherCode, sunrise, sunset, uvIndexMax, precipitationSum, snowfallSum, ];
@@ -174,6 +214,16 @@ class DailyUnits extends Equatable {
       snowfallSum: json["snowfall_sum"],
     );
   }
+
+  Map<String, dynamic> toJson() => {
+    "time": time,
+    "weather_code": weatherCode,
+    "sunrise": sunrise,
+    "sunset": sunset,
+    "uv_index_max": uvIndexMax,
+    "precipitation_sum": precipitationSum,
+    "snowfall_sum": snowfallSum,
+  };
 
   @override
   List<Object?> get props => [
@@ -226,6 +276,21 @@ class Hourly extends Equatable {
     );
   }
 
+  Map<String, dynamic> toJson() => {
+    "time": time.map((x) => x).toList(),
+    "temperature_2m": temperature2M.map((x) => x).toList(),
+    "relative_humidity_2m": relativeHumidity2M.map((x) => x).toList(),
+    "precipitation_probability": precipitationProbability.map((x) => x).toList(),
+    "rain": rain.map((x) => x).toList(),
+    "snowfall": snowfall.map((x) => x).toList(),
+    "weather_code": weatherCode.map((x) => x).toList(),
+    "visibility": visibility.map((x) => x).toList(),
+    "wind_speed_10m": windSpeed10M.map((x) => x).toList(),
+    "temperature_80m": temperature80M.map((x) => x).toList(),
+    "uv_index": uvIndex.map((x) => x).toList(),
+    "uv_index_clear_sky": uvIndexClearSky.map((x) => x).toList(),
+  };
+
   @override
   List<Object?> get props => [
     time, temperature2M, relativeHumidity2M, precipitationProbability, rain, snowfall, weatherCode, visibility, windSpeed10M, temperature80M, uvIndex, uvIndexClearSky, ];
@@ -276,6 +341,21 @@ class HourlyUnits extends Equatable {
       uvIndexClearSky: json["uv_index_clear_sky"],
     );
   }
+
+  Map<String, dynamic> toJson() => {
+    "time": time,
+    "temperature_2m": temperature2M,
+    "relative_humidity_2m": relativeHumidity2M,
+    "precipitation_probability": precipitationProbability,
+    "rain": rain,
+    "snowfall": snowfall,
+    "weather_code": weatherCode,
+    "visibility": visibility,
+    "wind_speed_10m": windSpeed10M,
+    "temperature_80m": temperature80M,
+    "uv_index": uvIndex,
+    "uv_index_clear_sky": uvIndexClearSky,
+  };
 
   @override
   List<Object?> get props => [
