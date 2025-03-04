@@ -2,10 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-
-import '../../setting_screen/bloc/setting_event.dart';
-import '../../setting_screen/bloc/setting_state.dart';
-import '../../setting_screen/bloc/settting_bloc.dart';
+import '../../../bloc/setting_bloc/setting_event.dart';
+import '../../../bloc/setting_bloc/setting_state.dart';
+import '../../../bloc/setting_bloc/settting_bloc.dart';
 import '../component/weather_item_2.dart';
 import '../component/weatherforecast_item.dart';
 

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:weatherapp/bloc/visibility_bloc/visibility_unit_bloc.dart';
 import 'package:weatherapp/components/appbar_setting.dart';
 import 'package:weatherapp/components/circle_page.dart';
 
@@ -32,26 +34,46 @@ class _VisibilityScreenState extends State<VisibilityScreen> {
               ),
             ),
           ),
-          Container(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                CirclePage(
-                  color1: Color(0xff5363F3),
-                  parameter: 24.14,
-                  color2: Color(0xff4BCFF9),
-                  located: 'Hoài Đức, Hà Nội',
-                  textAirQuality: '',
-                  textState: '',
-                  unit: 'Km',
-                  isUnit: true,
+          BlocBuilder<VisibilityUnitBloc, VisibilityState>(
+            builder: (context, state) {
+              return Container(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    CirclePage(
+                      color1: state.beginColor,
+                      parameter: 24.14,
+                      color2: state.endColor,
+                      located: 'Hoài Đức, Hà Nội',
+                      textAirQuality: '',
+                      textState: '',
+                      unit:
+                          '${state.unit == VisiblityUnit.kilometer ? 'Km' : 'Mi'}',
+                      isUnit: true,
+                    ),
+                    SizedBox(
+                      height: 30,
+                    ),
+                    VisibilitySwitch(
+                        isKilometer: state.unit == VisiblityUnit.kilometer,
+                        onUnitChange: (value) {
+                          context
+                              .read<VisibilityUnitBloc>()
+                              .add(SetVisibilityEvent(
+                                beginColor: state.beginColor,
+                                endColor: state.endColor,
+                                buttonColor: state.buttonColor,
+                                visibilitParameter: state.visibilityParameter,
+                                unit: value
+                                    ? VisiblityUnit.miles
+                                    : VisiblityUnit.kilometer,
+                              ));
+                        },
+                        buttonColor: state.buttonColor),
+                  ],
                 ),
-                SizedBox(
-                  height: 30,
-                ),
-                VisibilitySwitch(),
-              ],
-            ),
+              );
+            },
           ),
         ],
       ),

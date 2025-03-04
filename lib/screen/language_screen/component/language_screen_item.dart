@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-
-import '../language_bloc/language_bloc.dart';
+import '../../../bloc/language_bloc/language_bloc.dart';
 import '../model/language.dart';
 
 class OneElementLanguageScreen extends StatelessWidget {

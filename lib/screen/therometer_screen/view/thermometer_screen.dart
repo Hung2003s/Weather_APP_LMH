@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:weatherapp/app_bloc/app_bloc.dart';
 import 'package:weatherapp/components/appbar_setting.dart';
-
+import '../../../bloc/app_bloc/app_bloc.dart';
 import '../component/thermometer_screen_item.dart';
 import '../controller/thermometer_controller.dart';
 

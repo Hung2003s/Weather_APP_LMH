@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../language_screen/language_bloc/language_bloc.dart';
-import '../bloc/setting_event.dart';
-import '../bloc/setting_state.dart';
-import '../bloc/settting_bloc.dart';
+import '../../../bloc/language_bloc/language_bloc.dart';
+import '../../../bloc/setting_bloc/settting_bloc.dart';
+import '../../../bloc/setting_bloc/setting_event.dart';
+import '../../../bloc/setting_bloc/setting_state.dart';
 import '../model/setting_item.dart';
 
 class OneElementSettingScreen extends StatefulWidget {

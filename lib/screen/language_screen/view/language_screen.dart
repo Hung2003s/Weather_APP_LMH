@@ -1,10 +1,9 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weatherapp/components/appbar_setting.dart';
+import '../../../bloc/language_bloc/language_bloc.dart';
 import '../component/language_screen_item.dart';
 import '../controller/language_controller.dart';
-import '../language_bloc/language_bloc.dart';
 
 class LanguageScreen extends StatefulWidget {
   const LanguageScreen({super.key});
@@ -40,10 +39,11 @@ class _LanguageScreenState extends State<LanguageScreen> {
                   child: ListView.builder(
                       itemCount: languageController.listlanguage.length,
                       itemBuilder: (BuildContext context, int index) {
-                        final acronym = LanguageController().listacronym[index].toString();
+                        final acronym =
+                            LanguageController().listacronym[index].toString();
                         return OneElementLanguageScreen(
                           language: languageController.listlanguage[index],
-                          value: index+1,
+                          value: index + 1,
                           onChange: _radioValueChanged,
                           groupValue: groupValue,
                         );

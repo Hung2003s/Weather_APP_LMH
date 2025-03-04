@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:go_router/go_router.dart';
-import 'package:weatherapp/app_bloc/app_bloc.dart';
+import 'package:weatherapp/model/weather.dart';
+import 'package:weatherapp/repository/weather_repository.dart';
+import '../../../bloc/app_bloc/app_bloc.dart';
 import '../component/home_item.dart';
 import '../home_controller/home_controller.dart';
 
@@ -14,6 +17,54 @@ class Homepage extends StatefulWidget {
 
 class _HomepageState extends State<Homepage> {
   HomeController homeController = HomeController();
+  final WeatherRepository _weatherService = WeatherRepository();
+  late Future<Weather?> _current;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _current = _getCurrentLocationAndFetchWeather();
+  }
+
+  Future<Weather?> _getCurrentLocationAndFetchWeather() async {
+    bool serviceEnable;
+    LocationPermission permission;
+
+    serviceEnable = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnable) {
+      return Future.error('Location services are disable');
+    }
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        return Future.error('Location permissions are denied');
+      }
+    }
+    if (permission == LocationPermission.deniedForever) {
+      return Future.error(
+          'Location permissions are permanently denied, we cannot request permissions.');
+    }
+    try {
+      Position position = await Geolocator.getCurrentPosition(
+          locationSettings: LocationSettings(accuracy: LocationAccuracy.high));
+      setState(() {
+        _current = _weatherService.fetchWether(
+          latitude: position.latitude,
+          longitude: position.longitude,
+        );
+      });
+    } catch (e) {
+      print("Error getting location or weather: $e");
+      setState(() {
+        _current = _weatherService.fetchWether(
+            latitude: 21.0285,
+            longitude: 105.8048,
+        );
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -141,47 +192,61 @@ class _HomepageState extends State<Homepage> {
                             ]),
                         height: 221,
                         padding: EdgeInsets.all(7),
-                        child: Column(
-                          children: [
-                            BlocBuilder<AppBloc, AppState>(
-                              builder: (context, state) {
-                                return Container(
-                                  height: 151,
-                                  width: 60,
-                                  decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                          image: AssetImage(
-                                              state.thermometer))),
+                        child: FutureBuilder<Weather?>(
+                            future: _current,
+                            builder: (context, snapshot) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.waiting) {
+                                return Center(child: CircularProgressIndicator());
+                              } else if (snapshot.hasError) {
+                                return Text('Error: ${snapshot.error}');
+                              } else if (snapshot.hasData) {
+                                final weather = snapshot.data;
+                                return Column(
+                                  children: [
+                                    BlocBuilder<AppBloc, AppState>(
+                                      builder: (context, state) {
+                                        return Container(
+                                          height: 151,
+                                          width: 60,
+                                          decoration: BoxDecoration(
+                                              image: DecorationImage(
+                                                  image: AssetImage(
+                                                      state.thermometer))),
+                                        );
+                                      },
+                                    ),
+                                    Text(
+                                      '${weather?.current?.temperature2M}°C/80°F',
+                                      style: TextStyle(
+                                        color: Color(0xff0A2958),
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                    Text(
+                                      'Feel like',
+                                      style: TextStyle(
+                                        color: Color(0xff0A2958BF)
+                                            .withValues(alpha: 0.75),
+                                        fontSize: 11,
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                    ),
+                                    Text(
+                                      '${weather?.current?.temperature2M}°C/28°F',
+                                      style: TextStyle(
+                                        color: Color(0xff0A2958BF)
+                                            .withValues(alpha: 0.75),
+                                        fontSize: 11,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    )
+                                  ],
                                 );
-                              },
-                            ),
-                            Text(
-                              '30°C/80°F',
-                              style: TextStyle(
-                                color: Color(0xff0A2958),
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                            Text(
-                              'Feel like',
-                              style: TextStyle(
-                                color:
-                                    Color(0xff0A2958BF).withValues(alpha: 0.75),
-                                fontSize: 11,
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                            Text(
-                              '28°C/28°F',
-                              style: TextStyle(
-                                color:
-                                    Color(0xff0A2958BF).withValues(alpha: 0.75),
-                                fontSize: 11,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            )
-                          ],
-                        ),
+                              } else {
+                                return const Text('No data');
+                              }
+                            }),
                       ),
                       Container(
                         height: 72,
@@ -329,7 +394,8 @@ class _HomepageState extends State<Homepage> {
                     itemBuilder: (BuildContext context, int index) {
                       return GestureDetector(
                         onTap: () {
-                          GoRouter.of(context).push(homeController.listhomeitem[index].link);
+                          GoRouter.of(context)
+                              .push(homeController.listhomeitem[index].link);
                         },
                         child: OneeElementService(
                             homeitem: homeController.listhomeitem[index]),

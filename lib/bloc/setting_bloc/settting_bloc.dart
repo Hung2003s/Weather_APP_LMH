@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:weatherapp/screen/setting_screen/bloc/setting_event.dart';
-import 'package:weatherapp/screen/setting_screen/bloc/setting_state.dart';
+import 'package:weatherapp/bloc/setting_bloc/setting_event.dart';
+import 'package:weatherapp/bloc/setting_bloc/setting_state.dart';
 
 class TemperatureUnitBloc extends Bloc<TemperatureUnitEvent, TemperatureUnitState> {
   TemperatureUnitBloc() : super(const TemperatureUnitState(unit: TemperatureUnit.celsius)) {

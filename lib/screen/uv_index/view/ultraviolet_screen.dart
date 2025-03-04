@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:weatherapp/bloc/app_bloc/app_bloc.dart';
 import 'package:weatherapp/components/appbar_setting.dart';
 import 'package:weatherapp/components/circle_page.dart';
 import 'package:weatherapp/model/weather.dart';
@@ -13,17 +15,15 @@ class UltravioletScreen extends StatefulWidget {
 }
 
 class _UltravioletScreenState extends State<UltravioletScreen> {
-  final OpenMeteoService _weatherService = OpenMeteoService();
+  final WeatherRepository _weatherService = WeatherRepository();
 
-  Future<Daily>? _daily;
-
+  late Future<Weather?> _hourly;
   @override
   void initState() {
     super.initState();
-    _getCurrentLocationAndFetchWeather();
+    _hourly = _getCurrentLocationAndFetchWeather();
   }
-
-  Future<void> _getCurrentLocationAndFetchWeather() async {
+  Future<Weather?> _getCurrentLocationAndFetchWeather() async {
     bool serviceEnable;
     LocationPermission permission;
 
@@ -45,22 +45,18 @@ class _UltravioletScreenState extends State<UltravioletScreen> {
     }
     try {
       Position position = await Geolocator.getCurrentPosition(
-          locationSettings: LocationSettings(accuracy: LocationAccuracy.best));
+          locationSettings: LocationSettings(accuracy: LocationAccuracy.high));
 
-      setState(() {
-        _daily = _weatherService.getDaily(
-          latitude: position.latitude,
-          longitude: position.longitude,
-        );
-      });
+      return _weatherService.fetchWether(
+        latitude: position.latitude,
+        longitude: position.longitude,
+      );
     } catch (e) {
       print("Error getting location or weather: $e");
-      setState(() {
-        _daily = _weatherService.getDaily(
-          latitude: 21.0285,
-          longitude: 105.8048,
-        );
-      });
+      return _hourly = _weatherService.fetchWether(
+        latitude: 21.0285,
+        longitude: 105.8048,
+      );
     }
   }
 
@@ -71,24 +67,30 @@ class _UltravioletScreenState extends State<UltravioletScreen> {
       backgroundColor: Color(0xffF5F6FC),
       body: Column(
         children: [
-          FutureBuilder<Daily>(
-              future: _daily,
+          FutureBuilder<Weather?>(
+              future: _hourly,
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return CircularProgressIndicator();
+                  return Center(child: CircularProgressIndicator());
                 } else if (snapshot.hasError) {
                   return Text('Error: ${snapshot.error}');
-                } else if (snapshot.hasData) {
+                } else if (snapshot.hasData && snapshot.data != null) {
                   final weather = snapshot.data;
-                  return CirclePage(
-                    color1: Color(0xffF36253),
-                    parameter: weather?.uvIndexMax,
-                    color2: Color(0xffF9ED4B),
-                    located: 'Hoài Đức, Hà Nội',
-                    textAirQuality: 'Low',
-                    textState: 'Good',
-                    unit: '',
-                    isUnit: false,
+                  // print('----------------ok ${weather.toString()}');
+                  return BlocBuilder<AppBloc, AppState>(
+                    builder: (context, state) {
+                      return CirclePage(
+                        color1: Color(0xffF36253),
+                        parameter: weather!.daily?.uvIndexMax.first.toString(),
+                        color2: Color(0xffF9ED4B),
+                        located: 'latitude: ${state.latitude}, longitude: ${state.longitude}',
+                        textAirQuality: 'low',
+                        // _getUVIndexCategory(currentUVIndex),
+                        textState: 'Good',
+                        unit: '',
+                        isUnit: false,
+                      );
+                    },
                   );
                 } else {
                   return const Text('No data');
@@ -97,5 +99,19 @@ class _UltravioletScreenState extends State<UltravioletScreen> {
         ],
       ),
     );
+  }
+
+  String _getUVIndexCategory(double uvIndex) {
+    if (uvIndex < 3) {
+      return 'Low';
+    } else if (uvIndex < 6) {
+      return 'Moderate';
+    } else if (uvIndex < 8) {
+      return 'High';
+    } else if (uvIndex < 11) {
+      return 'Very High';
+    } else {
+      return 'Extreme';
+    }
   }
 }

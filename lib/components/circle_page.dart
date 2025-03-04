@@ -82,7 +82,7 @@ class CirclePage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  parameter.toString(),
+                  '${parameter}',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       fontWeight: FontWeight.w700,

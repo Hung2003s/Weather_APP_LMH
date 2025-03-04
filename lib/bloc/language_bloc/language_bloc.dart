@@ -1,7 +1,9 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
-import '../controller/language_controller.dart';
+import '../../screen/language_screen/controller/language_controller.dart';
+
+
 
 
 

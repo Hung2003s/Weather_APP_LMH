@@ -1,8 +1,7 @@
-
 import 'package:flutter/material.dart';
-import 'package:weatherapp/app_bloc/app_bloc.dart';
 import 'package:weatherapp/components/appbar_setting.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../bloc/app_bloc/app_bloc.dart';
 import '../component/theme_item_screen.dart';
 import '../controller/theme_controller.dart';
 
