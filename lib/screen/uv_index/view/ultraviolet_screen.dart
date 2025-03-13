@@ -15,14 +15,18 @@ class UltravioletScreen extends StatefulWidget {
 }
 
 class _UltravioletScreenState extends State<UltravioletScreen> {
-  final WeatherRepository _weatherService = WeatherRepository();
-
+  final WeatherRepository weatherRepository = WeatherRepository();
   late Future<Weather?> _hourly;
+
   @override
   void initState() {
     super.initState();
+    // context.read<AppBloc>().add(SetLocationandFetchDataEvent(
+    //     latitude: context.watch<AppBloc>().state.latitude,
+    //     longitude: context.watch<AppBloc>().state.latitude));
     _hourly = _getCurrentLocationAndFetchWeather();
   }
+
   Future<Weather?> _getCurrentLocationAndFetchWeather() async {
     bool serviceEnable;
     LocationPermission permission;
@@ -47,13 +51,13 @@ class _UltravioletScreenState extends State<UltravioletScreen> {
       Position position = await Geolocator.getCurrentPosition(
           locationSettings: LocationSettings(accuracy: LocationAccuracy.high));
 
-      return _weatherService.fetchWether(
+      return weatherRepository.fetchWether(
         latitude: position.latitude,
         longitude: position.longitude,
       );
     } catch (e) {
       print("Error getting location or weather: $e");
-      return _hourly = _weatherService.fetchWether(
+      return _hourly = weatherRepository.fetchWether(
         latitude: 21.0285,
         longitude: 105.8048,
       );
@@ -65,25 +69,27 @@ class _UltravioletScreenState extends State<UltravioletScreen> {
     return Scaffold(
       appBar: AppbarSetting(titletext: 'UV Index', link: '/'),
       backgroundColor: Color(0xffF5F6FC),
-      body: Column(
-        children: [
-          FutureBuilder<Weather?>(
-              future: _hourly,
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(child: CircularProgressIndicator());
-                } else if (snapshot.hasError) {
-                  return Text('Error: ${snapshot.error}');
-                } else if (snapshot.hasData && snapshot.data != null) {
-                  final weather = snapshot.data;
-                  // print('----------------ok ${weather.toString()}');
-                  return BlocBuilder<AppBloc, AppState>(
+      body: FutureBuilder<Weather?>(
+          future: _hourly,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(child: CircularProgressIndicator());
+            } else if (snapshot.hasError) {
+              return Text('Error: ${snapshot.error}');
+            } else if (snapshot.hasData) {
+              final weather = snapshot.data;
+              print('----------------ok ${weather?.current.toString()}');
+              return Column(
+                children: [
+                  BlocBuilder<AppBloc, AppState>(
                     builder: (context, state) {
+                      print('---------------ok: ${state.weather.toString()}');
                       return CirclePage(
                         color1: Color(0xffF36253),
-                        parameter: weather!.daily?.uvIndexMax.first.toString(),
+                        parameter: weather?.daily?.uvIndexMax.first.toString(),
                         color2: Color(0xffF9ED4B),
-                        located: 'latitude: ${state.latitude}, longitude: ${state.longitude}',
+                        located:
+                            'latitude: ${state.latitude}, longitude: ${state.longitude}',
                         textAirQuality: 'low',
                         // _getUVIndexCategory(currentUVIndex),
                         textState: 'Good',
@@ -91,13 +97,13 @@ class _UltravioletScreenState extends State<UltravioletScreen> {
                         isUnit: false,
                       );
                     },
-                  );
-                } else {
-                  return const Text('No data');
-                }
-              })
-        ],
-      ),
+                  ),
+                ],
+              );
+            } else {
+              return const Text('No data');
+            }
+          }),
     );
   }
 

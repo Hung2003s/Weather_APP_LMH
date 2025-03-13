@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../bloc/language_bloc/language_bloc.dart';
+import 'package:weatherapp/bloc/app_bloc/app_bloc.dart';
 import '../model/language.dart';
 
 class OneElementLanguageScreen extends StatelessWidget {
@@ -18,7 +18,7 @@ class OneElementLanguageScreen extends StatelessWidget {
 
   Widget build(BuildContext context) {
 
-    return BlocBuilder<LanguageBloc, LanguageState>(
+    return BlocBuilder<AppBloc, AppState>(
       builder: (context, state) {
         return Container(
           height: (MediaQuery
@@ -74,7 +74,7 @@ class OneElementLanguageScreen extends StatelessWidget {
                     if (value2 != null) {
                       onChange(value2);
                     };
-                    context.read<LanguageBloc>().add(SetAcronymEvent(languageAcronym: language.acronym));
+                    context.read<AppBloc>().add(SetAcronymEvent(languageAcronym: language.acronym));
                   }
               )
             ],

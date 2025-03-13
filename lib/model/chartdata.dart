@@ -1,17 +1,11 @@
-import 'dart:ui';
-
 class ChartData {
-String _xvalue;
-double _yvalue;
-Color _color;
+  String _xvalue;
+  double _yvalue;
 
-ChartData(this._xvalue, this._yvalue, this._color);
-
-Color get color => _color;
-
-  set color(Color value) {
-    _color = value;
-  }
+  ChartData(
+    this._xvalue,
+    this._yvalue,
+  );
 
   double get yvalue => _yvalue;
 

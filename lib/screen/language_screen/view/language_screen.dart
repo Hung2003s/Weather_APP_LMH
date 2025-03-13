@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weatherapp/components/appbar_setting.dart';
-import '../../../bloc/language_bloc/language_bloc.dart';
+import '../../../bloc/app_bloc/app_bloc.dart';
+
 import '../component/language_screen_item.dart';
 import '../controller/language_controller.dart';
 
@@ -28,7 +29,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
     return Scaffold(
       appBar: AppbarSetting(titletext: 'Language', link: '/setting'),
       backgroundColor: Color(0xffF5F6FC),
-      body: SafeArea(child: BlocBuilder<LanguageBloc, LanguageState>(
+      body: SafeArea(child: BlocBuilder<AppBloc, AppState>(
         builder: (context, state) {
           return Container(
             padding: EdgeInsets.all(15),
@@ -39,8 +40,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
                   child: ListView.builder(
                       itemCount: languageController.listlanguage.length,
                       itemBuilder: (BuildContext context, int index) {
-                        final acronym =
-                            LanguageController().listacronym[index].toString();
+                        //final acronym = LanguageController().listacronym[index].toString();
                         return OneElementLanguageScreen(
                           language: languageController.listlanguage[index],
                           value: index + 1,

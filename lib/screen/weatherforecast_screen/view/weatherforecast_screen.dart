@@ -1,10 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:go_router/go_router.dart';
-import '../../../bloc/setting_bloc/setting_event.dart';
-import '../../../bloc/setting_bloc/setting_state.dart';
-import '../../../bloc/setting_bloc/settting_bloc.dart';
+import '../../../bloc/app_bloc/app_bloc.dart';
+import '../../../model/weather.dart';
+import '../../../repository/weather_repository.dart';
 import '../component/weather_item_2.dart';
 import '../component/weatherforecast_item.dart';
 
@@ -18,6 +19,50 @@ class WeatherforecastScreen extends StatefulWidget {
 class _WeatherforecastScreenState extends State<WeatherforecastScreen> {
   bool isCelcius = true;
   bool light = true;
+
+  final WeatherRepository _weatherService = WeatherRepository();
+  late Future<Weather?> _hourly;
+  @override
+  void initState() {
+    super.initState();
+    _hourly = _getCurrentLocationAndFetchWeather();
+  }
+  Future<Weather?> _getCurrentLocationAndFetchWeather() async {
+    bool serviceEnable;
+    LocationPermission permission;
+
+    // Test if location services are enabled.
+    serviceEnable = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnable) {
+      return Future.error('Location services are disabled.');
+    }
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        return Future.error('Location permissions are denied');
+      }
+    }
+    if (permission == LocationPermission.deniedForever) {
+      return Future.error(
+          'Location permissions are permanently denied, we cannot request permissions.');
+    }
+    try {
+      Position position = await Geolocator.getCurrentPosition(
+          locationSettings: LocationSettings(accuracy: LocationAccuracy.high));
+
+      return _weatherService.fetchWether(
+        latitude: position.latitude,
+        longitude: position.longitude,
+      );
+    } catch (e) {
+      print("Error getting location or weather: $e");
+      return _hourly = _weatherService.fetchWether(
+        latitude: 21.0285,
+        longitude: 105.8048,
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +93,7 @@ class _WeatherforecastScreenState extends State<WeatherforecastScreen> {
               )),
         ),
         actions: [
-          BlocBuilder<TemperatureUnitBloc, TemperatureUnitState>(
+          BlocBuilder<AppBloc, AppState>(
             builder: (context, state) {
               return Container(
                 height: 32,
@@ -63,14 +108,14 @@ class _WeatherforecastScreenState extends State<WeatherforecastScreen> {
                     GestureDetector(
                       onTap: () {
                         context
-                            .read<TemperatureUnitBloc>()
+                            .read<AppBloc>()
                             .add(ToggleTemperatureUnit());
                       },
                       child: Container(
                         padding:
                             EdgeInsets.symmetric(horizontal: 4, vertical: 4),
                         decoration: BoxDecoration(
-                            color: state.unit == TemperatureUnit.celsius
+                            color: state.tempunit == TemperatureUnit.celsius
                                 ? Colors.white
                                 : Colors.transparent,
                             borderRadius: BorderRadius.circular(8)),
@@ -82,7 +127,7 @@ class _WeatherforecastScreenState extends State<WeatherforecastScreen> {
                             style: TextStyle(
                                 fontWeight: FontWeight.w600,
                                 fontSize: 24,
-                                color: state.unit == TemperatureUnit.celsius
+                                color: state.tempunit == TemperatureUnit.celsius
                                     ? Color(0xff8BC12D)
                                     : Color(0xff6D6D6D),
                                 height: 0.5),
@@ -96,14 +141,16 @@ class _WeatherforecastScreenState extends State<WeatherforecastScreen> {
                     GestureDetector(
                       onTap: () {
                         context
-                            .read<TemperatureUnitBloc>()
-                            .add(ToggleTemperatureUnit());
+                            .read<AppBloc>()
+                            .add(ToggleTemperatureUnit(
+
+                        ));
                       },
                       child: Container(
                         padding:
                             EdgeInsets.symmetric(horizontal: 4, vertical: 4),
                         decoration: BoxDecoration(
-                            color: state.unit == TemperatureUnit.celsius
+                            color: state.tempunit == TemperatureUnit.celsius
                                 ? Colors.transparent
                                 : Colors.white,
                             borderRadius: BorderRadius.circular(8)),
@@ -115,7 +162,7 @@ class _WeatherforecastScreenState extends State<WeatherforecastScreen> {
                             style: TextStyle(
                                 fontWeight: FontWeight.w600,
                                 fontSize: 24,
-                                color: state.unit == TemperatureUnit.celsius
+                                color: state.tempunit == TemperatureUnit.celsius
                                     ? Color(0xff6D6D6D)
                                     : Color(0xff8BC12D),
                                 height: 0.5),
@@ -132,83 +179,103 @@ class _WeatherforecastScreenState extends State<WeatherforecastScreen> {
       ),
       backgroundColor: Color(0xffF5F6FC),
       body: SafeArea(child: SingleChildScrollView(
-        child: BlocBuilder<TemperatureUnitBloc, TemperatureUnitState>(
+        child: BlocBuilder<AppBloc, AppState>(
           builder: (context, state) {
             return Container(
               padding: EdgeInsets.only(top: 10),
               child: Column(
                 children: <Widget>[
-                  Container(
-                    height: 300,
-                    width: MediaQuery.of(context).size.width,
-                    decoration: BoxDecoration(
-                        image: DecorationImage(
-                            image: AssetImage('assets/images/pixelmap.png'))),
-                    child: Column(
-                      children: [
-                        Container(
-                          margin: EdgeInsets.only(top: 10),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
+                  FutureBuilder<Weather?>(
+                    future: _hourly,
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState ==
+                          ConnectionState.waiting) {
+                        return Center(child: CircularProgressIndicator());
+                      } else if (snapshot.hasError) {
+                        return Text('Error: ${snapshot.error}');
+                      } else if (snapshot.hasData && snapshot.data != null) {
+                        final weather = snapshot.data;
+                        print('-----------------------ok: ${weather}');
+                        return Container(
+                          height: 300,
+                          width: MediaQuery.of(context).size.width,
+                          decoration: BoxDecoration(
+                              image: DecorationImage(
+                                  image: AssetImage('assets/images/pixelmap.png'))),
+                          child: Column(
                             children: [
                               Container(
-                                decoration: BoxDecoration(),
-                                child: Image(
-                                  image: AssetImage(
-                                      'assets/images/locationicon.png'),
+                                margin: EdgeInsets.only(top: 10),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Container(
+                                      decoration: BoxDecoration(),
+                                      child: Image(
+                                        image: AssetImage(
+                                            'assets/images/locationicon.png'),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Container(
+                                      child: Text(
+                                        'New York, USA',
+                                        style: TextStyle(
+                                          color: Color(0xff12203A),
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w400,
+                                        ),
+                                      ),
+                                    )
+                                  ],
                                 ),
                               ),
                               SizedBox(
-                                width: 10,
+                                height: 10,
                               ),
                               Container(
-                                child: Text(
-                                  'New York, USA',
-                                  style: TextStyle(
-                                    color: Color(0xff12203A),
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w400,
-                                  ),
+                                decoration: BoxDecoration(
+                                    color: Color(0xffFFD900).withValues(alpha: 0.1)),
+                                child: Image(
+                                  image: AssetImage(
+                                      'assets/images/weather_forecast/sunshine.png'),
+                                ),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Text(
+                                '${state.tempunit == TemperatureUnit.celsius ? weather?.current?.temperature2M : ((weather?.current?.temperature2M)!*1.8 + 32).toStringAsFixed(2)}'
+                                    '°'
+                                    '${state.tempunit == TemperatureUnit.celsius
+                                    ? 'C'
+                                    : 'F'}',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 64,
+                                    color: Color(0xff12203A)),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Text(
+                                'Feel like ${state.tempunit == TemperatureUnit.celsius ? weather?.current?.apparentTemperature : (weather?.current?.apparentTemperature)!*1.8 + 32}°${state.tempunit == TemperatureUnit.celsius ? 'C' : 'F'}',
+                                style: TextStyle(
+                                  color: Color(0xff12203A).withValues(alpha: 0.54),
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w400,
                                 ),
                               )
                             ],
                           ),
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Container(
-                          decoration: BoxDecoration(
-                              color: Color(0xffFFD900).withValues(alpha: 0.1)),
-                          child: Image(
-                            image: AssetImage(
-                                'assets/images/weather_forecast/sunshine.png'),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Text(
-                          '25°${state.unit == TemperatureUnit.celsius ? 'C' : 'F'}',
-                          style: TextStyle(
-                              fontWeight: FontWeight.w700,
-                              fontSize: 64,
-                              color: Color(0xff12203A)),
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Text(
-                          'Feel like 28°${state.unit == TemperatureUnit.celsius ? 'C' : 'F'}',
-                          style: TextStyle(
-                            color: Color(0xff12203A).withValues(alpha: 0.54),
-                            fontSize: 16,
-                            fontWeight: FontWeight.w400,
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
+                        );
+                      } else {
+                        return const Text('No data');
+                      }
+                    }
+    ),
                   Container(
                     height: 90,
                     child: Column(
@@ -277,7 +344,10 @@ class _WeatherforecastScreenState extends State<WeatherforecastScreen> {
                               physics: NeverScrollableScrollPhysics(),
                               itemCount: 7,
                               itemBuilder: (context, index) {
-                                return WeatherforecastItem();
+                                return WeatherforecastItem(
+                                  day: 'MON',
+                                  weathercode: '',
+                                  weatherState: 'SUN',);
                               }),
                         )
                       ],

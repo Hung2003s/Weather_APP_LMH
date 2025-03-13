@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../bloc/language_bloc/language_bloc.dart';
-import '../../../bloc/setting_bloc/settting_bloc.dart';
-import '../../../bloc/setting_bloc/setting_event.dart';
-import '../../../bloc/setting_bloc/setting_state.dart';
+
+import '../../../bloc/app_bloc/app_bloc.dart';
 import '../model/setting_item.dart';
 
 class OneElementSettingScreen extends StatefulWidget {
@@ -22,7 +20,7 @@ class _OneElementSettingScreenState extends State<OneElementSettingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<TemperatureUnitBloc, TemperatureUnitState>(
+    return BlocBuilder<AppBloc, AppState>(
       builder: (context, state) {
         return Container(
           height: (MediaQuery.of(context).size.height - 180) / 10,
@@ -86,14 +84,14 @@ class _OneElementSettingScreenState extends State<OneElementSettingScreen> {
                               onTap: () {
                                 setState(() {
                                   context
-                                      .read<TemperatureUnitBloc>()
+                                      .read<AppBloc>()
                                       .add(ToggleTemperatureUnit());
                                 });
                               },
                               child: Container(
                                 padding: EdgeInsets.symmetric(horizontal: 8),
                                 decoration: BoxDecoration(
-                                    color: state.unit == TemperatureUnit.celsius
+                                    color: state.tempunit == TemperatureUnit.celsius
                                         ? Color(0xff0A2958)
                                         : Color(0xffFFFFFF),
                                     borderRadius: BorderRadius.circular(8),
@@ -109,7 +107,7 @@ class _OneElementSettingScreenState extends State<OneElementSettingScreen> {
                                   child: Text(
                                     '°C',
                                     style: TextStyle(
-                                        color: state.unit ==
+                                        color: state.tempunit ==
                                                 TemperatureUnit.celsius
                                             ? Color(0xffFFFFFF)
                                             : Color(0xff0A2958),
@@ -126,14 +124,14 @@ class _OneElementSettingScreenState extends State<OneElementSettingScreen> {
                               onTap: () {
                                 setState(() {
                                   context
-                                      .read<TemperatureUnitBloc>()
+                                      .read<AppBloc>()
                                       .add(ToggleTemperatureUnit());
                                 });
                               },
                               child: Container(
                                 padding: EdgeInsets.symmetric(horizontal: 8),
                                 decoration: BoxDecoration(
-                                    color: state.unit == TemperatureUnit.celsius
+                                    color: state.tempunit == TemperatureUnit.celsius
                                         ? Color(0xffFFFFFF)
                                         : Color(0xff0A2958),
                                     borderRadius: BorderRadius.circular(8),
@@ -149,7 +147,7 @@ class _OneElementSettingScreenState extends State<OneElementSettingScreen> {
                                   child: Text(
                                     '°F',
                                     style: TextStyle(
-                                        color: state.unit ==
+                                        color: state.tempunit ==
                                                 TemperatureUnit.celsius
                                             ? Color(0xff0A2958)
                                             : Color(0xffFFFFFF),
@@ -162,7 +160,7 @@ class _OneElementSettingScreenState extends State<OneElementSettingScreen> {
                           ],
                         ),
                       )
-                    : BlocBuilder<LanguageBloc, LanguageState>(
+                    : BlocBuilder<AppBloc, AppState>(
                         builder: (context, state) {
                           return Container(
                             child: widget.settingItem.acronym

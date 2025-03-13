@@ -2,7 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class WeatherforecastItem extends StatelessWidget {
-  const WeatherforecastItem({super.key});
+  final String day;
+  final String weathercode;
+  final String weatherState;
+
+  const WeatherforecastItem({super.key, required this.day, required this.weathercode, required this.weatherState});
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +31,7 @@ class WeatherforecastItem extends StatelessWidget {
           children: [
             Container(
               padding: EdgeInsets.symmetric(horizontal: 15),
-              child: Text('MON',style: TextStyle(
+              child: Text(day,style: TextStyle(
                 color: Color(0xff12203A).withValues(alpha: 0.54),
                 fontSize: 12,
                 fontWeight: FontWeight.w500,
@@ -59,7 +63,7 @@ class WeatherforecastItem extends StatelessWidget {
                     child: Image(
                         image: AssetImage('assets/images/rainicon.png')),
                   ),
-                  Text('Rain',style: TextStyle(
+                  Text(weatherState,style: TextStyle(
                     color: Color(0xff12203A).withValues(alpha: 0.54),
                     fontSize: 14,
                     fontWeight: FontWeight.w400,

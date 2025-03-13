@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:weatherapp/bloc/app_bloc/app_bloc.dart';
 import 'package:weatherapp/components/appbar_setting.dart';
@@ -15,7 +16,7 @@ class HumidityScreen extends StatefulWidget {
 }
 
 class _HumidityScreenState extends State<HumidityScreen> {
-  final WeatherRepository _weatherService = WeatherRepository();
+  WeatherRepository weatherRepository = WeatherRepository();
     late Future<Weather?> _current;
 
   @override
@@ -23,27 +24,47 @@ class _HumidityScreenState extends State<HumidityScreen> {
     super.initState();
      _current = _getCurrentLocationAndFetchWeather();
   }
+    Future<Weather?> _getCurrentLocationAndFetchWeather() async {
+      bool serviceEnable;
+      LocationPermission permission;
 
-  Future<Weather?> _getCurrentLocationAndFetchWeather() async {
-    SetLocationEvent;
-    try {
-      Position position = await Geolocator.getCurrentPosition(
-          locationSettings: LocationSettings(accuracy: LocationAccuracy.high));
-        return _weatherService.fetchWether(
-          latitude: position.latitude,
-          longitude: position.longitude,
-        );
-
-    } catch (e) {
-      print("Error getting location or weather: $e");
-      return _weatherService.fetchWether(
-        latitude: 21.0285,
-        longitude: 105.8048,
-      );
+      serviceEnable = await Geolocator.isLocationServiceEnabled();
+      if (!serviceEnable) {
+        return Future.error('Location services are disable');
+      }
+      permission = await Geolocator.checkPermission();
+      if (permission == LocationPermission.denied) {
+        permission = await Geolocator.requestPermission();
+        if (permission == LocationPermission.denied) {
+          return Future.error('Location permissions are denied');
+        }
+      }
+      if (permission == LocationPermission.deniedForever) {
+        return Future.error(
+            'Location permissions are permanently denied, we cannot request permissions.');
+      }
+      try {
+        Position position = await Geolocator.getCurrentPosition(
+            locationSettings: LocationSettings(accuracy: LocationAccuracy.high));
+        setState(() {
+          _current = weatherRepository.fetchWether(
+            latitude: position.latitude,
+            longitude: position.longitude,
+          );
+        });
+      } catch (e) {
+        print("Error getting location or weather: $e");
+        setState(() {
+          _current = weatherRepository.fetchWether(
+            latitude: 21.0285,
+            longitude: 105.8048,
+          );
+        });
+      }
     }
-  }
 
-  @override
+
+    @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppbarSetting(titletext: 'Humidity', link: '/'),

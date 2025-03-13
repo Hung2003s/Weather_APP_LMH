@@ -6,8 +6,7 @@ import '../screen/air_quality/air_quality_screen.dart';
 import '../screen/compass/compass_screen.dart';
 import '../screen/homepage/view/homepage.dart';
 import '../screen/humidity_screen/humidity_screen.dart';
-import '../screen/intro/intro_screen_1.dart';
-import '../screen/intro/intro_screen_2.dart';
+import '../screen/intro/intro_screen.dart';
 import '../screen/language_screen/view/language_screen.dart';
 import '../screen/pollen_screen/view/pollen_screen.dart';
 import '../screen/precipitation_screen/view/precipitation_screen.dart';
@@ -21,6 +20,8 @@ import '../screen/weatherforecast_screen/view/weatherforecast_screen.dart';
 import '../screen/wind_screen/view/wind_screen.dart';
 
 class AppRouter {
+  static String intro = "intro";
+  static String introPath = "/intro";
   static String homeScreen = "/";
 
   // child class home
@@ -64,6 +65,7 @@ class AppRouter {
   static String wavePath = "/wave";
   static String pollutantsName = "pollutant";
   static String pollutantsPath = "/pollutan";
+
   // child class setting
   static String themeName = "theme";
   static String themePath = "/theme";
@@ -74,92 +76,89 @@ class AppRouter {
   static String thermometerName = "thermometer";
   static String thermometerPath = "/thermometer";
 
-
-  static final GoRouter router =
-      GoRouter(initialLocation: "/", debugLogDiagnostics: false, routes: [
-    GoRoute(
-        name: homeScreen,
-        path: '/',
-        builder: ((context, state) => const Homepage()),
-        routes: [
-          GoRoute(
-              name: settingName,
-              path: settingPath,
-              builder: ((context, state) => const SettingScreen()),
-              routes: [
-              ]),
-          GoRoute(
-              name: themeName,
-              path: themePath,
-              builder: ((context, state) => const ThemeScreen())),
-          GoRoute(
-              name: languageName,
-              path: languagePath,
-              builder: ((context, state) => const LanguageScreen())),
-          GoRoute(
-              name: thermometerName,
-              path: thermometerPath,
-              builder: ((context, state) => const ThermometerScreen()),
-              routes: []),
-          GoRoute(
-              name: airQualityName,
-              path: airQualityPath,
-              builder: ((context, state) => const AirQualityScreen())),
-          GoRoute(
-              name: compassName,
-              path: compassPath,
-              builder: ((context, state) => const CompassScreen())),
-          GoRoute(
-              name: humidityName,
-              path: humidityPath,
-              builder: ((context, state) => const HumidityScreen())),
-          GoRoute(
-              name: 'hung',
-              path: "/intro1",
-              builder: ((context, state) => const IntroScreen1())),
-          GoRoute(
-              path: "/intro2",
-              builder: ((context, state) => const IntroScreen2())),
-          GoRoute(
-              name: pollenName,
-              path: pollenPath,
-              builder: ((context, state) => const PollenScreen())),
-          GoRoute(
-              name: pollutantsName,
-              path: pollutantsPath,
-              builder: ((context, state) => const PollutantsScreen())),
-          GoRoute(
-              name: precipitationName,
-              path: precipitationPath,
-              builder: ((context, state) => const PrecipitationScreen())),
-          GoRoute(
-              name: snowFallName,
-              path: snowFallPath,
-              builder: ((context, state) => const SnowFallScreen())),
-          GoRoute(
-              name: uvIndexName,
-              path: uvIndexPath,
-              builder: ((context, state) => const UltravioletScreen())),
-          GoRoute(
-              name: visibilityName,
-              path: visibilityPath,
-              builder: ((context, state) => const VisibilityScreen())),
-          GoRoute(
-              name: weatherForeCastName,
-              path: weatherForecastPath,
-              builder: ((context, state) => const WeatherforecastScreen())),
-          GoRoute(
-              name: sunTimeName,
-              path: sunTimePath,
-              builder: ((context, state) => const SunTimeScreen())),
-          GoRoute(
-              name: windName,
-              path: windPath,
-              builder: ((context, state) => const WindScreen())),
-          GoRoute(
-              name: wavePath,
-              path: waveName,
-              builder: ((context, state) => const PollutantsScreen())),
-        ]),
-  ]);
+  static final GoRouter router = GoRouter(
+      initialLocation: introPath,
+      debugLogDiagnostics: true,
+      routes: <RouteBase>[
+        GoRoute(
+            name: intro,
+            path: introPath,
+            builder: ((context, state) => const IntroScreen())),
+        GoRoute(
+            name: homeScreen,
+            path: '/',
+            builder: ((context, state) => const Homepage()),
+            routes: [
+              GoRoute(
+                  name: settingName,
+                  path: settingPath,
+                  builder: ((context, state) => const SettingScreen()),
+                  routes: []),
+              GoRoute(
+                  name: themeName,
+                  path: themePath,
+                  builder: ((context, state) => const ThemeScreen())),
+              GoRoute(
+                  name: languageName,
+                  path: languagePath,
+                  builder: ((context, state) => const LanguageScreen())),
+              GoRoute(
+                  name: thermometerName,
+                  path: thermometerPath,
+                  builder: ((context, state) => const ThermometerScreen()),
+                  routes: []),
+              GoRoute(
+                  name: airQualityName,
+                  path: airQualityPath,
+                  builder: ((context, state) => const AirQualityScreen())),
+              GoRoute(
+                  name: compassName,
+                  path: compassPath,
+                  builder: ((context, state) => const CompassScreen())),
+              GoRoute(
+                  name: humidityName,
+                  path: humidityPath,
+                  builder: ((context, state) => const HumidityScreen())),
+              GoRoute(
+                  name: pollenName,
+                  path: pollenPath,
+                  builder: ((context, state) => const PollenScreen())),
+              GoRoute(
+                  name: pollutantsName,
+                  path: pollutantsPath,
+                  builder: ((context, state) => const PollutantsScreen())),
+              GoRoute(
+                  name: precipitationName,
+                  path: precipitationPath,
+                  builder: ((context, state) => const PrecipitationScreen())),
+              GoRoute(
+                  name: snowFallName,
+                  path: snowFallPath,
+                  builder: ((context, state) => const SnowFallScreen())),
+              GoRoute(
+                  name: uvIndexName,
+                  path: uvIndexPath,
+                  builder: ((context, state) => const UltravioletScreen())),
+              GoRoute(
+                  name: visibilityName,
+                  path: visibilityPath,
+                  builder: ((context, state) => const VisibilityScreen())),
+              GoRoute(
+                  name: weatherForeCastName,
+                  path: weatherForecastPath,
+                  builder: ((context, state) => const WeatherforecastScreen())),
+              GoRoute(
+                  name: sunTimeName,
+                  path: sunTimePath,
+                  builder: ((context, state) => const SunTimeScreen())),
+              GoRoute(
+                  name: windName,
+                  path: windPath,
+                  builder: ((context, state) => const WindScreen())),
+              GoRoute(
+                  name: wavePath,
+                  path: waveName,
+                  builder: ((context, state) => const PollutantsScreen())),
+            ]),
+      ]);
 }
