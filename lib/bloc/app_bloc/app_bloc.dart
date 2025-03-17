@@ -51,14 +51,6 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     try {
       Position position = await Geolocator.getCurrentPosition(
           locationSettings: LocationSettings(accuracy: LocationAccuracy.high));
-
-      final WeatherRepository weatherRepository = WeatherRepository();
-      //   final Weather data = await weatherRepository.fetchWether(
-      //     latitude: state.latitude,
-      //     longitude: state.longitude,
-      //   );
-
-
       emit(state.copyWith(
         latitude: position.latitude,
         longitude: position.longitude,

@@ -1,8 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:geolocator/geolocator.dart';
-import 'package:weatherapp/bloc/app_bloc/app_bloc.dart';
 import 'package:weatherapp/components/appbar_setting.dart';
 import 'package:weatherapp/components/circle_page.dart';
 import 'package:weatherapp/model/weather.dart';

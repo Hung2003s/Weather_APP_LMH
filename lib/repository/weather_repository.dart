@@ -95,37 +95,40 @@ class WeatherRepository {
   Future<List<ChartData>> processWeatherDataForChart(Weather weather, String datatype) async {
     List<ChartData> dataPoints = [];
     final hourly = weather.hourly;
-    if (hourly != null && hourly.time != null ) {
+    if (hourly != null
+        // && hourly.time != null
+        )
+    {
       List<num>? dataList;
-      String unit = '';
+      //String unit = '';
       switch (datatype) {
         case 'windSpeed10M':
           dataList = hourly.windSpeed10M;
-          unit = 'Km/h'; // Hoặc 'm/s' tùy thuộc vào API
+         // unit = 'Km/h'; // Hoặc 'm/s' tùy thuộc vào API
           break;
         case 'snowfall':
           dataList = hourly.snowfall;
-          unit = 'cm'; // Hoặc 'mm' tùy thuộc vào API
+         // unit = 'cm'; // Hoặc 'mm' tùy thuộc vào API
           break;
         case 'precipitation':
           dataList = hourly.precipitationProbability;
-          unit = 'mm';
+         // unit = 'mm';
           break;
       // Thêm các case khác cho các loại dữ liệu khác (ví dụ: temperature2M, relativeHumidity2M, v.v.)
         default:
           print('Loại dữ liệu không được hỗ trợ: $datatype');
           return dataPoints;
       }
-      if(dataList != null) {
+     // if(dataList != null) {
         for (int i = 0; i < hourly.time.length; i++) {
           String formattedTime = convertTimeFormattoH(hourly.time[i]);
-          final value = dataList[i]?.toDouble();
+          final value = dataList[i].toDouble();
           dataPoints.add(ChartData(
             formattedTime,
-            value!,
+            value,
           ));
         }
-      }
+    //  }
 
     }
     return dataPoints;

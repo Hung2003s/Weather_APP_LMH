@@ -1,13 +1,8 @@
 import 'dart:convert';
-
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
-import 'package:weatherapp/screen/weatherforecast_screen/model/weekday.dart';
 import '../../../bloc/app_bloc/app_bloc.dart';
 import '../../../model/weather.dart';
 import '../../../repository/weather_repository.dart';

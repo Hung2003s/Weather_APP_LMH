@@ -5,7 +5,7 @@ import 'package:weatherapp/components/appbar_setting.dart';
 import 'package:weatherapp/components/circle_page.dart';
 import 'package:weatherapp/model/weather.dart';
 import 'package:weatherapp/repository/weather_repository.dart';
-import 'package:geolocator/geolocator.dart';
+
 
 class UltravioletScreen extends StatefulWidget {
   const UltravioletScreen({super.key});

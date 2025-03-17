@@ -1,4 +1,4 @@
-import '../../../util/images.dart';
+
 import '../model/introModel.dart';
 
 class IntroController {

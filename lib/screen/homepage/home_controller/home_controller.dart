@@ -23,7 +23,7 @@ class HomeController{
 
     bool serviceEnabled;
     PermissionStatus permissionGranted;
-    LocationData locationData;
+    //LocationData locationData;
 
     serviceEnabled = await location.serviceEnabled();
     if (!serviceEnabled) {
@@ -41,6 +41,6 @@ class HomeController{
      }
     }
 
-    locationData = await location.getLocation();
+    //locationData = await location.getLocation();
    }
 }

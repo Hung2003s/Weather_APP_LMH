@@ -1,16 +1,10 @@
-import 'dart:convert';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
-import 'package:intl/intl.dart';
 import 'package:weatherapp/components/appbar_setting.dart';
 import 'package:weatherapp/components/diagram_screen.dart';
 import 'package:syncfusion_flutter_charts/charts.dart' as syncfusion;
 import '../../../model/chartdata.dart';
 import '../../../model/weather.dart';
 import '../../../repository/weather_repository.dart';
-import 'package:http/http.dart' as http;
 
 class SnowFallScreen extends StatefulWidget {
   const SnowFallScreen({super.key});
@@ -35,13 +29,13 @@ class _SnowFallScreenState extends State<SnowFallScreen> {
     try {
       Weather? weather =
           await weatherRepository.getCurrentLocationAndFetchWeather();
-      if (weather != null) {
-        return await weatherRepository.processWeatherDataForChart(
-            weather, 'snowfall');
-      } else {
-        // Handle the case where weather data is not available
-        return [];
-      }
+      //if (weather != null) {
+      return await weatherRepository.processWeatherDataForChart(
+          weather, 'snowfall');
+      // } else {
+      // Handle the case where weather data is not available
+      //return [];
+      //}
     } catch (e) {
       print("Error loading wind chart data: $e");
       return []; // Return an empty list or handle the error as needed

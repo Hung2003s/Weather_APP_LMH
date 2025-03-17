@@ -1,14 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
-import 'package:intl/intl.dart';
 import 'package:weatherapp/components/diagram_screen.dart';
 import 'package:syncfusion_flutter_charts/charts.dart' as syncfusion;
 import 'package:weatherapp/model/weather.dart';
 import 'package:weatherapp/repository/weather_repository.dart';
-import 'dart:convert';
-import 'package:http/http.dart' as http;
-import 'package:weatherapp/model/weather.dart';
 import '../../../components/appbar_setting.dart';
 import '../../../model/chartdata.dart';
 
@@ -33,13 +27,8 @@ class _PrecipitationScreenState extends State<PrecipitationScreen> {
   Future<List<ChartData>> _loadWindChartData() async {
     try {
       Weather? weather = await weatherRepository.getCurrentLocationAndFetchWeather();
-      if (weather != null) {
-        return await weatherRepository.processWeatherDataForChart(weather, 'precipitation');
-      } else {
-        // Handle the case where weather data is not available
-        return [];
-      }
-    } catch (e) {
+      return await weatherRepository.processWeatherDataForChart(weather, 'precipitation');
+        } catch (e) {
       print("Error loading wind chart data: $e");
       return []; // Return an empty list or handle the error as needed
     }

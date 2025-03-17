@@ -1,14 +1,11 @@
-import 'dart:convert';
+
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:weatherapp/components/appbar_setting.dart';
 import 'package:weatherapp/components/diagram_screen.dart';
 import 'package:syncfusion_flutter_charts/charts.dart' as syncfusion;
 import '../../../model/chartdata.dart';
 import '../../../model/weather.dart';
 import '../../../repository/weather_repository.dart';
-import 'package:http/http.dart' as http;
-import 'package:intl/intl.dart';
 class WindScreen extends StatefulWidget {
   const WindScreen({super.key});
 
@@ -30,12 +27,12 @@ class _WindScreenState extends State<WindScreen> {
   Future<List<ChartData>> _loadWindChartData() async {
     try {
       Weather? weather = await weatherRepository.getCurrentLocationAndFetchWeather();
-      if (weather != null) {
+      //if (weather != null) {
         return await weatherRepository.processWeatherDataForChart(weather, 'windSpeed10M');
-      } else {
+     // } else {
         // Handle the case where weather data is not available
-        return [];
-      }
+        //return [];
+     // }
     } catch (e) {
       print("Error loading wind chart data: $e");
       return []; // Return an empty list or handle the error as needed

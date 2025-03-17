@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
+
 import 'package:weatherapp/components/appbar_setting.dart';
 import 'package:weatherapp/components/circle_page.dart';
 
