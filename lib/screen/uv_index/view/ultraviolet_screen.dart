@@ -21,47 +21,7 @@ class _UltravioletScreenState extends State<UltravioletScreen> {
   @override
   void initState() {
     super.initState();
-    // context.read<AppBloc>().add(SetLocationandFetchDataEvent(
-    //     latitude: context.watch<AppBloc>().state.latitude,
-    //     longitude: context.watch<AppBloc>().state.latitude));
-    _hourly = _getCurrentLocationAndFetchWeather();
-  }
-
-  Future<Weather?> _getCurrentLocationAndFetchWeather() async {
-    bool serviceEnable;
-    LocationPermission permission;
-
-    // Test if location services are enabled.
-    serviceEnable = await Geolocator.isLocationServiceEnabled();
-    if (!serviceEnable) {
-      return Future.error('Location services are disabled.');
-    }
-    permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.denied) {
-        return Future.error('Location permissions are denied');
-      }
-    }
-    if (permission == LocationPermission.deniedForever) {
-      return Future.error(
-          'Location permissions are permanently denied, we cannot request permissions.');
-    }
-    try {
-      Position position = await Geolocator.getCurrentPosition(
-          locationSettings: LocationSettings(accuracy: LocationAccuracy.high));
-
-      return weatherRepository.fetchWether(
-        latitude: position.latitude,
-        longitude: position.longitude,
-      );
-    } catch (e) {
-      print("Error getting location or weather: $e");
-      return _hourly = weatherRepository.fetchWether(
-        latitude: 21.0285,
-        longitude: 105.8048,
-      );
-    }
+    _hourly = weatherRepository.getCurrentLocationAndFetchWeather();
   }
 
   @override
@@ -90,7 +50,10 @@ class _UltravioletScreenState extends State<UltravioletScreen> {
                         color2: Color(0xffF9ED4B),
                         located:
                             'latitude: ${state.latitude}, longitude: ${state.longitude}',
-                        textAirQuality: 'low',
+                        textAirQuality:
+                            '${(weather?.daily!.uvIndexMax.first)! < 3 ? 'Low'
+                                : (weather?.daily!.uvIndexMax.first)! < 6 ? 'Moderate'
+                                : (weather?.daily!.uvIndexMax.first)! < 8 ? 'Very High' : 'Extreme'}',
                         // _getUVIndexCategory(currentUVIndex),
                         textState: 'Good',
                         unit: '',
@@ -105,19 +68,5 @@ class _UltravioletScreenState extends State<UltravioletScreen> {
             }
           }),
     );
-  }
-
-  String _getUVIndexCategory(double uvIndex) {
-    if (uvIndex < 3) {
-      return 'Low';
-    } else if (uvIndex < 6) {
-      return 'Moderate';
-    } else if (uvIndex < 8) {
-      return 'High';
-    } else if (uvIndex < 11) {
-      return 'Very High';
-    } else {
-      return 'Extreme';
-    }
   }
 }

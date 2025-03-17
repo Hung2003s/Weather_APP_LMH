@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 
 class WeatherItem2 extends StatelessWidget {
-  const WeatherItem2({super.key});
+  final String weathercode;
+  final String daytime;
+  const WeatherItem2({super.key, required this.weathercode, required this.daytime});
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +17,7 @@ class WeatherItem2 extends StatelessWidget {
           ),
           Container(
             padding: EdgeInsets.symmetric(horizontal: 0),
-            child: Text('03:00', style:
+            child: Text(daytime, style:
               TextStyle(
                 color: Color(0xff1C2025),
                 fontSize: 14,

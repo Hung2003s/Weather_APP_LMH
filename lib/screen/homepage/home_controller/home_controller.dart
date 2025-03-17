@@ -1,3 +1,5 @@
+import 'package:location/location.dart';
+
 import '../../../router/router.dart';
 import '../model/app_service.dart';
 class HomeController{
@@ -16,4 +18,29 @@ class HomeController{
     AppService('Pollen', 'assets/images/homepageimage/pollenlogo.png', 0xffD4DAFA,AppRouter.pollenPath),
     AppService('Wave', 'assets/images/homepageimage/wavelogo.png',0xffF9FFD8 ,AppRouter.wavePath),
   ];
+   void determinePosition() async {
+    Location location = Location();
+
+    bool serviceEnabled;
+    PermissionStatus permissionGranted;
+    LocationData locationData;
+
+    serviceEnabled = await location.serviceEnabled();
+    if (!serviceEnabled) {
+     serviceEnabled = await location.requestService();
+     if (!serviceEnabled) {
+      return;
+     }
+    }
+
+    permissionGranted = await location.hasPermission();
+    if (permissionGranted == PermissionStatus.denied) {
+     permissionGranted = await location.requestPermission();
+     if (permissionGranted != PermissionStatus.granted) {
+      return;
+     }
+    }
+
+    locationData = await location.getLocation();
+   }
 }

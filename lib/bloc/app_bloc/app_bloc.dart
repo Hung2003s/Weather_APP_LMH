@@ -151,7 +151,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
       print('Fetching Data');
       emit(state.copyWith(loadingState: LoadingState.loading));
       final WeatherRepository weatherRepository = WeatherRepository();
-      final Weather data = await weatherRepository.fetchWether(
+      final Weather data = await weatherRepository.fetchWeather(
         latitude: event.latitude,
         longitude: event.longitude,
       );

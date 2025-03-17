@@ -63,7 +63,7 @@ class IntroScreenState extends State<IntroScreen> {
             child: Container(
               height: 50,
               width: MediaQuery.of(context).size.width,
-              padding: EdgeInsets.symmetric(horizontal: 20),
+              margin: EdgeInsets.symmetric(horizontal: 20),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
                 gradient: LinearGradient(
@@ -82,7 +82,7 @@ class IntroScreenState extends State<IntroScreen> {
               ),
             ),
           ),
-          SizedBox(height: 30,)
+          SizedBox(height: 50,)
 
         ],
       ),

@@ -35,44 +35,7 @@ class _VisibilityScreenState extends State<VisibilityScreen> {
   @override
   void initState() {
     super.initState();
-    _hourly = _getCurrentLocationAndFetchWeather();
-  }
-
-  Future<Weather?> _getCurrentLocationAndFetchWeather() async {
-    bool serviceEnable;
-    LocationPermission permission;
-
-    // Test if location services are enabled.
-    serviceEnable = await Geolocator.isLocationServiceEnabled();
-    if (!serviceEnable) {
-      return Future.error('Location services are disabled.');
-    }
-    permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.denied) {
-        return Future.error('Location permissions are denied');
-      }
-    }
-    if (permission == LocationPermission.deniedForever) {
-      return Future.error(
-          'Location permissions are permanently denied, we cannot request permissions.');
-    }
-    try {
-      Position position = await Geolocator.getCurrentPosition(
-          locationSettings: LocationSettings(accuracy: LocationAccuracy.high));
-
-      return weatherRepository.fetchWether(
-        latitude: position.latitude,
-        longitude: position.longitude,
-      );
-    } catch (e) {
-      print("Error getting location or weather: $e");
-      return _hourly = weatherRepository.fetchWether(
-        latitude: 21.0285,
-        longitude: 105.8048,
-      );
-    }
+    _hourly = weatherRepository.getCurrentLocationAndFetchWeather();
   }
 
   @override

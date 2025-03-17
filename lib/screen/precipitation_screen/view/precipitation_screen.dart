@@ -20,89 +20,29 @@ class PrecipitationScreen extends StatefulWidget {
 }
 
 class _PrecipitationScreenState extends State<PrecipitationScreen> {
-  final WeatherRepository _weatherService = WeatherRepository();
-  late final Future<Weather?> _hourlyPrecipitation;
-  late List<ChartData> precipitationData = [];
+  final WeatherRepository weatherRepository = WeatherRepository();
+  late Future<List<ChartData>> _hourlyPrecipitation;
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    _loadChartData();
-    _hourlyPrecipitation = _getCurrentLocationAndFetchWeather();
+    _hourlyPrecipitation = _loadWindChartData();
   }
-  _loadChartData() async {
-    precipitationData = await fetchDataFromApi(); // Gọi hàm giả định lấy dữ liệu API
-    print('---------------precipitationData: $precipitationData');
-  }
-  Future<Weather?> _getCurrentLocationAndFetchWeather() async {
-    bool serviceEnable;
-    LocationPermission permission;
 
-    // Test if location services are enabled.
-    serviceEnable = await Geolocator.isLocationServiceEnabled();
-    if (!serviceEnable) {
-      return Future.error('Location services are disabled.');
-    }
-    permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.denied) {
-        return Future.error('Location permissions are denied');
-      }
-    }
-    if (permission == LocationPermission.deniedForever) {
-      return Future.error(
-          'Location permissions are permanently denied, we cannot request permissions.');
-    }
+  Future<List<ChartData>> _loadWindChartData() async {
     try {
-      Position position = await Geolocator.getCurrentPosition(
-          locationSettings: LocationSettings(accuracy: LocationAccuracy.high));
-
-      return _weatherService.fetchWether(
-        latitude: position.latitude,
-        longitude: position.longitude,
-      );
-    } catch (e) {
-      print("Error getting location or weather: $e");
-      return _hourlyPrecipitation = _weatherService.fetchWether(
-        latitude: 21.0285,
-        longitude: 105.8048,
-      );
-    }
-  }
-  Future<List<ChartData>> fetchDataFromApi() async {
-    final String url = "${baseUrl}?latitude=12.9333&longitude=100.8833&current=temperature_2m,relative_humidity_2m,precipitation,snowfall,weather_code&hourly=temperature_2m,relative_humidity_2m,precipitation_probability,snowfall,weather_code,wind_speed_10m,temperature_1000hPa,relative_humidity_1000hPa,wind_speed_1000hPa&daily=weather_code,sunrise,sunset,uv_index_max,precipitation_sum,snowfall_sum&timezone=Asia%2FBangkok&past_hours=6&forecast_hours=1&cell_selection=nearest&models=best_match";
-
-    final response = await http.get(Uri.parse(url));
-    if (response.statusCode == 200) {
-      print('---------------check ${response.body}');
-      final Hourly hourly =
-      Hourly.fromJson(jsonDecode(response.body)['hourly']);
-      List<ChartData> dataPoints = [];
-      // Iterate through timeList and temperatureList and create ChartData objects
-      for (int i = 0; i < hourly.time.length; i++) {
-        String formattedTime = convertTimeFormat(hourly.time[i]);
-        dataPoints.add(ChartData(
-          formattedTime,
-          hourly.temperature2M[i].toDouble(),
-        ));
+      Weather? weather = await weatherRepository.getCurrentLocationAndFetchWeather();
+      if (weather != null) {
+        return await weatherRepository.processWeatherDataForChart(weather, 'precipitation');
+      } else {
+        // Handle the case where weather data is not available
+        return [];
       }
-      return dataPoints;
-    } else {
-      print("Body: ${response.body}");
-      throw Exception('Có lỗi trong quá trình lấy dữ liệu thời tiết');
+    } catch (e) {
+      print("Error loading wind chart data: $e");
+      return []; // Return an empty list or handle the error as needed
     }
-
-  }
-  String convertTimeFormat(String inputTime) {
-    // 1. Parse chuỗi thời gian đầu vào thành đối tượng DateTime
-    DateTime dateTime = DateTime.parse(inputTime);
-
-    // 2. Định dạng đối tượng DateTime thành chuỗi giờ:phút (HH:mm)
-    String formattedTime = DateFormat("H'h'").format(dateTime);
-
-    // 3. Trả về chuỗi thời gian đã định dạng
-    return formattedTime;
   }
   @override
   Widget build(BuildContext context) {
@@ -120,7 +60,7 @@ class _PrecipitationScreenState extends State<PrecipitationScreen> {
         LinearGradient(colors: color, begin: Alignment.topLeft, stops: stops);
     return Scaffold(
       appBar: AppbarSetting(titletext: 'Precipitation', link: '/'),
-      body: FutureBuilder<Weather?>(
+      body: FutureBuilder<List<ChartData>>(
           future: _hourlyPrecipitation,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
@@ -128,16 +68,21 @@ class _PrecipitationScreenState extends State<PrecipitationScreen> {
             } else if (snapshot.hasError) {
               return Text('Error: ${snapshot.error}');
             } else if (snapshot.hasData && snapshot.data != null) {
-              final weather = snapshot.data;
-              print('----------------ok ${weather.toString()}');
+              final precipitationData = snapshot.data;
+              if (precipitationData!.isEmpty) {
+                return const Center(child: Text('Không có dữ liệu gió'));
+              }
+
+              final latestPrecipitation = precipitationData.isNotEmpty ? precipitationData.last.yvalue : 0;
+              final latestTime = precipitationData.isNotEmpty ? precipitationData.last.xvalue : '';
               return Container(
                 padding: EdgeInsets.all(20),
                 child: Column(
                   children: [
                     DiagramScreen(
-                        textvalue: '${weather?.current?.precipitation}',
+                        textvalue: latestPrecipitation.toStringAsFixed(2),
                         located: 'Hoài Đức, Hà Nội',
-                        time: '17:50',
+                        time: latestTime,
                         textunit: 'mm'),
                     SizedBox(
                       height: 20,

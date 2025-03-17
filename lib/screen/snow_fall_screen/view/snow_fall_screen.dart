@@ -20,95 +20,32 @@ class SnowFallScreen extends StatefulWidget {
 }
 
 class _SnowFallScreenState extends State<SnowFallScreen> {
-  final WeatherRepository _weatherService = WeatherRepository();
-  late final Future<Weather?> _hourlySnowfall;
-  late List<ChartData> snowFallData = [];
+  final WeatherRepository weatherRepository = WeatherRepository();
+  late final Future<List<ChartData>> _hourlySnowFall;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    _loadChartData();
-    _hourlySnowfall = _getCurrentLocationAndFetchWeather();
+
+    _hourlySnowFall = _loadSnowFallChartData();
   }
 
-  _loadChartData() async {
-    snowFallData = await fetchDataFromApi(); // Gọi hàm giả định lấy dữ liệu API
-    print('---------------Windata: $snowFallData');
-  }
-
-  Future<Weather?> _getCurrentLocationAndFetchWeather() async {
-    bool serviceEnable;
-    LocationPermission permission;
-
-    // Test if location services are enabled.
-    serviceEnable = await Geolocator.isLocationServiceEnabled();
-    if (!serviceEnable) {
-      return Future.error('Location services are disabled.');
-    }
-    permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.denied) {
-        return Future.error('Location permissions are denied');
-      }
-    }
-    if (permission == LocationPermission.deniedForever) {
-      return Future.error(
-          'Location permissions are permanently denied, we cannot request permissions.');
-    }
+  Future<List<ChartData>> _loadSnowFallChartData() async {
     try {
-      Position position = await Geolocator.getCurrentPosition(
-          locationSettings: LocationSettings(accuracy: LocationAccuracy.high));
-
-      return _weatherService.fetchWether(
-        latitude: position.latitude,
-        longitude: position.longitude,
-      );
-    } catch (e) {
-      print("Error getting location or weather: $e");
-      return _hourlySnowfall = _weatherService.fetchWether(
-        latitude: 21.0285,
-        longitude: 105.8048,
-      );
-    }
-  }
-
-  Future<List<ChartData>> fetchDataFromApi() async {
-    final String url =
-        "${baseUrl}?latitude=21.05&longitude=105.7833&current=temperature_2m,relative_humidity_2m,precipitation,snowfall,weather_code&hourly=temperature_2m,relative_humidity_2m,precipitation_probability,snowfall,weather_code,wind_speed_10m,temperature_1000hPa,relative_humidity_1000hPa,wind_speed_1000hPa&daily=weather_code,sunrise,sunset,uv_index_max,precipitation_sum,snowfall_sum&timezone=Asia%2FBangkok&past_hours=6&forecast_hours=1&cell_selection=nearest&models=best_match";
-    final response = await http.get(Uri.parse(url));
-    if (response.statusCode == 200) {
-      print('---------------check ${response.body}');
-      final Hourly hourly =
-          Hourly.fromJson(jsonDecode(response.body)['hourly']);
-
-      List<ChartData> dataPoints = [];
-      // Iterate through timeList and temperatureList and create ChartData objects
-
-      for (int i = 0; i < hourly.time.length; i++) {
-        String formattedTime = convertTimeFormat(hourly.time[i]);
-        dataPoints.add(ChartData(
-          formattedTime,
-          hourly.snowfall[i].toDouble(),
-        ));
+      Weather? weather =
+          await weatherRepository.getCurrentLocationAndFetchWeather();
+      if (weather != null) {
+        return await weatherRepository.processWeatherDataForChart(
+            weather, 'snowfall');
+      } else {
+        // Handle the case where weather data is not available
+        return [];
       }
-      return dataPoints;
-    } else {
-      print("Body: ${response.body}");
-      throw Exception('Có lỗi trong quá trình lấy dữ liệu thời tiết');
+    } catch (e) {
+      print("Error loading wind chart data: $e");
+      return []; // Return an empty list or handle the error as needed
     }
-  }
-
-  String convertTimeFormat(String inputTime) {
-    // 1. Parse chuỗi thời gian đầu vào thành đối tượng DateTime
-    DateTime dateTime = DateTime.parse(inputTime);
-
-    // 2. Định dạng đối tượng DateTime thành chuỗi giờ:phút (HH:mm)
-    String formattedTime = DateFormat("H'h'").format(dateTime);
-
-    // 3. Trả về chuỗi thời gian đã định dạng
-    return formattedTime;
   }
 
   @override
@@ -127,24 +64,31 @@ class _SnowFallScreenState extends State<SnowFallScreen> {
         LinearGradient(colors: color, begin: Alignment.topLeft, stops: stops);
     return Scaffold(
       appBar: AppbarSetting(titletext: 'Snow', link: '/'),
-      body: FutureBuilder<Weather?>(
-          future: _hourlySnowfall,
+      body: FutureBuilder<List<ChartData>>(
+          future: _hourlySnowFall,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return Center(child: CircularProgressIndicator());
             } else if (snapshot.hasError) {
               return Text('Error: ${snapshot.error}');
             } else if (snapshot.hasData && snapshot.data != null) {
-              final weather = snapshot.data;
-              print('----------------ok ${weather?.hourly.toString()}');
+              final snowfalldata = snapshot.data;
+              if (snowfalldata!.isEmpty) {
+                return const Center(child: Text('Không có dữ liệu tuyết rơi'));
+              }
+
+              final latestSnowfall =
+                  snowfalldata.isNotEmpty ? snowfalldata.last.yvalue : 0;
+              final latestTime =
+                  snowfalldata.isNotEmpty ? snowfalldata.last.xvalue : '';
               return Container(
                 padding: EdgeInsets.all(20),
                 child: Column(
                   children: [
                     DiagramScreen(
-                        textvalue: '${weather?.hourly?.snowfall.first}',
+                        textvalue: latestSnowfall.toStringAsFixed(2),
                         located: 'New York, USA',
-                        time: '17:50',
+                        time: latestTime,
                         textunit: 'cm'),
                     SizedBox(
                       height: 20,
@@ -170,7 +114,7 @@ class _SnowFallScreenState extends State<SnowFallScreen> {
                             ),
                             series: <syncfusion.CartesianSeries>[
                               syncfusion.SplineAreaSeries<ChartData, String>(
-                                dataSource: snowFallData,
+                                dataSource: snowfalldata,
                                 // Bind the color for all the data points from the data source
                                 //pointColorMapper:(ChartData data, _) => data.color,
                                 xValueMapper: (ChartData data, _) =>

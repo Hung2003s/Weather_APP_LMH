@@ -22,47 +22,47 @@ class _AirQualityScreenState extends State<AirQualityScreen> {
   @override
   void initState() {
     super.initState();
-    _current = _getCurrentLocationAndFetchWeather();
+    _current = weatherRepository.getCurrentLocationAndFetchWeather();
   }
 
-  Future<Weather?> _getCurrentLocationAndFetchWeather() async {
-    bool serviceEnable;
-    LocationPermission permission;
-
-    serviceEnable = await Geolocator.isLocationServiceEnabled();
-    if (!serviceEnable) {
-      return Future.error('Location services are disable');
-    }
-    permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.denied) {
-        return Future.error('Location permissions are denied');
-      }
-    }
-    if (permission == LocationPermission.deniedForever) {
-      return Future.error(
-          'Location permissions are permanently denied, we cannot request permissions.');
-    }
-    try {
-      Position position = await Geolocator.getCurrentPosition(
-          locationSettings: LocationSettings(accuracy: LocationAccuracy.high));
-      setState(() {
-        _current = weatherRepository.fetchWether(
-          latitude: position.latitude,
-          longitude: position.longitude,
-        );
-      });
-    } catch (e) {
-      print("Error getting location or weather: $e");
-      setState(() {
-        _current = weatherRepository.fetchWether(
-          latitude: 21.0285,
-          longitude: 105.8048,
-        );
-      });
-    }
-  }
+  // Future<Weather?> _getCurrentLocationAndFetchWeather() async {
+  //   bool serviceEnable;
+  //   LocationPermission permission;
+  //
+  //   serviceEnable = await Geolocator.isLocationServiceEnabled();
+  //   if (!serviceEnable) {
+  //     return Future.error('Location services are disable');
+  //   }
+  //   permission = await Geolocator.checkPermission();
+  //   if (permission == LocationPermission.denied) {
+  //     permission = await Geolocator.requestPermission();
+  //     if (permission == LocationPermission.denied) {
+  //       return Future.error('Location permissions are denied');
+  //     }
+  //   }
+  //   if (permission == LocationPermission.deniedForever) {
+  //     return Future.error(
+  //         'Location permissions are permanently denied, we cannot request permissions.');
+  //   }
+  //   try {
+  //     Position position = await Geolocator.getCurrentPosition(
+  //         locationSettings: LocationSettings(accuracy: LocationAccuracy.high));
+  //     setState(() {
+  //       _current = weatherRepository.fetchWether(
+  //         latitude: position.latitude,
+  //         longitude: position.longitude,
+  //       );
+  //     });
+  //   } catch (e) {
+  //     print("Error getting location or weather: $e");
+  //     setState(() {
+  //       _current = weatherRepository.fetchWether(
+  //         latitude: 21.0285,
+  //         longitude: 105.8048,
+  //       );
+  //     });
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
