@@ -35,10 +35,13 @@ final class AppState extends Equatable {
   final double visibilityParameter;
 
 
+  //chart data
+  final List<ChartData> chartData;
+  final String dataType;
 
 
 
-  AppState({
+  AppState( {
     this.loadingState = LoadingState.pure,
     required this.latitude,
     required this.longitude,
@@ -62,7 +65,8 @@ final class AppState extends Equatable {
 
 
     //uv index
-
+    required this.chartData,
+    required this.dataType,
 
 
 
@@ -72,7 +76,7 @@ final class AppState extends Equatable {
     return AppState(
         latitude: 0.0,
         longitude: 0.0,
-
+        loadingState: LoadingState.loading,
         //language
         acronym: LanguageController().listacronym.first,
 
@@ -87,7 +91,10 @@ final class AppState extends Equatable {
         beginColor: Color(0xff4BCFF9),
         endColor: Color(0xff5363F3),
         buttonColor: Color(0xff4DBFF9),
-        visibilityParameter: 5.0);
+        visibilityParameter: 5.0,
+        chartData: [],
+        dataType: ''
+    );
   }
 
   AppState copyWith({
@@ -111,6 +118,8 @@ final class AppState extends Equatable {
     Color? endColor, // Màu kết thúc gradient của CirclePage
     Color? buttonColor, // Màu của VisibilityButton
     double? visibilityParameter,
+    List<ChartData>? chartData,
+    String? dataType,
   }) {
     return AppState(
       latitude: latitude ?? this.latitude,
@@ -132,6 +141,8 @@ final class AppState extends Equatable {
       endColor: endColor ?? this.endColor,
       buttonColor: buttonColor ?? this.buttonColor,
       visibilityParameter: visibilityParameter ?? this.visibilityParameter,
+      chartData: chartData ?? this.chartData,
+      dataType: dataType ?? this.dataType,
 
 
     );
@@ -147,6 +158,9 @@ final class AppState extends Equatable {
         tempunit, tempParameter, thermometer, theme,
 
         //visibility
-    visibilityUnit, beginColor, endColor, buttonColor, visibilityParameter,
+        visibilityUnit, beginColor, endColor, buttonColor, visibilityParameter,
+
+        //chartData
+        chartData,dataType
       ];
 }

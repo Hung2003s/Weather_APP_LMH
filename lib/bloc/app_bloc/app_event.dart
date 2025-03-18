@@ -4,18 +4,35 @@ sealed class AppEvent extends Equatable {
   const AppEvent();
 }
 //app
-final class SetLocationandFetchDataEvent extends AppEvent {
+final class SetLocationEvent extends AppEvent {
+  SetLocationEvent();
+
+  @override
+  // TODO: implement props
+  List<Object?> get props => [];
+
+
+}
+final class FetchDataEvent extends AppEvent {
   final double latitude;
   final double longitude;
 
-  SetLocationandFetchDataEvent({required this.latitude, required this.longitude});
+  FetchDataEvent(this.latitude, this.longitude);
 
   @override
   // TODO: implement props
   List<Object?> get props => [latitude, longitude];
 }
 
+final class AddWeather extends AppEvent {
+  final Weather weather;
 
+  AddWeather(this.weather);
+
+  @override
+  // TODO: implement props
+  List<Object?> get props => [];
+}
 
 //language
 final class SetAcronymEvent extends AppEvent {
@@ -95,4 +112,13 @@ class SetVisibilityEvent extends AppEvent {
     // visibilitParameter,
     // buttonColor
   ];
+}
+
+class SetDataToChartEvent extends AppEvent {
+  final List<ChartData> chartData;
+  SetDataToChartEvent(this.chartData);
+
+  @override
+  // TODO: implement props
+  List<Object?> get props => [];
 }

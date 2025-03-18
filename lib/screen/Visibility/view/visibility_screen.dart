@@ -19,23 +19,13 @@ class VisibilityScreen extends StatefulWidget {
 class _VisibilityScreenState extends State<VisibilityScreen> {
   int value = 0;
   final WeatherRepository weatherRepository = WeatherRepository();
-  late Future<Weather?> _hourly;
+  //late Future<Weather?> _hourly;
 
-  // @override
-  // Future<void> didChangeDependencies() async {
-  //   final controller = context.watch<AppBloc>().state;
-  //   final latitude = context.watch<AppBloc>().state.latitude;
-  //   final longitude = context.watch<AppBloc>().state.latitude;
-  //   context
-  //       .read<AppBloc>()
-  //       .add(SetVisibilityParamEvent(latitude: latitude, longitude: longitude));
-  //   super.didChangeDependencies();
-  // }
 
   @override
   void initState() {
     super.initState();
-    _hourly = weatherRepository.getCurrentLocationAndFetchWeather();
+    //_hourly = weatherRepository.getCurrentLocationAndFetchWeather();
   }
 
   @override
@@ -62,24 +52,20 @@ class _VisibilityScreenState extends State<VisibilityScreen> {
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    FutureBuilder<Weather?>(
-                        future: _hourly,
-                        builder: (context, snapshot) {
-                          if (snapshot.connectionState ==
-                              ConnectionState.waiting) {
-                            return Center(child: CircularProgressIndicator());
-                          } else if (snapshot.hasError) {
-                            return Text('Error: ${snapshot.error}');
-                          } else if (snapshot.hasData) {
-                            final weather = snapshot.data;
-                            print(
-                                '----------------ok ${weather?.current.toString()}');
+                    BlocBuilder<AppBloc, AppState>(
+                        builder: (context, state) {
+                          if (state.loadingState == LoadingState.loading) {
+                            return Center(
+                                child: CircularProgressIndicator());
+                          } else if (state.loadingState == LoadingState.error) {
+                            return Text('Error: ');
+                          } else if (state.loadingState == LoadingState.finished) {
                             return CirclePage(
                                 color1: state.beginColor,
                                 parameter: state.visibilityUnit ==
                                         VisibilityUnit.kilometer
-                                    ? weather?.current?.temperature2M
-                                    : ((weather?.current
+                                    ? state.weather?.current?.temperature2M
+                                    : ((state.weather?.current
                                                 ?.temperature2M)! *
                                             0.62137199)
                                         .toStringAsFixed(2),

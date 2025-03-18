@@ -22,19 +22,43 @@ class Homepage extends StatefulWidget {
 
 class _HomepageState extends State<Homepage> {
   HomeController homeController = HomeController();
-  final WeatherRepository _weatherService = WeatherRepository();
+  final WeatherRepository weatherRepository = WeatherRepository();
   late Future<Weather?> _current;
   bool _permissionsGranted = false;
   bool isAlert = false;
   bool isConnected = false;
 
-  // Location location = Loca
+  // @override
+  // void didChangeDependencies() {
+  //   super.didChangeDependencies();
+  //
+  //
+  // }
+  //
+  void fetchData() async {
+    context.read<AppBloc>().add(SetLocationEvent());
+    // context.read<AppBloc>().add(FetchDataEvent(
+    //     context.watch<AppBloc>().state.latitude,
+    //     context.watch<AppBloc>().state.longitude));
+    Weather newWeather = await WeatherRepository().fetchWeather(
+        latitude: context.watch<AppBloc>().state.latitude,
+        longitude: context.watch<AppBloc>().state.longitude);
+    context.read<AppBloc>().add(AddWeather(newWeather));
+  }
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    fetchData();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<AppBloc>().add(SetLocationEvent());
+      context.read<AppBloc>().add(FetchDataEvent(
+          context.read<AppBloc>().state.latitude,
+          context.read<AppBloc>().state.longitude));
+    });
     _checkInitialPermissions();
-    _current = _weatherService.getCurrentLocationAndFetchWeather();
+    _current = weatherRepository.getCurrentLocationAndFetchWeather();
   }
 
   _checkInitialPermissions() async {
@@ -43,45 +67,6 @@ class _HomepageState extends State<Homepage> {
       _permissionsGranted = granted;
     });
   }
-
-  // Future<Weather?> _getCurrentLocationAndFetchWeather() async {
-  //   bool serviceEnable;
-  //   LocationPermission permission;
-  //
-  //   serviceEnable = await Geolocator.isLocationServiceEnabled();
-  //   if (!serviceEnable) {
-  //     return Future.error('Location services are disable');
-  //   }
-  //   permission = await Geolocator.checkPermission();
-  //   if (permission == LocationPermission.denied) {
-  //     permission = await Geolocator.requestPermission();
-  //     if (permission == LocationPermission.denied) {
-  //       return Future.error('Location permissions are denied');
-  //     }
-  //   }
-  //   if (permission == LocationPermission.deniedForever) {
-  //     return Future.error(
-  //         'Location permissions are permanently denied, we cannot request permissions.');
-  //   }
-  //   try {
-  //     Position position = await Geolocator.getCurrentPosition(
-  //         locationSettings: LocationSettings(accuracy: LocationAccuracy.high));
-  //     setState(() {
-  //       _current = _weatherService.fetchWether(
-  //         latitude: position.latitude,
-  //         longitude: position.longitude,
-  //       );
-  //     });
-  //   } catch (e) {
-  //     print("Error getting location or weather: $e");
-  //     setState(() {
-  //       _current = _weatherService.fetchWether(
-  //         latitude: 21.0285,
-  //         longitude: 105.8048,
-  //       );
-  //     });
-  //   }
-  // }
 
   Future<bool> _checkPermissions() async {
     PermissionStatus status = await Permission.location.status;
@@ -101,11 +86,11 @@ class _HomepageState extends State<Homepage> {
       print('Quyền vị trí bị từ chối vĩnh viễn. Mở cài đặt ứng dụng để bật.');
     }
   }
+
   void showDialogBox() {
     showCupertinoDialog(
       context: context,
-      builder:
-          (BuildContext context) => AlertDialog(
+      builder: (BuildContext context) => AlertDialog(
         title: Image.asset(''),
         actions: [
           Column(
@@ -162,10 +147,10 @@ class _HomepageState extends State<Homepage> {
       ),
     );
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: SafeArea(
         child: Column(
           children: [
@@ -174,17 +159,17 @@ class _HomepageState extends State<Homepage> {
               width: MediaQuery.of(context).size.width,
               padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
               decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.only(bottomLeft: Radius.circular(15),bottomRight: Radius.circular(15)),
-                boxShadow: [
-                  BoxShadow(
-                    color: Color(0xffBFC9D7).withValues(alpha: 0.2),
-                    spreadRadius: 0,
-                    blurRadius: 4,
-                    offset: Offset(0, 4)
-                  )
-                ]
-              ),
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(15),
+                      bottomRight: Radius.circular(15)),
+                  boxShadow: [
+                    BoxShadow(
+                        color: Color(0xffBFC9D7).withValues(alpha: 0.2),
+                        spreadRadius: 0,
+                        blurRadius: 4,
+                        offset: Offset(0, 4))
+                  ]),
               child: Column(
                 children: [
                   Row(
@@ -192,22 +177,26 @@ class _HomepageState extends State<Homepage> {
                     children: [
                       Container(
                         child: Image(
-                            image: AssetImage('assets/images/homepageimage/warning.png')
-                        ),
+                            image: AssetImage(
+                                'assets/images/homepageimage/warning.png')),
                       ),
                       Container(
                         height: 30,
-                        child: Text('Enable device location permission to update  temperature and \nweather condition', style: TextStyle(
-                          color: Color(0xff000000),
-                          fontSize: 10,
-                          fontWeight: FontWeight.w400,
-                        ),
-                        textAlign: TextAlign.left,
+                        child: Text(
+                          'Enable device location permission to update  temperature and \nweather condition',
+                          style: TextStyle(
+                            color: Color(0xff000000),
+                            fontSize: 10,
+                            fontWeight: FontWeight.w400,
+                          ),
+                          textAlign: TextAlign.left,
                         ),
                       )
                     ],
                   ),
-                  SizedBox(height: 5,),
+                  SizedBox(
+                    height: 5,
+                  ),
                   // GestureDetector(
                   //   onTap: () {
                   //
@@ -234,11 +223,9 @@ class _HomepageState extends State<Homepage> {
                   //   ),
                   // )
                   CustomAppButton(
-                    onPressed:
-                        () => showDialog(
+                    onPressed: () => showDialog(
                       context: context,
-                      builder:
-                          (BuildContext context) => AlertDialog(
+                      builder: (BuildContext context) => AlertDialog(
                         elevation: 0,
                         title: const Text('Allow location access'),
                         content: const Text(
@@ -246,15 +233,13 @@ class _HomepageState extends State<Homepage> {
                         ),
                         actions: <Widget>[
                           Row(
-                            mainAxisAlignment:
-                            MainAxisAlignment.spaceBetween,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               CustomAppButton(
                                 height: 46,
                                 width: 140,
                                 backgroundColor: Colors.white,
-                                onPressed:
-                                    () => Navigator.pop(context, 'OK'),
+                                onPressed: () => Navigator.pop(context, 'OK'),
                                 child: const Text(
                                   'Close',
                                   style: TextStyle(color: Colors.red),
@@ -325,15 +310,17 @@ class _HomepageState extends State<Homepage> {
                   ),
                   child: Container(
                     decoration: BoxDecoration(
-                        gradient:
-                            LinearGradient(begin: Alignment.bottomCenter, colors: [
-                      Colors.white.withValues(alpha: 0.1),
-                      Color(0xffF4FAFA).withValues(alpha: 0.2),
-                    ])),
+                        gradient: LinearGradient(
+                            begin: Alignment.bottomCenter,
+                            colors: [
+                          Colors.white.withValues(alpha: 0.1),
+                          Color(0xffF4FAFA).withValues(alpha: 0.2),
+                        ])),
                   ),
                 ),
                 Container(
-                  padding: EdgeInsets.only(left: 20, top: 10, right: 10, bottom: 10),
+                  padding:
+                      EdgeInsets.only(left: 20, top: 10, right: 10, bottom: 10),
                   child: Column(
                     children: [
                       Container(
@@ -406,7 +393,8 @@ class _HomepageState extends State<Homepage> {
                                   borderRadius: BorderRadius.circular(15),
                                   boxShadow: [
                                     BoxShadow(
-                                      color: Colors.black.withValues(alpha: 0.1),
+                                      color:
+                                          Colors.black.withValues(alpha: 0.1),
                                       spreadRadius: 0,
                                       blurRadius: 4,
                                       offset: Offset(0, 4),
@@ -414,62 +402,58 @@ class _HomepageState extends State<Homepage> {
                                   ]),
                               height: 221,
                               padding: EdgeInsets.all(7),
-                              child: FutureBuilder<Weather?>(
-                                  future: _current,
-                                  builder: (context, snapshot) {
-                                    if (snapshot.connectionState ==
-                                        ConnectionState.waiting) {
-                                      return Center(
-                                          child: CircularProgressIndicator());
-                                    } else if (snapshot.hasError) {
-                                      return Text('Error: ${snapshot.error}');
-                                    } else if (snapshot.hasData) {
-                                      final weather = snapshot.data;
-                                      return Column(
-                                        children: [
-                                          BlocBuilder<AppBloc, AppState>(
-                                            builder: (context, state) {
-                                              return Container(
-                                                height: 151,
-                                                width: 60,
-                                                decoration: BoxDecoration(
-                                                    image: DecorationImage(
-                                                        image: AssetImage(
-                                                            state.thermometer))),
-                                              );
-                                            },
-                                          ),
-                                          Text(
-                                            '${weather?.current?.temperature2M.toStringAsFixed(0)}°C/${((weather?.current?.temperature2M)! * 1.8 + 32).toStringAsFixed(0)} °F',
-                                            style: TextStyle(
-                                              color: Color(0xff0A2958),
-                                              fontWeight: FontWeight.w600,
-                                            ),
-                                          ),
-                                          Text(
-                                            'Feel like',
-                                            style: TextStyle(
-                                              color: Color(0xff0A2958BF)
-                                                  .withValues(alpha: 0.75),
-                                              fontSize: 11,
-                                              fontWeight: FontWeight.w400,
-                                            ),
-                                          ),
-                                          Text(
-                                            '${weather?.current?.temperature2M.toStringAsFixed(0)}°C/${((weather?.current?.temperature2M)! * 1.8 + 32).toStringAsFixed(0)}°F',
-                                            style: TextStyle(
-                                              color: Color(0xff0A2958BF)
-                                                  .withValues(alpha: 0.75),
-                                              fontSize: 11,
-                                              fontWeight: FontWeight.w500,
-                                            ),
-                                          )
-                                        ],
-                                      );
-                                    } else {
-                                      return const Text('No data');
-                                    }
-                                  }),
+                              child: BlocBuilder<AppBloc, AppState>(
+                                  builder: (context, state) {
+                                if (state.loadingState ==
+                                    LoadingState.loading) {
+                                  return Center(
+                                      child: CircularProgressIndicator());
+                                } else if (state.loadingState ==
+                                    LoadingState.error) {
+                                  return Text('Error: ');
+                                } else if (state.loadingState ==
+                                    LoadingState.finished) {
+                                  return Column(
+                                    children: [
+                                      Container(
+                                        height: 151,
+                                        width: 60,
+                                        decoration: BoxDecoration(
+                                            image: DecorationImage(
+                                                image: AssetImage(
+                                                    state.thermometer))),
+                                      ),
+                                      Text(
+                                        '${state.weather?.current?.temperature2M.toStringAsFixed(0)}°C/${((state.weather?.current?.temperature2M)! * 1.8 + 32).toStringAsFixed(0)} °F',
+                                        style: TextStyle(
+                                          color: Color(0xff0A2958),
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                      Text(
+                                        'Feel like',
+                                        style: TextStyle(
+                                          color: Color(0xff0A2958BF)
+                                              .withValues(alpha: 0.75),
+                                          fontSize: 11,
+                                          fontWeight: FontWeight.w400,
+                                        ),
+                                      ),
+                                      Text(
+                                        '${state.weather?.current?.temperature2M.toStringAsFixed(0)}°C/${((state.weather?.current?.temperature2M)! * 1.8 + 32).toStringAsFixed(0)}°F',
+                                        style: TextStyle(
+                                          color: Color(0xff0A2958BF)
+                                              .withValues(alpha: 0.75),
+                                          fontSize: 11,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      )
+                                    ],
+                                  );
+                                } else {
+                                  return const Text('No data');
+                                }
+                              }),
                             ),
                             Container(
                               height: 72,
@@ -479,137 +463,140 @@ class _HomepageState extends State<Homepage> {
                                   borderRadius: BorderRadius.circular(15),
                                   boxShadow: [
                                     BoxShadow(
-                                      color: Colors.black.withValues(alpha: 0.1),
+                                      color:
+                                          Colors.black.withValues(alpha: 0.1),
                                       spreadRadius: 0,
                                       blurRadius: 4,
                                       offset: Offset(0, 4),
                                     ),
                                   ]),
-                              child: FutureBuilder<Weather?>(
-                                  future: _current,
-                                  builder: (context, snapshot) {
-                                    if (snapshot.connectionState ==
-                                        ConnectionState.waiting) {
-                                      return Center(
-                                          child: CircularProgressIndicator());
-                                    } else if (snapshot.hasError) {
-                                      return Text('Error: ${snapshot.error}');
-                                    } else if (snapshot.hasData) {
-                                      final weather = snapshot.data;
-                                      return Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Container(
-                                            child: Row(
-                                              children: [
-                                                Container(
-                                                  width: 24,
-                                                  height: 24,
-                                                  decoration: BoxDecoration(
-                                                      image: DecorationImage(
-                                                          image: AssetImage(
-                                                              'assets/images/homepageimage/uvlogo.png'))),
-                                                ),
-                                                SizedBox(
-                                                  width: 10,
-                                                ),
-                                                Container(
-                                                  child: Column(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment.center,
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment.start,
-                                                    children: [
-                                                      Text(
-                                                        'UV Index',
-                                                        style: TextStyle(
-                                                            color: Color(0xff0A2958)
-                                                                .withValues(
-                                                                    alpha: 0.25),
-                                                            fontWeight:
-                                                                FontWeight.w500,
-                                                            fontSize: 11),
-                                                      ),
-                                                      Text(
-                                                        '${weather!.daily?.uvIndexMax.first.toString()}',
-                                                        style: TextStyle(
-                                                            color: Color(0xff0A2958),
-                                                            fontWeight:
-                                                                FontWeight.w500,
-                                                            fontSize: 16),
-                                                      )
-                                                    ],
+                              child: BlocBuilder<AppBloc, AppState>(
+                                  builder: (context, state) {
+                                if (state.loadingState ==
+                                    LoadingState.loading) {
+                                  return Center(
+                                      child: CircularProgressIndicator());
+                                } else if (state.loadingState ==
+                                    LoadingState.error) {
+                                  return Text('Error: ');
+                                } else if (state.loadingState ==
+                                    LoadingState.finished) {
+                                  return Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Container(
+                                        child: Row(
+                                          children: [
+                                            Container(
+                                              width: 24,
+                                              height: 24,
+                                              decoration: BoxDecoration(
+                                                  image: DecorationImage(
+                                                      image: AssetImage(
+                                                          'assets/images/homepageimage/uvlogo.png'))),
+                                            ),
+                                            SizedBox(
+                                              width: 10,
+                                            ),
+                                            Container(
+                                              child: Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    'UV Index',
+                                                    style: TextStyle(
+                                                        color: Color(0xff0A2958)
+                                                            .withValues(
+                                                                alpha: 0.25),
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                        fontSize: 11),
                                                   ),
-                                                )
-                                              ],
+                                                  Text(
+                                                    '${state.weather!.daily?.uvIndexMax.first.toString()}',
+                                                    style: TextStyle(
+                                                        color:
+                                                            Color(0xff0A2958),
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                        fontSize: 16),
+                                                  )
+                                                ],
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: 15,
+                                      ),
+                                      Container(
+                                        margin:
+                                            EdgeInsets.symmetric(vertical: 10),
+                                        width: 1,
+                                        decoration: BoxDecoration(
+                                          color: Color(0xffCED9DC),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: 15,
+                                      ),
+                                      Container(
+                                        child: Row(
+                                          children: [
+                                            Container(
+                                              width: 24,
+                                              height: 24,
+                                              decoration: BoxDecoration(
+                                                  image: DecorationImage(
+                                                      image: AssetImage(
+                                                          'assets/images/homepageimage/humiditylogo.png'))),
                                             ),
-                                          ),
-                                          SizedBox(
-                                            width: 15,
-                                          ),
-                                          Container(
-                                            margin:
-                                                EdgeInsets.symmetric(vertical: 10),
-                                            width: 1,
-                                            decoration: BoxDecoration(
-                                              color: Color(0xffCED9DC),
+                                            SizedBox(
+                                              width: 10,
                                             ),
-                                          ),
-                                          SizedBox(
-                                            width: 15,
-                                          ),
-                                          Container(
-                                            child: Row(
-                                              children: [
-                                                Container(
-                                                  width: 24,
-                                                  height: 24,
-                                                  decoration: BoxDecoration(
-                                                      image: DecorationImage(
-                                                          image: AssetImage(
-                                                              'assets/images/homepageimage/humiditylogo.png'))),
-                                                ),
-                                                SizedBox(
-                                                  width: 10,
-                                                ),
-                                                Container(
-                                                  child: Column(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment.center,
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment.start,
-                                                    children: [
-                                                      Text(
-                                                        'Humidity',
-                                                        style: TextStyle(
-                                                            color: Color(0xff0A2958)
-                                                                .withValues(
-                                                                    alpha: 0.25),
-                                                            fontWeight:
-                                                                FontWeight.w500,
-                                                            fontSize: 11),
-                                                      ),
-                                                      Text(
-                                                        '${weather.current?.relativeHumidity2M}%',
-                                                        style: TextStyle(
-                                                            color: Color(0xff0A2958),
-                                                            fontWeight:
-                                                                FontWeight.w500,
-                                                            fontSize: 16),
-                                                      )
-                                                    ],
+                                            Container(
+                                              child: Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    'Humidity',
+                                                    style: TextStyle(
+                                                        color: Color(0xff0A2958)
+                                                            .withValues(
+                                                                alpha: 0.25),
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                        fontSize: 11),
                                                   ),
-                                                )
-                                              ],
-                                            ),
-                                          ),
-                                        ],
-                                      );
-                                    } else {
-                                      return Text('No data');
-                                    }
-                                  }),
+                                                  Text(
+                                                    '${state.weather?.current?.relativeHumidity2M}%',
+                                                    style: TextStyle(
+                                                        color:
+                                                            Color(0xff0A2958),
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                        fontSize: 16),
+                                                  )
+                                                ],
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  );
+                                } else {
+                                  return Text('No data');
+                                }
+                              }),
                             )
                           ],
                         ),
@@ -619,7 +606,8 @@ class _HomepageState extends State<Homepage> {
                       ),
                       Container(
                         height: 300,
-                        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 16, vertical: 10),
                         decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(15),
@@ -632,7 +620,8 @@ class _HomepageState extends State<Homepage> {
                               ),
                             ]),
                         child: GridView.builder(
-                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 4,
                           ),
                           physics: NeverScrollableScrollPhysics(),
@@ -640,8 +629,8 @@ class _HomepageState extends State<Homepage> {
                           itemBuilder: (BuildContext context, int index) {
                             return GestureDetector(
                               onTap: () {
-                                GoRouter.of(context)
-                                    .push(homeController.listhomeitem[index].link);
+                                GoRouter.of(context).push(
+                                    homeController.listhomeitem[index].link);
                               },
                               child: OneeElementService(
                                   homeitem: homeController.listhomeitem[index]),
@@ -655,7 +644,8 @@ class _HomepageState extends State<Homepage> {
                 if (!_permissionsGranted)
                   Positioned.fill(
                       child: Container(
-                    color: Colors.black54, // Màu nền mờ để làm nổi bật thông báo
+                    color: Colors.black54,
+                    // Màu nền mờ để làm nổi bật thông báo
                     child: AlertDialog(
                       title: Text('Yêu cầu Quyền Vị Trí'),
                       content: Text(

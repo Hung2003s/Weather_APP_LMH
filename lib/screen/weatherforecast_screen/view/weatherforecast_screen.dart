@@ -75,7 +75,7 @@ class _WeatherforecastScreenState extends State<WeatherforecastScreen> {
   @override
   Widget build(BuildContext context) {
     final PageController _pageController =
-        PageController(viewportFraction: 0.2, initialPage: 0, keepPage: true);
+        PageController(viewportFraction: 0.2, initialPage: 0);
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -183,185 +183,180 @@ class _WeatherforecastScreenState extends State<WeatherforecastScreen> {
       body: SafeArea(child: SingleChildScrollView(
         child: BlocBuilder<AppBloc, AppState>(
           builder: (context, state) {
-            return Container(
-              padding: EdgeInsets.only(top: 10),
-              child: Column(
-                children: <Widget>[
-                  FutureBuilder<Weather?>(
-                      future: _hourly,
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return Center(child: CircularProgressIndicator());
-                        } else if (snapshot.hasError) {
-                          return Text('Error: ${snapshot.error}');
-                        } else if (snapshot.hasData && snapshot.data != null) {
-                          final weather = snapshot.data;
-                          print('-----------------------ok: ${weather}');
-                          return Container(
-                            height: 300,
-                            width: MediaQuery.of(context).size.width,
-                            decoration: BoxDecoration(
-                                image: DecorationImage(
-                                    image: AssetImage(
-                                        'assets/images/pixelmap.png'))),
-                            child: Column(
+            if (state.loadingState == LoadingState.loading) {
+              return Center(child: CircularProgressIndicator());
+            } else if (state.loadingState == LoadingState.error) {
+              return Text('Error: ');
+            } else if (state.loadingState == LoadingState.finished) {
+              return Container(
+                padding: EdgeInsets.only(top: 10),
+                child: Column(
+                  children: <Widget>[
+                    Container(
+                      height: 300,
+                      width: MediaQuery.of(context).size.width,
+                      decoration: BoxDecoration(
+                          image: DecorationImage(
+                              image: AssetImage('assets/images/pixelmap.png'))),
+                      child: Column(
+                        children: [
+                          Container(
+                            margin: EdgeInsets.only(top: 10),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Container(
-                                  margin: EdgeInsets.only(top: 10),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Container(
-                                        decoration: BoxDecoration(),
-                                        child: Image(
-                                          image: AssetImage(
-                                              'assets/images/locationicon.png'),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: 10,
-                                      ),
-                                      Container(
-                                        child: Text(
-                                          'New York, USA',
-                                          style: TextStyle(
-                                            color: Color(0xff12203A),
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w400,
-                                          ),
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                Container(
-                                  decoration: BoxDecoration(
-                                      color: Color(0xffFFD900)
-                                          .withValues(alpha: 0.1)),
+                                  decoration: BoxDecoration(),
                                   child: Image(
                                     image: AssetImage(
-                                        'assets/images/weather_forecast/sunshine.png'),
+                                        'assets/images/locationicon.png'),
                                   ),
                                 ),
                                 SizedBox(
-                                  height: 10,
+                                  width: 10,
                                 ),
-                                Text(
-                                  '${state.tempunit == TemperatureUnit.celsius ? weather?.current?.temperature2M : ((weather?.current?.temperature2M)! * 1.8 + 32).toStringAsFixed(2)}'
-                                  '°'
-                                  '${state.tempunit == TemperatureUnit.celsius ? 'C' : 'F'}',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w700,
-                                      fontSize: 64,
-                                      color: Color(0xff12203A)),
-                                ),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                Text(
-                                  'Feel like ${state.tempunit == TemperatureUnit.celsius ? weather?.current?.apparentTemperature : (weather?.current?.apparentTemperature)! * 1.8 + 32}°${state.tempunit == TemperatureUnit.celsius ? 'C' : 'F'}',
-                                  style: TextStyle(
-                                    color: Color(0xff12203A)
-                                        .withValues(alpha: 0.54),
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w400,
+                                Container(
+                                  child: Text(
+                                    'New York, USA',
+                                    style: TextStyle(
+                                      color: Color(0xff12203A),
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w400,
+                                    ),
                                   ),
                                 )
                               ],
                             ),
-                          );
-                        } else {
-                          return const Text('No data');
-                        }
-                      }),
-                  Container(
-                    height: 90,
-                    child: Column(
-                      children: [
-                        Row(
-                          children: [
-                            Center(
-                              child: Container(
-                                height: 60,
-                                width: MediaQuery.of(context).size.width,
-                                child: PageView.builder(
-                                  controller: _pageController,
-                                  itemCount: daytime.length,
-                                  pageSnapping: true,
-                                  itemBuilder: (context, index) {
-                                    return Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 0),
-                                      child: WeatherItem2(
-                                        weathercode: '',
-                                        daytime: daytime[index],
-                                      ),
-                                    );
-                                  },
-                                ),
-                              ),
-                            )
-                          ],
-                        ),
-                        Container(
-                          height: 30,
-                          child: Image(
-                            image: AssetImage(
-                                'assets/images/weather_forecast/scroll.png'),
-                            fit: BoxFit.cover,
                           ),
-                        )
-                      ],
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Container(
+                            height: 105,
+                            decoration: BoxDecoration(
+                                // color: Color(0xffFFD900)
+                                //     .withValues(alpha: 0.1)
+                                ),
+                            child: Image(
+                              image: AssetImage(
+                                'assets/images/weathercode/weather_${state.weather?.current?.weatherCode}.png',
+                              ),
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            '${state.tempunit == TemperatureUnit.celsius ? state.weather?.current?.temperature2M : ((state.weather?.current?.temperature2M)! * 1.8 + 32).toStringAsFixed(2)}'
+                            '°'
+                            '${state.tempunit == TemperatureUnit.celsius ? 'C' : 'F'}',
+                            style: TextStyle(
+                                fontWeight: FontWeight.w700,
+                                fontSize: 64,
+                                color: Color(0xff12203A)),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            'Feel like ${state.tempunit == TemperatureUnit.celsius ? state.weather?.current?.apparentTemperature : (state.weather?.current?.apparentTemperature)! * 1.8 + 32}°${state.tempunit == TemperatureUnit.celsius ? 'C' : 'F'}',
+                            style: TextStyle(
+                              color: Color(0xff12203A).withValues(alpha: 0.54),
+                              fontSize: 16,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          )
+                        ],
+                      ),
                     ),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Container(
-                    child: Column(
-                      children: [
-                        Row(
-                          children: [
-                            Container(
-                              padding: EdgeInsets.only(left: 20),
-                              child: Text(
-                                'Another 7 days',
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 14,
+                    Container(
+                      height: 90,
+                      child: Column(
+                        children: [
+                          Row(
+                            children: [
+                              Center(
+                                child: Container(
+                                  height: 60,
+                                  width: MediaQuery.of(context).size.width,
+                                  child: PageView.builder(
+                                    controller: _pageController,
+                                    itemCount: daytime.length,
+                                    pageSnapping: true,
+                                    itemBuilder: (context, index) {
+                                      return Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 0),
+                                        child: WeatherItem2(
+                                          weathercode: '',
+                                          daytime: daytime[index],
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                          Container(
+                            height: 30,
+                            child: Image(
+                              image: AssetImage(
+                                  'assets/images/weather_forecast/scroll.png'),
+                              fit: BoxFit.cover,
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Container(
+                      child: Column(
+                        children: [
+                          Row(
+                            children: [
+                              Container(
+                                padding: EdgeInsets.only(left: 20),
+                                child: Text(
+                                  'Another 7 days',
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 14,
+                                  ),
                                 ),
                               ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Container(
-                          padding: EdgeInsets.symmetric(horizontal: 20),
-                          height: MediaQuery.of(context).size.height,
-                          child: ListView.builder(
-                              physics: NeverScrollableScrollPhysics(),
-                              itemCount: 7,
-                              itemBuilder: (context, index) {
-                                return WeatherforecastItem(
-                                  day: 'MON',
-                                  weathercode: '',
-                                  weatherState: 'SUN',
-                                );
-                              }),
-                        )
-                      ],
-                    ),
-                  )
-                ],
-              ),
-            );
+                            ],
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Container(
+                            padding: EdgeInsets.symmetric(horizontal: 20),
+                            height: MediaQuery.of(context).size.height,
+                            child: ListView.builder(
+                                physics: NeverScrollableScrollPhysics(),
+                                itemCount: 7,
+                                itemBuilder: (context, index) {
+                                  return WeatherforecastItem(
+                                    day: 'MON',
+                                    weathercode: '',
+                                    weatherState: 'SUN',
+                                  );
+                                }),
+                          )
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+              );
+            } else {
+              return const Text('No data');
+            }
           },
         ),
       )),

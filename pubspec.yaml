@@ -54,6 +54,7 @@ flutter:
     - assets/images/suntimeimage/
     - assets/images/visibilityimage/
     - assets/images/weather_forecast/
+    - assets/images/weathercode/
     - assets/images/introimage/
   # fonts:
   #   - family: Schyler

@@ -1,5 +1,7 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:weatherapp/bloc/app_bloc/app_bloc.dart';
 import 'package:weatherapp/components/appbar_setting.dart';
 import 'package:weatherapp/components/diagram_screen.dart';
 import 'package:syncfusion_flutter_charts/charts.dart' as syncfusion;
@@ -28,7 +30,7 @@ class _WindScreenState extends State<WindScreen> {
     try {
       Weather? weather = await weatherRepository.getCurrentLocationAndFetchWeather();
       //if (weather != null) {
-        return await weatherRepository.processWeatherDataForChart(weather, 'windSpeed10M');
+        return await weatherRepository.processWeatherDataForChart(weather!, 'windSpeed10M');
      // } else {
         // Handle the case where weather data is not available
         //return [];
@@ -106,15 +108,7 @@ class _WindScreenState extends State<WindScreen> {
                             ),
                             series: <syncfusion.CartesianSeries>[
                               syncfusion.SplineAreaSeries<ChartData, String>(
-                                dataSource: windData
-                                // [
-                                //   ChartData('Jan', 35,),
-                                //   ChartData('Feb', 28, ),
-                                //   ChartData('Mar', 34, ),
-                                //   ChartData('Apr', 32, ),
-                                //   ChartData('May', 40, )
-                                // ]
-                                ,
+                                dataSource: windData,
                                 // Bind the color for all the data points from the data source
                                 //pointColorMapper:(ChartData data, _) => data.color,
                                 xValueMapper: (ChartData data, _) =>

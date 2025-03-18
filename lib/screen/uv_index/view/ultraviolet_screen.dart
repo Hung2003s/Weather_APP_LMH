@@ -16,12 +16,10 @@ class UltravioletScreen extends StatefulWidget {
 
 class _UltravioletScreenState extends State<UltravioletScreen> {
   final WeatherRepository weatherRepository = WeatherRepository();
-  late Future<Weather?> _hourly;
 
   @override
   void initState() {
     super.initState();
-    _hourly = weatherRepository.getCurrentLocationAndFetchWeather();
   }
 
   @override
@@ -29,16 +27,14 @@ class _UltravioletScreenState extends State<UltravioletScreen> {
     return Scaffold(
       appBar: AppbarSetting(titletext: 'UV Index', link: '/'),
       backgroundColor: Color(0xffF5F6FC),
-      body: FutureBuilder<Weather?>(
-          future: _hourly,
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(child: CircularProgressIndicator());
-            } else if (snapshot.hasError) {
-              return Text('Error: ${snapshot.error}');
-            } else if (snapshot.hasData) {
-              final weather = snapshot.data;
-              print('----------------ok ${weather?.current.toString()}');
+      body: BlocBuilder<AppBloc, AppState>(
+          builder: (context, state) {
+            if (state.loadingState == LoadingState.loading) {
+              return Center(
+                  child: CircularProgressIndicator());
+            } else if (state.loadingState == LoadingState.error) {
+              return Text('Error: ');
+            } else if (state.loadingState == LoadingState.finished) {
               return Column(
                 children: [
                   BlocBuilder<AppBloc, AppState>(
@@ -46,14 +42,14 @@ class _UltravioletScreenState extends State<UltravioletScreen> {
                       print('---------------ok: ${state.weather.toString()}');
                       return CirclePage(
                         color1: Color(0xffF36253),
-                        parameter: weather?.daily?.uvIndexMax.first.toString(),
+                        parameter: state.weather?.daily?.uvIndexMax.first.toString(),
                         color2: Color(0xffF9ED4B),
                         located:
-                            'latitude: ${state.latitude}, longitude: ${state.longitude}',
+                            'latitude: ${state.latitude.toStringAsFixed(2)}, longitude: ${state.longitude.toStringAsPrecision(2)}',
                         textAirQuality:
-                            '${(weather?.daily!.uvIndexMax.first)! < 3 ? 'Low'
-                                : (weather?.daily!.uvIndexMax.first)! < 6 ? 'Moderate'
-                                : (weather?.daily!.uvIndexMax.first)! < 8 ? 'Very High' : 'Extreme'}',
+                            '${(state.weather?.daily!.uvIndexMax.first)! < 3 ? 'Low'
+                                : (state.weather?.daily!.uvIndexMax.first)! < 6 ? 'Moderate'
+                                : (state.weather?.daily!.uvIndexMax.first)! < 8 ? 'Very High' : 'Extreme'}',
                         // _getUVIndexCategory(currentUVIndex),
                         textState: 'Good',
                         unit: '',
