@@ -67,7 +67,7 @@ class _VisibilityScreenState extends State<VisibilityScreen> {
                                             0.62137199)
                                         .toStringAsFixed(2),
                                 color2: state.endColor,
-                                located: 'Hoài Đức, Hà Nội',
+                                located: '${state.locationName}',
                                 textAirQuality: '',
                                 textState: '',
                                 unit:

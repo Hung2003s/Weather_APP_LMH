@@ -64,7 +64,7 @@ class _SnowFallScreenState extends State<SnowFallScreen> {
               children: [
                 DiagramScreen(
                     textvalue: latestSnowfall.toStringAsFixed(2),
-                    located: 'New York, USA',
+                    located: '${state.locationName}',
                     time: latestTime,
                     textunit: 'cm'),
                 SizedBox(

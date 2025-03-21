@@ -108,7 +108,8 @@ class AppBloc extends Bloc<AppEvent, AppState> {
       if (placemarks != null && placemarks.isNotEmpty) {
         Placemark place = placemarks[0];
           emit(state.copyWith(
-              locationName:  "${place.street}, ${place.locality}, ${place.administrativeArea}, ${place.country}"
+            //${place.street}, ${place.locality},
+              locationName:  "${place.locality}, ${place.administrativeArea}, ${place.country}"
           )); ;
       } else {
         emit(state.copyWith(

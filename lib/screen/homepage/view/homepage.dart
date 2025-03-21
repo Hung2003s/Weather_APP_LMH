@@ -348,6 +348,7 @@ class _HomepageState extends State<Homepage> {
                                           color: Color(0xff0A2958),
                                           size: 14,
                                         ),
+                                        SizedBox(width: 5),
                                         Text(
                                           '${state.locationName}',
                                           style: TextStyle(

@@ -171,7 +171,7 @@ class _WeatherforecastScreenState extends State<WeatherforecastScreen> {
                                 ),
                                 Container(
                                   child: Text(
-                                    'New York, USA',
+                                    '${state.locationName}',
                                     style: TextStyle(
                                       color: Color(0xff12203A),
                                       fontSize: 14,

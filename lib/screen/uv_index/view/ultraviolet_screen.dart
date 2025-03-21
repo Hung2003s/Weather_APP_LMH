@@ -44,7 +44,7 @@ class _UltravioletScreenState extends State<UltravioletScreen> {
                         parameter: state.weather?.daily?.uvIndexMax.first.toString(),
                         color2: Color(0xffF9ED4B),
                         located:
-                            'latitude: ${state.latitude.toStringAsFixed(2)}, longitude: ${state.longitude.toStringAsPrecision(2)}',
+                            '${state.locationName}',
                         textAirQuality:
                             '${(state.weather?.daily!.uvIndexMax.first)! < 3 ? 'Low'
                                 : (state.weather?.daily!.uvIndexMax.first)! < 6 ? 'Moderate'

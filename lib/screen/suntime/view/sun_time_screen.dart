@@ -45,7 +45,7 @@ class _SunTimeScreenState extends State<SunTimeScreen> {
                       ),
                       Center(
                         child: Text(
-                          'Hoài Đức, Hà Nội',
+                          '${state.locationName}',
                           style: TextStyle(
                               fontWeight: FontWeight.w400, fontSize: 14),
                         ),

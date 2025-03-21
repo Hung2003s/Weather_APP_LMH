@@ -64,7 +64,7 @@ class _PrecipitationScreenState extends State<PrecipitationScreen> {
               children: [
                 DiagramScreen(
                     textvalue: latestPrecipitation.toStringAsFixed(2),
-                    located: 'Hoài Đức, Hà Nội',
+                    located: '${state.locationName}',
                     time: latestTime,
                     textunit: 'mm'),
                 SizedBox(

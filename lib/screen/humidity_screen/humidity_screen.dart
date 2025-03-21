@@ -39,13 +39,13 @@ class _HumidityScreenState extends State<HumidityScreen> {
                   // return Container();
                   return CirclePage(
                     color1: Color(0xff4BCFF9),
-                    parameter: state.weather!.current?.relativeHumidity2M,
+                    parameter: '${state.weather!.current?.relativeHumidity2M}%',
                     color2: Color(0xff5363F3),
-                    located: 'Hoài Đức, Hà Nội',
+                    located: '${state.locationName}',
                     textAirQuality: '',
                     textState: '',
                     unit: '%',
-                    isUnit: true,
+                    isUnit: false,
                   );
                 } else {
                   return const Text('No data');

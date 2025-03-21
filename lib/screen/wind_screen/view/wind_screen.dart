@@ -64,7 +64,7 @@ class _WindScreenState extends State<WindScreen> {
               children: [
                 DiagramScreen(
                     textvalue: latestWindSpeed.toStringAsFixed(2),
-                    located: 'Hoài Đức, Hà Nội',
+                    located: '${state.locationName}',
                     time: latestTime,
                     textunit: 'Km/h'),
                 SizedBox(

@@ -63,7 +63,7 @@ class _AirQualityScreenState extends State<AirQualityScreen> {
                 color1: color1,
                 parameter: state.weather?.current?.windSpeed10M,
                 color2: color2,
-                located: 'Hoài Đức, Hà Nội',
+                located: '${state.locationName}',
                 textAirQuality: textAirQuality,
                 textState: textState,
                 unit: '',
