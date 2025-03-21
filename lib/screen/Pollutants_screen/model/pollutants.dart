@@ -4,7 +4,6 @@ class Pollutants {
   int _color;
   int _textcolor;
 
-
   Pollutants(this._name, this._value, this._color, this._textcolor);
 
   int get textcolor => _textcolor;

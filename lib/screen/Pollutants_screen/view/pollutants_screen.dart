@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:weatherapp/components/appbar_setting.dart';
-
 import '../component/pollutants_screen_item.dart';
 import '../controller/polluntant_controller.dart';
 

@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:intl/intl.dart';
 import 'package:weatherapp/repository/weather_repository.dart';
@@ -20,6 +21,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     on<SetLocationEvent>(_onSetAppLocation);
     on<FetchDataEvent>(_onFetchData);
     on<AddWeather>(_onAddWeather);
+    on<SetLocationName>(_onSetLocationName);
     //Language
     on<SetAcronymEvent>(_onSetAcronym);
     //Setting
@@ -33,6 +35,12 @@ class AppBloc extends Bloc<AppEvent, AppState> {
 
     //chartData
     on<SetDataToChartEvent>(_onLoadDataToChart);
+
+
+    //Weather forecast
+    // on<ChangeTimeData>(_onChangeTimeData);
+    on<LoadDayTimeData>(_onLoadDayTimeData);
+    on<LoadWeekTimeData>(_onLoadWeekTimeData);
   }
 
 
@@ -68,8 +76,10 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   //fetch Data
   void _onFetchData(FetchDataEvent event, Emitter<AppState> emit) async {
     WeatherRepository weatherRepository = WeatherRepository();
+
+
     final String url =
-        "${baseUrl}?latitude=${state.latitude}&longitude=${state.longitude}&daily=weather_code,sunset,uv_index_max,rain_sum,precipitation_hours,sunrise,snowfall_sum,precipitation_sum,temperature_2m_max,precipitation_probability_max&hourly=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation_probability,rain,snowfall,weather_code,visibility,wind_speed_10m,temperature_80m,uv_index,temperature_1000hPa,relative_humidity_1000hPa&models=best_match&current=temperature_2m,wind_speed_10m,relative_humidity_2m,snowfall,precipitation,apparent_temperature,weather_code,wind_direction_10m,rain&forecast_hours=6&past_hours=6";
+        "${baseUrl}?latitude=${state.latitude}&longitude=${state.longitude}&daily=weather_code,sunset,temperature_2m_max,temperature_2m_min,uv_index_max,rain_sum,precipitation_hours,snowfall_sum,precipitation_sum,precipitation_probability_max,apparent_temperature_max,wind_speed_10m_max,sunrise&hourly=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation_probability,rain,snowfall,wind_speed_10m,visibility,weather_code,temperature_80m,uv_index,relative_humidity_1000hPa&models=best_match&current=temperature_2m,apparent_temperature,precipitation,relative_humidity_2m,weather_code,wind_direction_10m,snowfall,wind_speed_10m,rain&timezone=Asia%2FBangkok&fbclid=IwY2xjawIfhCpleHRuA2FlbQIxMAABHU_l6AU1rH2_R4tzELC_mWSMt_WAySH-hh5btYTDw_iP0RMmAPbhj5jG0A_aem_qnm23evz_D-4tp0sHLqbPw&forecast_hours=6&past_hours=6";
     try {
       final jsonData = await weatherRepository.callAPI(url);
       print('Data fetched successfully: $jsonData');
@@ -84,7 +94,33 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   }
 
   void _onAddWeather(AddWeather event, Emitter<AppState> emit) async {
-    emit(state.copyWith(weather: event.weather));
+    emit(
+        state.copyWith(
+            weather: event.weather,
+          // dayTimeData: event.weather.hourly?.time
+        ));
+  }
+
+  void _onSetLocationName(SetLocationName event, Emitter<AppState> emit)  async {
+    try {
+      List<Placemark> placemarks = await placemarkFromCoordinates(state.latitude, state.longitude);
+
+      if (placemarks != null && placemarks.isNotEmpty) {
+        Placemark place = placemarks[0];
+          emit(state.copyWith(
+              locationName:  "${place.street}, ${place.locality}, ${place.administrativeArea}, ${place.country}"
+          )); ;
+      } else {
+        emit(state.copyWith(
+            locationName:  "location not found"
+        ));
+      }
+    } catch (e) {
+      print(e);
+      emit(state.copyWith(
+          locationName:  'Error retrieving location'
+      ));
+    }
   }
 
   // language
@@ -169,7 +205,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     {
       List<num>? dataList;
       //String unit = '';
-      switch (state.dataType) {
+      switch (event.dataType) {
         case 'windSpeed10M':
           dataList = hourly?.windSpeed10M;
           // unit = 'Km/h'; // Hoặc 'm/s' tùy thuộc vào API
@@ -185,29 +221,73 @@ class AppBloc extends Bloc<AppEvent, AppState> {
       // Thêm các case khác cho các loại dữ liệu khác (ví dụ: temperature2M, relativeHumidity2M, v.v.)
         default:
           print('Loại dữ liệu không được hỗ trợ: ${state.dataType}');
-          emit(state.copyWith(
-            chartData: dataPoints
-          ));
       }
       // if(dataList != null) {
       for (int i = 0; i < hourly!.time.length; i++) {
-        String formattedTime = convertTimeFormattoH(hourly.time[i]);
+        String formattedTime = convertHour(hourly.time[i]);
         final value = dataList?[i].toDouble();
         dataPoints.add(ChartData(
           formattedTime,
           value!,
         ));
       }
+
+      emit(state.copyWith(
+        chartData: dataPoints
+      ));
       //  }
 
     }
   }
-  String convertTimeFormattoH(String inputTime) {
-    // 1. Parse chuỗi thời gian đầu vào thành đối tượng DateTime
+
+
+  void _onLoadDayTimeData(LoadDayTimeData event, Emitter<AppState> emit) {
+     List<String>? DataPoint = state.weather?.hourly?.time ;
+     List<String>? daytime = [];
+    for (int i = 0; i < DataPoint!.length; i++) {
+      String formattedTime = convertHourMinute(DataPoint[i]);
+      daytime.add(
+        formattedTime,
+      );
+    }
+    emit(state.copyWith(
+      dayTimeData: daytime
+    ));
+  }
+  void _onLoadWeekTimeData(LoadWeekTimeData event, Emitter<AppState> emit) {
+     List<DateTime>? dataPoint = state.weather?.daily?.time ;
+    List<String> weektime = [];
+    for (int i = 0; i < dataPoint!.length; i++) {
+      String formattedTime = convertWeekday(dataPoint[i]);
+      weektime.add(
+        formattedTime,
+      );
+    }
+    emit(state.copyWith(
+        weekTimeData: weektime
+    ));
+  }
+
+
+
+
+
+
+
+  //hàm hỗ trợ quy đổi thời gian
+  String convertHour(String inputTime) {
     DateTime dateTime = DateTime.parse(inputTime);
-    // 2. Định dạng đối tượng DateTime thành chuỗi giờ:phút (HH:mm)
     String formattedTime = DateFormat("H'h'").format(dateTime);
-    // 3. Trả về chuỗi thời gian đã định dạng
+    return formattedTime;
+  }
+  String convertHourMinute(String inputTime) {
+    DateTime dateTime = DateTime.parse(inputTime);
+    String formattedTime = DateFormat('HH:mm').format(dateTime);
+    return formattedTime;
+  }
+  String convertWeekday(DateTime inputTime) {
+
+    String formattedTime = DateFormat("EEE").format(inputTime).toUpperCase();
     return formattedTime;
   }
 }

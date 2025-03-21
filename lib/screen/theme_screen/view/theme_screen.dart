@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:weatherapp/components/appbar_setting.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../bloc/app_bloc/app_bloc.dart';

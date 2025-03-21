@@ -15,6 +15,7 @@ final class AppState extends Equatable {
   //app
   final double latitude;
   final double longitude;
+  final String locationName;
   final Weather? weather;
   LoadingState loadingState;
 
@@ -34,18 +35,20 @@ final class AppState extends Equatable {
   final Color buttonColor; // Màu của VisibilityButton
   final double visibilityParameter;
 
-
   //chart data
   final List<ChartData> chartData;
   final String dataType;
 
+  //weather_forecast
+  final List<String> dayTimeData;
+  final List<String> weekTimeData;
 
-
-  AppState( {
+  AppState({
     this.loadingState = LoadingState.pure,
     required this.latitude,
     required this.longitude,
     this.weather,
+    required this.locationName,
 
     //language
     required this.acronym,
@@ -63,13 +66,13 @@ final class AppState extends Equatable {
     required this.buttonColor,
     required this.visibilityParameter,
 
-
     //uv index
     required this.chartData,
     required this.dataType,
 
-
-
+    //weatherforecast
+    required this.dayTimeData,
+    required this.weekTimeData,
   });
 
   factory AppState.init() {
@@ -93,7 +96,10 @@ final class AppState extends Equatable {
         buttonColor: Color(0xff4DBFF9),
         visibilityParameter: 5.0,
         chartData: [],
-        dataType: ''
+        dataType: '',
+        dayTimeData: [],
+        weekTimeData: [],
+        locationName: '',
     );
   }
 
@@ -102,6 +108,7 @@ final class AppState extends Equatable {
     double? longitude,
     LoadingState? loadingState,
     Weather? weather,
+    String? locationName,
 
     // language
     String? acronym,
@@ -119,7 +126,10 @@ final class AppState extends Equatable {
     Color? buttonColor, // Màu của VisibilityButton
     double? visibilityParameter,
     List<ChartData>? chartData,
+
     String? dataType,
+    List<String>? dayTimeData,
+    List<String>? weekTimeData,
   }) {
     return AppState(
       latitude: latitude ?? this.latitude,
@@ -143,15 +153,17 @@ final class AppState extends Equatable {
       visibilityParameter: visibilityParameter ?? this.visibilityParameter,
       chartData: chartData ?? this.chartData,
       dataType: dataType ?? this.dataType,
-
-
+      dayTimeData: dayTimeData ?? this.dayTimeData,
+      weekTimeData: weekTimeData ?? this.weekTimeData,
+      locationName: locationName ?? this.locationName,
     );
   }
 
   @override
-  List<Object?> get props => [
+  List<Object?> get props =>
+      [
         //app
-        latitude, longitude, loadingState, weather,
+        latitude, longitude, loadingState, weather, locationName,
         //language
         acronym,
         //setting
@@ -161,6 +173,9 @@ final class AppState extends Equatable {
         visibilityUnit, beginColor, endColor, buttonColor, visibilityParameter,
 
         //chartData
-        chartData,dataType
+        chartData, dataType,
+
+        //weather forecast
+        dayTimeData, weekTimeData,
       ];
 }

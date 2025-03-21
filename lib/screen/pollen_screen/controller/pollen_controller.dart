@@ -9,7 +9,4 @@ class PollenController {
     Pollen('Olive Pollen', 'assets/images/pollenimage/olivepollen.png', 0xffD4FFBA),
     Pollen('Ragweed Pollen', 'assets/images/pollenimage/ragweedpollen.png', 0xffE5D4FA),
   ];
-
-
-
 }

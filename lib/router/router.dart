@@ -6,7 +6,7 @@ import '../screen/air_quality/air_quality_screen.dart';
 import '../screen/compass/compass_screen.dart';
 import '../screen/homepage/view/homepage.dart';
 import '../screen/humidity_screen/humidity_screen.dart';
-import '../screen/intro/intro_screen.dart';
+import '../screen/intro/screen/intro_screen.dart';
 import '../screen/language_screen/view/language_screen.dart';
 import '../screen/pollen_screen/view/pollen_screen.dart';
 import '../screen/precipitation_screen/view/precipitation_screen.dart';

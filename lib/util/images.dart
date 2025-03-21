@@ -1,8 +1,3 @@
-
-
-
-
-
 const themepic1 = 'assets/images/themeimage/themepic1.jpg';
 const themepic2 = 'assets/images/themeimage/themepic2.jpg';
 const themepic3 = 'assets/images/themeimage/themepic3.jpg';

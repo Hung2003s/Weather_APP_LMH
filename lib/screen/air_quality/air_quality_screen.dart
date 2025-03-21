@@ -1,12 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'package:weatherapp/components/appbar_setting.dart';
 import 'package:weatherapp/components/circle_page.dart';
-
 import '../../bloc/app_bloc/app_bloc.dart';
-import '../../model/weather.dart';
 import '../../repository/weather_repository.dart';
 
 class AirQualityScreen extends StatefulWidget {
@@ -19,14 +15,13 @@ class AirQualityScreen extends StatefulWidget {
 class _AirQualityScreenState extends State<AirQualityScreen> {
   double textParameter = 30;
   WeatherRepository weatherRepository = WeatherRepository();
- // late Future<Weather?> _current;
+
+  // late Future<Weather?> _current;
 
   @override
   void initState() {
     super.initState();
-   // _current = weatherRepository.getCurrentLocationAndFetchWeather();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -58,28 +53,26 @@ class _AirQualityScreenState extends State<AirQualityScreen> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          BlocBuilder<AppBloc, AppState>(
-              builder: (context, state) {
-                if (state.loadingState == LoadingState.loading) {
-                  return Center(
-                      child: CircularProgressIndicator());
-                } else if (state.loadingState == LoadingState.error) {
-                  return Text('Error: ');
-                } else if (state.loadingState == LoadingState.finished) {
-                  return CirclePage(
-                    color1: color1,
-                    parameter: state.weather?.current?.windSpeed10M,
-                    color2: color2,
-                    located: 'Hoài Đức, Hà Nội',
-                    textAirQuality: textAirQuality,
-                    textState: textState,
-                    unit: '',
-                    isUnit: false,
-                  );
-                } else {
-                  return const Text('No data');
-                }
-              })
+          BlocBuilder<AppBloc, AppState>(builder: (context, state) {
+            if (state.loadingState == LoadingState.loading) {
+              return Center(child: CircularProgressIndicator());
+            } else if (state.loadingState == LoadingState.error) {
+              return Text('Error: ');
+            } else if (state.loadingState == LoadingState.finished) {
+              return CirclePage(
+                color1: color1,
+                parameter: state.weather?.current?.windSpeed10M,
+                color2: color2,
+                located: 'Hoài Đức, Hà Nội',
+                textAirQuality: textAirQuality,
+                textState: textState,
+                unit: '',
+                isUnit: false,
+              );
+            } else {
+              return const Text('No data');
+            }
+          })
         ],
       ),
     );

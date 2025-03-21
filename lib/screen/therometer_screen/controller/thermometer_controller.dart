@@ -1,4 +1,3 @@
-
 import "../../../util/images.dart";
 
 class ThermometerController {

@@ -1,13 +1,11 @@
-
-
 import 'package:flutter/material.dart';
-
 import '../model/app_service.dart';
-
 
 class OneeElementService extends StatelessWidget {
   final AppService homeitem;
+
   const OneeElementService({super.key, required this.homeitem});
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -50,8 +48,7 @@ class OneeElementService extends StatelessWidget {
                   color: Color(0xff081D3F),
                   fontSize: 12,
                   fontWeight: FontWeight.w500,
-                  height: 0.9
-              ),
+                  height: 0.9),
               textAlign: TextAlign.center,
             ),
           )

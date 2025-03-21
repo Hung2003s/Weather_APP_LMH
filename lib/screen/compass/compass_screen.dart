@@ -1,8 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_compass/flutter_compass.dart';
 import 'dart:math';
-import 'package:flutter/services.dart';
 import 'package:weatherapp/components/appbar_setting.dart';
 
 class CompassScreen extends StatefulWidget {
@@ -47,7 +45,8 @@ class _CompassScreenState extends State<CompassScreen> {
                   Center(
                     child: Text(
                       'Hoài Đức, Hà Nội',
-                      style: TextStyle(fontWeight: FontWeight.w400, fontSize: 14),
+                      style:
+                          TextStyle(fontWeight: FontWeight.w400, fontSize: 14),
                     ),
                   ),
                 ],

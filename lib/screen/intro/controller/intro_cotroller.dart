@@ -1,6 +1,5 @@
 
 import '../model/introModel.dart';
-
 class IntroController {
   List<IntroModel> listIntro = [
     IntroModel(

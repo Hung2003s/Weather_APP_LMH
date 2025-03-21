@@ -1,5 +1,4 @@
 import '../model/pollutants.dart';
-
 class PolluntantController {
   final List<Pollutants> listPollutants = [
     Pollutants('NO', 1200, 0xffC8F0DA, 0xff01C754),

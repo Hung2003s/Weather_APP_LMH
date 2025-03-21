@@ -3,9 +3,7 @@ import '../model/pollutants.dart';
 
 class OneElementPollutant extends StatefulWidget {
   final Pollutants pollutants;
-
   const OneElementPollutant({super.key, required this.pollutants});
-
   @override
   State<OneElementPollutant> createState() => _OneElementPollutantState();
 }

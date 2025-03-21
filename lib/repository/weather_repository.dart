@@ -55,7 +55,7 @@ class WeatherRepository {
     required double longitude,
   }) async {
     final String url =
-        "${baseUrl}?latitude=$latitude&longitude=$longitude&daily=weather_code,sunset,uv_index_max,rain_sum,precipitation_hours,sunrise,snowfall_sum,precipitation_sum,temperature_2m_max,precipitation_probability_max&hourly=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation_probability,rain,snowfall,weather_code,visibility,wind_speed_10m,temperature_80m,uv_index,temperature_1000hPa,relative_humidity_1000hPa&models=best_match&current=temperature_2m,wind_speed_10m,relative_humidity_2m,snowfall,precipitation,apparent_temperature,weather_code,wind_direction_10m,rain&forecast_hours=6&past_hours=6";
+        "${baseUrl}?latitude=$latitude&longitude=$longitude&daily=weather_code,sunset,temperature_2m_max,temperature_2m_min,uv_index_max,rain_sum,precipitation_hours,snowfall_sum,precipitation_sum,precipitation_probability_max,apparent_temperature_max,wind_speed_10m_max,sunrise&hourly=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation_probability,rain,snowfall,wind_speed_10m,visibility,weather_code,temperature_80m,uv_index,relative_humidity_1000hPa&models=best_match&current=temperature_2m,apparent_temperature,precipitation,relative_humidity_2m,weather_code,wind_direction_10m,snowfall,wind_speed_10m,rain&timezone=Asia%2FBangkok&fbclid=IwY2xjawIfhCpleHRuA2FlbQIxMAABHU_l6AU1rH2_R4tzELC_mWSMt_WAySH-hh5btYTDw_iP0RMmAPbhj5jG0A_aem_qnm23evz_D-4tp0sHLqbPw&forecast_hours=6&past_hours=6";
     try {
       final jsonData = await callAPI(url);
       return Weather.fromJson(jsonData);
@@ -80,57 +80,5 @@ class WeatherRepository {
         longitude: 105.8048, // Hà Nội (mặc định)
       );
     }
-  }
-
-  //xu ly thoi gian
-  String convertTimeFormattoH(String inputTime) {
-    // 1. Parse chuỗi thời gian đầu vào thành đối tượng DateTime
-    DateTime dateTime = DateTime.parse(inputTime);
-    // 2. Định dạng đối tượng DateTime thành chuỗi giờ:phút (HH:mm)
-    String formattedTime = DateFormat("H'h'").format(dateTime);
-    // 3. Trả về chuỗi thời gian đã định dạng
-    return formattedTime;
-  }
-
-  Future<List<ChartData>> processWeatherDataForChart(Weather weather, String datatype) async {
-    List<ChartData> dataPoints = [];
-    final hourly = weather.hourly;
-    if (hourly != null
-        // && hourly.time != null
-        )
-    {
-      List<num>? dataList;
-      //String unit = '';
-      switch (datatype) {
-        case 'windSpeed10M':
-          dataList = hourly.windSpeed10M;
-         // unit = 'Km/h'; // Hoặc 'm/s' tùy thuộc vào API
-          break;
-        case 'snowfall':
-          dataList = hourly.snowfall;
-         // unit = 'cm'; // Hoặc 'mm' tùy thuộc vào API
-          break;
-        case 'precipitation':
-          dataList = hourly.precipitationProbability;
-         // unit = 'mm';
-          break;
-      // Thêm các case khác cho các loại dữ liệu khác (ví dụ: temperature2M, relativeHumidity2M, v.v.)
-        default:
-          print('Loại dữ liệu không được hỗ trợ: $datatype');
-          return dataPoints;
-      }
-     // if(dataList != null) {
-        for (int i = 0; i < hourly.time.length; i++) {
-          String formattedTime = convertTimeFormattoH(hourly.time[i]);
-          final value = dataList[i].toDouble();
-          dataPoints.add(ChartData(
-            formattedTime,
-            value,
-          ));
-        }
-    //  }
-
-    }
-    return dataPoints;
   }
 }

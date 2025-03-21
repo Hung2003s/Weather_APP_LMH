@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weatherapp/components/appbar_setting.dart';
 import '../../../bloc/app_bloc/app_bloc.dart';
-
 import '../component/language_screen_item.dart';
 import '../controller/language_controller.dart';
 

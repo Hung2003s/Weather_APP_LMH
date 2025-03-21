@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'package:weatherapp/bloc/app_bloc/app_bloc.dart';
 import 'package:weatherapp/components/appbar_setting.dart';
 import 'package:weatherapp/components/circle_page.dart';
-import 'package:weatherapp/model/weather.dart';
 import 'package:weatherapp/repository/weather_repository.dart';
-
 import '../component/visibility_switch.dart';
 
 class VisibilityScreen extends StatefulWidget {

@@ -1,10 +1,8 @@
-
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-
-import '../../router/router.dart';
-import 'component/intro.dart';
-import 'controller/intro_cotroller.dart';
+import '../../../router/router.dart';
+import '../component/intro.dart';
+import '../controller/intro_cotroller.dart';
 
 
 
@@ -52,7 +50,7 @@ class IntroScreenState extends State<IntroScreen> {
           GestureDetector(
             onTap: () {
               if (currentIndex == introController.listIntro.length - 1) {
-                GoRouter.of(context).go(AppRouter.homeScreen);
+                GoRouter.of(context).push(AppRouter.homeScreen);
               } else {
                 controller.nextPage(
                   duration: Duration(milliseconds: 100),
