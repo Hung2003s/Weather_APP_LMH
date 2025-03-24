@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weatherapp/router/router.dart';
-import 'bloc/app_bloc/app_bloc.dart';
+
+import 'controller/bloc/app_bloc/app_bloc.dart';
+
+
+
 
 
 void main() {
