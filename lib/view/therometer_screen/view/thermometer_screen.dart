@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import '../../../controller/bloc/app_bloc/app_bloc.dart';
+import '../../../util/thermometer_data.dart';
 import '../../../widget/appbar_setting.dart';
 import 'thermometer_screen_item.dart';
-import '../../../controller/thermometer_controller.dart';
 
 
 class ThermometerScreen extends StatefulWidget {
@@ -14,7 +15,6 @@ class ThermometerScreen extends StatefulWidget {
 }
 
 class _ThermometerScreenState extends State<ThermometerScreen> {
-  ThermometerController thermometerController = ThermometerController();
   int selectindex = 0;
   @override
   Widget build(BuildContext context) {
@@ -31,21 +31,19 @@ class _ThermometerScreenState extends State<ThermometerScreen> {
               mainAxisSpacing: 20,
               crossAxisSpacing: 14,
               childAspectRatio: 0.6),
-          itemCount: thermometerController.listThermometers.length,
+          itemCount: listThermometers.length,
           itemBuilder: (BuildContext context, int index) {
-            final thermometerlist =
-                thermometerController.listThermometers[index];
+            final thermometer = listThermometers[index];
             return GestureDetector(
                 onTap: () {
-                  context.read<AppBloc>().add(
-                      SetThermometerEvent(imageThermometer: thermometerlist));
-                  setState(() {
+                  context.read<AppBloc>().add(SetThermometerEvent(imageThermometer: thermometer));
+                setState(() {
                     selectindex = index;
                   });
                 },
                 child: OneElementThermometerScreen(
-                    image: thermometerlist.toString(),
-                  choose: selectindex == index,),
+                image: thermometer.toString(),
+                choose: selectindex == index,),
             );
           },
         ),

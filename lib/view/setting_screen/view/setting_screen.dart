@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import '../../../util/setting_item_data.dart';
 import '../../../widget/appbar_setting.dart';
 import 'setting_screen_item.dart';
-import '../../../controller/setting_controller.dart';
+
 
 
 class SettingScreen extends StatefulWidget {
@@ -14,8 +15,7 @@ class SettingScreen extends StatefulWidget {
 
 class _SettingScreenState extends State<SettingScreen> {
   
-  SettingController settingController = SettingController();
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,13 +28,13 @@ class _SettingScreenState extends State<SettingScreen> {
           children: <Widget>[
             Expanded(
               child: ListView.builder(
-                  itemCount: settingController.listSettingItem.length,
+                  itemCount: listSettingItem.length,
                   itemBuilder: (BuildContext context, int index) {
                     return GestureDetector(
                       onTap: () {
-                        GoRouter.of(context).push(settingController.listSettingItem[index].linksetting);
+                        GoRouter.of(context).push(listSettingItem[index].linksetting);
                       },
-                        child: OneElementSettingScreen(settingItem: settingController.listSettingItem[index],));
+                        child: OneElementSettingScreen(settingItem: listSettingItem[index],));
                   }),
             )
           ],

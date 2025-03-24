@@ -3,12 +3,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:location/location.dart' as locate;
 import 'package:weatherapp/model/weather.dart';
 import 'package:weatherapp/repository/weather_repository.dart';
 import '../../../controller/bloc/app_bloc/app_bloc.dart';
+import '../../../util/service_data.dart';
 import '../../../widget/custom_button.dart';
 import 'home_item.dart';
-import '../../../controller/home_controller.dart';
+
 import 'package:permission_handler/permission_handler.dart';
 
 class Homepage extends StatefulWidget {
@@ -19,19 +21,12 @@ class Homepage extends StatefulWidget {
 }
 
 class _HomepageState extends State<Homepage> {
-  HomeController homeController = HomeController();
   final WeatherRepository weatherRepository = WeatherRepository();
   bool _permissionsGranted = false;
   bool isAlert = false;
   bool isConnected = false;
 
-  // @override
-  // void didChangeDependencies() {
-  //   super.didChangeDependencies();
-  //
-  //
-  // }
-  //
+
   void fetchData() async {
     Weather newWeather =
         await WeatherRepository().getCurrentLocationAndFetchWeather();
@@ -39,6 +34,25 @@ class _HomepageState extends State<Homepage> {
     context.read<AppBloc>().add(LoadDayTimeData());
     context.read<AppBloc>().add(LoadWeekTimeData());
     context.read<AppBloc>().add(SetLocationName());
+  }
+  void determinePosition() async {
+   locate.Location location = locate.Location();
+    bool serviceEnabled;
+    PermissionStatus permissionGranted;
+    serviceEnabled = await location.serviceEnabled();
+    if (!serviceEnabled) {
+      serviceEnabled = await location.requestService();
+      if (!serviceEnabled) {
+        return;
+      }
+    }
+    permissionGranted = (await location.hasPermission()) as PermissionStatus;
+    if (permissionGranted == PermissionStatus.denied) {
+      permissionGranted = (await location.requestPermission()) as PermissionStatus;
+      if (permissionGranted != PermissionStatus.granted) {
+        return;
+      }
+    }
   }
 
   @override
@@ -227,7 +241,7 @@ class _HomepageState extends State<Homepage> {
                                         width: 140,
                                         backgroundColor: Colors.white,
                                         onPressed: () {
-                                          homeController.determinePosition();
+                                          determinePosition();
                                           Navigator.pop(context);
                                         },
                                         child: const Text(
@@ -625,16 +639,14 @@ class _HomepageState extends State<Homepage> {
                                         childAspectRatio: 1/1,
                                     ),
                                 // physics: NeverScrollableScrollPhysics(),
-                                itemCount: homeController.listhomeitem.length,
+                                itemCount: listhomeitem.length,
                                 itemBuilder: (BuildContext context, int index) {
                                   return GestureDetector(
                                     onTap: () {
-                                      GoRouter.of(context).push(homeController
-                                          .listhomeitem[index].link);
+                                      GoRouter.of(context).push(listhomeitem[index].link);
                                     },
                                     child: OneeElementService(
-                                        homeitem:
-                                            homeController.listhomeitem[index]),
+                                        homeitem: listhomeitem[index]),
                                   );
                                 },
                               ),

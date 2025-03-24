@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../../router/router.dart';
+import '../../../util/intro_item_data.dart';
 import 'intro_item.dart';
-import '../../../controller/intro_cotroller.dart';
+
 
 
 
@@ -16,7 +17,6 @@ class IntroScreen extends StatefulWidget {
 }
 
 class IntroScreenState extends State<IntroScreen> {
-  final IntroController introController = IntroController();
   int currentIndex = 0;
   PageController controller = PageController();
   @override
@@ -40,20 +40,20 @@ class IntroScreenState extends State<IntroScreen> {
                     currentIndex = index;
                   },
                   controller: controller,
-                  itemCount: introController.listIntro.length,
+                  itemCount: listIntro.length,
                   itemBuilder: (context, index) {
                     return IntroItem(
-                      image: introController.listIntro[index].image,
-                      icon: introController.listIntro[index].icon,
-                      text1: introController.listIntro[index].text1,
-                      text2: introController.listIntro[index].text2,
+                      image: listIntro[index].image,
+                      icon: listIntro[index].icon,
+                      text1: listIntro[index].text1,
+                      text2: listIntro[index].text2,
                     );
                   },
                 ),
               ),
               GestureDetector(
                 onTap: () {
-                  if (currentIndex == introController.listIntro.length - 1) {
+                  if (currentIndex == listIntro.length - 1) {
                     GoRouter.of(context).push(AppRouter.homeScreen);
                   } else {
                     controller.nextPage(
