@@ -1,10 +1,7 @@
 import 'dart:convert';
 import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
-import 'package:intl/intl.dart';
 import 'package:weatherapp/model/weather.dart';
-
-import '../model/chartdata.dart';
 
 const baseUrl = 'https://api.open-meteo.com/v1/forecast';
 
