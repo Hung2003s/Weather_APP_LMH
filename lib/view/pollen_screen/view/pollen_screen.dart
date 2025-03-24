@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../../../controller/bloc/app_bloc/app_bloc.dart';
+import '../../../util/pollent_data.dart';
 import '../../../widget/appbar_setting.dart';
 import 'pollen_screen_item.dart';
-import '../../../controller/pollen_controller.dart';
 
 class PollenScreen extends StatefulWidget {
   const PollenScreen({super.key});
@@ -14,7 +13,7 @@ class PollenScreen extends StatefulWidget {
 }
 
 class _PollenScreenState extends State<PollenScreen> {
-  PollenController pollenController = PollenController();
+
 
   @override
   Widget build(BuildContext context) {
@@ -76,10 +75,10 @@ class _PollenScreenState extends State<PollenScreen> {
                           crossAxisSpacing: 20,
                           childAspectRatio: 1 / 1),
                       physics: NeverScrollableScrollPhysics(),
-                      itemCount: pollenController.listPollen.length,
+                      itemCount: listPollen.length,
                       itemBuilder: (BuildContext context, int index) {
                         return OneElementPollen(
-                            pollen: pollenController.listPollen[index]);
+                            pollen: listPollen[index]);
                       },
                     ),
                   )

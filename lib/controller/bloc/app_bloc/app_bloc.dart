@@ -6,14 +6,11 @@ import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:intl/intl.dart';
 import 'package:weatherapp/repository/weather_repository.dart';
-
 import '../../../model/chartdata.dart';
 import '../../../model/weather.dart';
-import '../../language_controller.dart';
-import '../../theme_controller.dart';
-import '../../thermometer_controller.dart';
-
-
+import '../../../util/language_data.dart';
+import '../../../util/theme_data.dart';
+import '../../../util/thermometer_data.dart';
 
 part 'app_event.dart';
 

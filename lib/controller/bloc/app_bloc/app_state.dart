@@ -81,13 +81,13 @@ final class AppState extends Equatable {
         longitude: 0.0,
         loadingState: LoadingState.loading,
         //language
-        acronym: LanguageController().listacronym.first,
+        acronym: listacronym.first,
 
         //setting
         tempunit: TemperatureUnit.celsius,
         tempParameter: 0.0,
-        theme: ThemeController().listThemeItem.first,
-        thermometer: ThermometerController().listThermometers.first,
+        theme: listThemeItem.first,
+        thermometer: listThermometers.first,
 
         //visibility
         visibilityUnit: VisibilityUnit.kilometer,

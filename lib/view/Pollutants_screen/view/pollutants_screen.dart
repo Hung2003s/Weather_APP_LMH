@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../controller/bloc/app_bloc/app_bloc.dart';
+import '../../../util/pollutant_data.dart';
 import '../../../widget/appbar_setting.dart';
 import 'pollutants_screen_item.dart';
-import '../../../controller/polluntant_controller.dart';
+
 
 class PollutantsScreen extends StatefulWidget {
   const PollutantsScreen({super.key});
@@ -13,7 +14,7 @@ class PollutantsScreen extends StatefulWidget {
 }
 
 class _PollutantsScreenState extends State<PollutantsScreen> {
-  PolluntantController polluntantController = PolluntantController();
+
 
   @override
   Widget build(BuildContext context) {
@@ -75,11 +76,11 @@ class _PollutantsScreenState extends State<PollutantsScreen> {
                           crossAxisSpacing: 20,
                           childAspectRatio: 1 / 1),
                       physics: NeverScrollableScrollPhysics(),
-                      itemCount: polluntantController.listPollutants.length,
+                      itemCount: listPollutants.length,
                       itemBuilder: (BuildContext context, int index) {
                         return OneElementPollutant(
                           pollutants:
-                              polluntantController.listPollutants[index],
+                             listPollutants[index],
                         );
                       },
                     ),

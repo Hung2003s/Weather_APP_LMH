@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../controller/bloc/app_bloc/app_bloc.dart';
+import '../../../util/language_data.dart';
 import '../../../widget/appbar_setting.dart';
 import 'language_screen_item.dart';
-import '../../../controller/language_controller.dart';
+
 
 class LanguageScreen extends StatefulWidget {
   const LanguageScreen({super.key});
@@ -13,7 +14,7 @@ class LanguageScreen extends StatefulWidget {
 }
 
 class _LanguageScreenState extends State<LanguageScreen> {
-  LanguageController languageController = LanguageController();
+
 
   @override
   void initState() {
@@ -40,7 +41,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
                         //final acronym = LanguageController().listacronym[index].toString();
                         final AppLanguage language = AppLanguage.values[index];
                         return OneElementLanguageScreen(
-                          language: languageController.listlanguage[index],
+                          language: listlanguage[index],
                           value: language,
                           groupValue: state.selectedLanguage,
                           current_index: index + 1,
