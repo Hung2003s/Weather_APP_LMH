@@ -12,7 +12,6 @@ class SunTimeScreen extends StatefulWidget {
 }
 
 class _SunTimeScreenState extends State<SunTimeScreen> {
-
   String formatTime(String timeString) {
     try {
       DateTime dateTime = DateTime.parse(timeString);

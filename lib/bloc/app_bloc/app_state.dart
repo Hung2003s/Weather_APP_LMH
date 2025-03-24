@@ -11,6 +11,7 @@ enum TemperatureUnit { celsius, fahrenheit }
 
 enum VisibilityUnit { kilometer, miles }
 
+enum AppLanguage {ENG, FRA, GER, ITA, KOR, RUS, TUR, IND, JPN,}
 final class AppState extends Equatable {
   //app
   final double latitude;
@@ -21,6 +22,7 @@ final class AppState extends Equatable {
 
   // language
   final String acronym;
+  final AppLanguage selectedLanguage;
 
   // setting
   final TemperatureUnit tempunit;
@@ -43,7 +45,7 @@ final class AppState extends Equatable {
   final List<String> dayTimeData;
   final List<String> weekTimeData;
 
-  AppState({
+  AppState( {
     this.loadingState = LoadingState.pure,
     required this.latitude,
     required this.longitude,
@@ -52,6 +54,7 @@ final class AppState extends Equatable {
 
     //language
     required this.acronym,
+    required this.selectedLanguage,
 
     //setting
     required this.tempunit,
@@ -100,6 +103,7 @@ final class AppState extends Equatable {
         dayTimeData: [],
         weekTimeData: [],
         locationName: '',
+      selectedLanguage: AppLanguage.ENG,
     );
   }
 
@@ -112,6 +116,7 @@ final class AppState extends Equatable {
 
     // language
     String? acronym,
+    AppLanguage? selectedLanguage,
 
     //setting
     TemperatureUnit? tempunit,
@@ -156,6 +161,7 @@ final class AppState extends Equatable {
       dayTimeData: dayTimeData ?? this.dayTimeData,
       weekTimeData: weekTimeData ?? this.weekTimeData,
       locationName: locationName ?? this.locationName,
+      selectedLanguage: selectedLanguage ?? this.selectedLanguage,
     );
   }
 
@@ -165,7 +171,8 @@ final class AppState extends Equatable {
         //app
         latitude, longitude, loadingState, weather, locationName,
         //language
-        acronym,
+        acronym,selectedLanguage
+        ,
         //setting
         tempunit, tempParameter, thermometer, theme,
 

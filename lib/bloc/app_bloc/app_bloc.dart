@@ -24,6 +24,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     on<SetLocationName>(_onSetLocationName);
     //Language
     on<SetAcronymEvent>(_onSetAcronym);
+    on<ChangeLanguageIndex>(_onChangeLanguageIndex);
     //Setting
     on<SetThemeEvent>(_onChangeThemeImage);
     on<SetThermometerEvent>(_onChangeThermometerImage);
@@ -105,11 +106,11 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     try {
       List<Placemark> placemarks = await placemarkFromCoordinates(state.latitude, state.longitude);
 
-      if (placemarks != null && placemarks.isNotEmpty) {
+      if (placemarks.isNotEmpty) {
         Placemark place = placemarks[0];
           emit(state.copyWith(
             //${place.street}, ${place.locality},
-              locationName:  "${place.locality}, ${place.administrativeArea}, ${place.country}"
+              locationName:  "${place.administrativeArea}, ${place.country}"
           )); ;
       } else {
         emit(state.copyWith(
@@ -127,6 +128,11 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   // language
   void _onSetAcronym(SetAcronymEvent event, Emitter<AppState> emit) {
     emit(state.copyWith(acronym: event.languageAcronym));
+  }
+  void _onChangeLanguageIndex (ChangeLanguageIndex event, Emitter<AppState> emit) {
+    emit(state.copyWith(
+      selectedLanguage:  event.currentLanguage,
+    ));
   }
 
   //Setting

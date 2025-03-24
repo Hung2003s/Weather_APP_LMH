@@ -26,8 +26,7 @@ class _SettingScreenState extends State<SettingScreen> {
         padding: EdgeInsets.all(15),
         child: Column(
           children: <Widget>[
-            Container(
-              height: MediaQuery.of(context).size.height - 180,
+            Expanded(
               child: ListView.builder(
                   itemCount: settingController.listSettingItem.length,
                   itemBuilder: (BuildContext context, int index) {

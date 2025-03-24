@@ -17,7 +17,6 @@ class OneElementSettingScreen extends StatefulWidget {
 class _OneElementSettingScreenState extends State<OneElementSettingScreen> {
   late bool isTemperature;
 
-
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<AppBloc, AppState>(
@@ -73,112 +72,110 @@ class _OneElementSettingScreenState extends State<OneElementSettingScreen> {
               SizedBox(
                 width: 40,
               ),
-              Container(
-                padding: EdgeInsets.symmetric(vertical: 16),
-                child: widget.settingItem.istemper
-                    ? Container(
-                        padding: EdgeInsets.symmetric(vertical: 6),
-                        child: Row(
-                          children: [
-                            GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  context
-                                      .read<AppBloc>()
-                                      .add(ToggleTemperatureUnit());
-                                });
-                              },
-                              child: Container(
-                                padding: EdgeInsets.symmetric(horizontal: 8),
-                                decoration: BoxDecoration(
-                                    color: state.tempunit == TemperatureUnit.celsius
-                                        ? Color(0xff0A2958)
-                                        : Color(0xffFFFFFF),
-                                    borderRadius: BorderRadius.circular(8),
-                                    boxShadow: [
-                                      BoxShadow(
-                                          color: Color(0xff000514)
-                                              .withValues(alpha: 0.1),
-                                          spreadRadius: 0,
-                                          blurRadius: 0,
-                                          offset: Offset(2, 2))
-                                    ]),
-                                child: Center(
-                                  child: Text(
-                                    '°C',
-                                    style: TextStyle(
-                                        color: state.tempunit ==
-                                                TemperatureUnit.celsius
-                                            ? Color(0xffFFFFFF)
-                                            : Color(0xff0A2958),
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w700),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              width: 5,
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  context
-                                      .read<AppBloc>()
-                                      .add(ToggleTemperatureUnit());
-                                });
-                              },
-                              child: Container(
-                                padding: EdgeInsets.symmetric(horizontal: 8),
-                                decoration: BoxDecoration(
-                                    color: state.tempunit == TemperatureUnit.celsius
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                Container(
+                  padding: EdgeInsets.symmetric(vertical: 16),
+                  child: widget.settingItem.istemper
+                      ? Container(
+                    // padding: EdgeInsets.symmetric(vertical: 4),
+                    child: Row(
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            context
+                                .read<AppBloc>()
+                                .add(ToggleTemperatureUnit());
+                          },
+                          child: Container(
+                            padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                            decoration: BoxDecoration(
+                                color: state.tempunit ==
+                                    TemperatureUnit.celsius
+                                    ? Color(0xff0A2958)
+                                    : Color(0xffFFFFFF),
+                                borderRadius: BorderRadius.circular(8),
+                                boxShadow: [
+                                  BoxShadow(
+                                      color: Color(0xff000514)
+                                          .withValues(alpha: 0.1),
+                                      spreadRadius: 0,
+                                      blurRadius: 0,
+                                      offset: Offset(2, 2))
+                                ]),
+                            child: Center(
+                              child: Text(
+                                '°C',
+                                style: TextStyle(
+                                    color: state.tempunit ==
+                                        TemperatureUnit.celsius
                                         ? Color(0xffFFFFFF)
                                         : Color(0xff0A2958),
-                                    borderRadius: BorderRadius.circular(8),
-                                    boxShadow: [
-                                      BoxShadow(
-                                          color: Color(0xff000514)
-                                              .withValues(alpha: 0.1),
-                                          spreadRadius: 0,
-                                          blurRadius: 0,
-                                          offset: Offset(0, 2))
-                                    ]),
-                                child: Center(
-                                  child: Text(
-                                    '°F',
-                                    style: TextStyle(
-                                        color: state.tempunit ==
-                                                TemperatureUnit.celsius
-                                            ? Color(0xff0A2958)
-                                            : Color(0xffFFFFFF),
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w700),
-                                  ),
-                                ),
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w700),
                               ),
                             ),
-                          ],
+                          ),
                         ),
-                      )
-                    : BlocBuilder<AppBloc, AppState>(
-                        builder: (context, state) {
-                          return Container(
-                            child: widget.settingItem.acronym
-                                ? Container(
-                                    child: Text(
-                                      state.acronym,
-                                      style: TextStyle(
-                                          color: Color(0xff0A2958),
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 16),
-                                    ),
-                                  )
-                                : Container(),
-                          );
-                        },
+                        SizedBox(
+                          width: 5,
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            context
+                                .read<AppBloc>()
+                                .add(ToggleTemperatureUnit());
+                          },
+                          child: Container(
+                            padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                            decoration: BoxDecoration(
+                                color: state.tempunit ==
+                                    TemperatureUnit.celsius
+                                    ? Color(0xffFFFFFF)
+                                    : Color(0xff0A2958),
+                                borderRadius: BorderRadius.circular(8),
+                                boxShadow: [
+                                  BoxShadow(
+                                      color: Color(0xff000514)
+                                          .withValues(alpha: 0.1),
+                                      spreadRadius: 0,
+                                      blurRadius: 0,
+                                      offset: Offset(0, 2))
+                                ]),
+                            child: Center(
+                              child: Text(
+                                '°F',
+                                style: TextStyle(
+                                    color: state.tempunit ==
+                                        TemperatureUnit.celsius
+                                        ? Color(0xff0A2958)
+                                        : Color(0xffFFFFFF),
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w700),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
+                      : Container(
+                    child: widget.settingItem.acronym
+                        ? Container(
+                      child: Text(
+                        state.acronym,
+                        style: TextStyle(
+                            color: Color(0xff0A2958),
+                            fontWeight: FontWeight.w500,
+                            fontSize: 16),
                       ),
-              ),
-              SizedBox()
+                    )
+                        : Container(),
+                  ),
+                ),
+                SizedBox(width: 20,)
+              ],)
             ],
           ),
         );

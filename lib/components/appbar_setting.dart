@@ -13,6 +13,7 @@ class AppbarSetting extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      backgroundColor: Color(0xffF5F6FC),
       centerTitle: true,
       title: Text(
         titletext,
@@ -22,18 +23,19 @@ class AppbarSetting extends StatelessWidget implements PreferredSizeWidget {
           fontWeight: FontWeight.w600,
         ),
       ),
-      leading: Container(
-        margin: EdgeInsets.all(15),
-        decoration: BoxDecoration(
-            color: Colors.white, borderRadius: BorderRadius.circular(40)),
-        child: InkWell(
-            onTap: () {
-              GoRouter.of(context).pop();
-            },
-            child: Icon(
-              Icons.arrow_back_ios_new,
-              size: 16,
-            )),
+      leading: GestureDetector(
+        onTap: () {
+          GoRouter.of(context).pop();
+        },
+        child: Container(
+          margin: EdgeInsets.all(15),
+          decoration: BoxDecoration(
+              color: Colors.white, borderRadius: BorderRadius.circular(40)),
+          child: Icon(
+            Icons.arrow_back_ios_new,
+            size: 16,
+          ),
+        ),
       ),
     );
   }

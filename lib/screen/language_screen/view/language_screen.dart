@@ -15,13 +15,12 @@ class LanguageScreen extends StatefulWidget {
 class _LanguageScreenState extends State<LanguageScreen> {
   LanguageController languageController = LanguageController();
 
-  int groupValue = 1;
-
-  void _radioValueChanged(int value2) {
-    setState(() {
-      groupValue = value2;
-    });
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -34,17 +33,17 @@ class _LanguageScreenState extends State<LanguageScreen> {
             padding: EdgeInsets.all(15),
             child: Column(
               children: <Widget>[
-                Container(
-                  height: MediaQuery.of(context).size.height - 180,
+                Expanded(
                   child: ListView.builder(
-                      itemCount: languageController.listlanguage.length,
+                      itemCount: AppLanguage.values.length,
                       itemBuilder: (BuildContext context, int index) {
                         //final acronym = LanguageController().listacronym[index].toString();
+                        final AppLanguage language = AppLanguage.values[index];
                         return OneElementLanguageScreen(
                           language: languageController.listlanguage[index],
-                          value: index + 1,
-                          onChange: _radioValueChanged,
-                          groupValue: groupValue,
+                          value: language,
+                          groupValue: state.selectedLanguage,
+                          current_index: index + 1,
                         );
                       }),
                 )

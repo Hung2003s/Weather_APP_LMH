@@ -15,42 +15,47 @@ class IntroComponent extends StatelessWidget {
   });
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Stack(
-          clipBehavior: Clip.none,
+    return SingleChildScrollView(
+      child: Container(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            ClipPath(
-              child: Image.asset(
-                image,
-                fit: BoxFit.fitWidth,
-                width: MediaQuery.of(context).size.width,
+            Stack(
+              alignment: Alignment.center,
+              clipBehavior: Clip.none,
+              children: [
+                ClipPath(
+                  child: Image.asset(
+                    image,
+                    fit: BoxFit.fitWidth,
+                    width: MediaQuery.of(context).size.width,
+                  ),
+                ),
+                Positioned(
+                  bottom: -20,
+                  child: Image.asset(icon),
+                ),
+              ],
+            ),
+            SizedBox(height: 30),
+            Text(
+              text1,
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600),
+            ),
+            Text(
+              text2,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w400,
+                color: Color(0xff12203A).withValues(alpha: 0.5),
               ),
             ),
-            Positioned(
-              bottom: -30,
-              left: MediaQuery.of(context).size.width * 0.4,
-              child: Image.asset(icon),
-            ),
+            SizedBox(height: 20),
           ],
         ),
-        SizedBox(height: 60),
-        Text(
-          text1,
-          textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600),
-        ),
-        Text(
-          text2,
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            fontSize: 14,
-            fontWeight: FontWeight.w400,
-            color: Color(0xff12203A).withOpacity(0.5),
-          ),
-        ),
-        SizedBox(height: 31),
-      ],
+      ),
     );
   }
 }

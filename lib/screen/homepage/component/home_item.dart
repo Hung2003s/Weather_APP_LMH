@@ -9,7 +9,7 @@ class OneeElementService extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(bottom: 5),
+
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -28,11 +28,11 @@ class OneeElementService extends StatelessWidget {
                   ),
                 ]),
             child: Container(
-              padding: EdgeInsets.all(10),
+              padding: EdgeInsets.symmetric(vertical: 10, horizontal: 2),
               decoration: BoxDecoration(
                   color: Color(homeitem.color), shape: BoxShape.circle),
               child: Container(
-                padding: EdgeInsets.all(10),
+                padding: EdgeInsets.symmetric(vertical: 10, horizontal: 2),
                 decoration: BoxDecoration(
                     image: DecorationImage(image: AssetImage(homeitem.logo))),
               ),

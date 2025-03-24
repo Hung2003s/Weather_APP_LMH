@@ -5,26 +5,23 @@ import '../model/language.dart';
 
 class OneElementLanguageScreen extends StatelessWidget {
   final Language language;
-  final int value;
-  final int groupValue;
-  final Function(int) onChange;
+  final AppLanguage value;
+  final AppLanguage groupValue;
+  final int current_index;
 
-  const OneElementLanguageScreen({
-    super.key,
-    required this.language,
-    required this.value,
-    required this.onChange, required this.groupValue,
-  });
+
+  const OneElementLanguageScreen(
+      {super.key,
+      required this.language,
+      required this.value,
+      required this.groupValue,
+      required this.current_index});
 
   Widget build(BuildContext context) {
-
     return BlocBuilder<AppBloc, AppState>(
       builder: (context, state) {
         return Container(
-          height: (MediaQuery
-              .of(context)
-              .size
-              .height - 180) / 10,
+          height: (MediaQuery.of(context).size.height - 180) / 10,
           margin: EdgeInsets.only(bottom: 8),
           padding: EdgeInsets.only(right: 10),
           decoration: BoxDecoration(
@@ -60,9 +57,10 @@ class OneElementLanguageScreen extends StatelessWidget {
                     Text(
                       language.name,
                       style: TextStyle(
-                          fontWeight: FontWeight.w400,
-                          fontSize: 14,
-                          color: Color(0xff12203A),),
+                        fontWeight: FontWeight.w400,
+                        fontSize: 14,
+                        color: Color(0xff12203A),
+                      ),
                     )
                   ],
                 ),
@@ -70,13 +68,15 @@ class OneElementLanguageScreen extends StatelessWidget {
               Radio(
                   value: value,
                   groupValue: groupValue,
-                  onChanged: (value2) {
+                  onChanged: (AppLanguage? value2) {
                     if (value2 != null) {
-                      onChange(value2);
-                    };
-                    context.read<AppBloc>().add(SetAcronymEvent(languageAcronym: language.acronym));
-                  }
-              )
+                      context.read<AppBloc>().add(
+                          SetAcronymEvent(languageAcronym: language.acronym));
+                      context
+                          .read<AppBloc>()
+                          .add(ChangeLanguageIndex(currentLanguage: value));
+                    }
+                  })
             ],
           ),
         );

@@ -153,3 +153,13 @@ class SetLocationName extends AppEvent {
   // TODO: implement props
   List<Object?> get props => [];
 }
+class ChangeLanguageIndex extends AppEvent {
+  final AppLanguage currentLanguage;
+
+  ChangeLanguageIndex({required this.currentLanguage});
+
+  @override
+  // TODO: implement props
+  List<Object?> get props => [currentLanguage];
+
+}
