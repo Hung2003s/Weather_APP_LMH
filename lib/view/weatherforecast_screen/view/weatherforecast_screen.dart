@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import '../../../controller/bloc/app_bloc/app_bloc.dart';
-import 'weather_item_2.dart';
-import 'weatherforecast_item.dart';
+import 'hourly_weather_item.dart';
+import 'daily_weather_item.dart';
 
 class WeatherforecastScreen extends StatefulWidget {
   const WeatherforecastScreen({super.key});
@@ -91,7 +91,7 @@ class _WeatherforecastScreenState extends State<WeatherforecastScreen> {
                         ),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 4,
                     ),
                     GestureDetector(
@@ -165,7 +165,7 @@ class _WeatherforecastScreenState extends State<WeatherforecastScreen> {
                                         'assets/images/locationicon.png'),
                                   ),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   width: 10,
                                 ),
                                 Container(
@@ -181,7 +181,7 @@ class _WeatherforecastScreenState extends State<WeatherforecastScreen> {
                               ],
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 10,
                           ),
                           Container(
@@ -198,7 +198,7 @@ class _WeatherforecastScreenState extends State<WeatherforecastScreen> {
                               fit: BoxFit.cover,
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 10,
                           ),
                           Text(
@@ -215,7 +215,7 @@ class _WeatherforecastScreenState extends State<WeatherforecastScreen> {
                                 fontSize: 64,
                                 color: Color(0xff12203A)),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 10,
                           ),
                           Text(
@@ -255,7 +255,7 @@ class _WeatherforecastScreenState extends State<WeatherforecastScreen> {
                                       return Padding(
                                         padding: const EdgeInsets.symmetric(
                                             horizontal: 0),
-                                        child: WeatherItem2(
+                                        child: HourlyWeatherItems(
                                           weathercode:
                                           'assets/images/weathercode/weather_${state
                                               .weather?.hourly
@@ -280,7 +280,7 @@ class _WeatherforecastScreenState extends State<WeatherforecastScreen> {
                         ],
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     Container(
@@ -301,7 +301,7 @@ class _WeatherforecastScreenState extends State<WeatherforecastScreen> {
                               ),
                             ],
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 10,
                           ),
                           Container(
@@ -314,7 +314,7 @@ class _WeatherforecastScreenState extends State<WeatherforecastScreen> {
                                 physics: NeverScrollableScrollPhysics(),
                                 itemCount: state.weekTimeData.length,
                                 itemBuilder: (context, index) {
-                                  return WeatherforecastItem(
+                                  return DailyWeatherItems(
                                     day: '${state.weekTimeData[index]}',
                                     weathercode:
                                     'assets/images/weathercode/weather_${state

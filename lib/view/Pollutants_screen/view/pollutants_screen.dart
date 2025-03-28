@@ -39,7 +39,7 @@ class _PollutantsScreenState extends State<PollutantsScreen> {
                           color: Color(0xff12203A),
                           size: 13,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 5,
                         ),
                         Text(
@@ -53,7 +53,7 @@ class _PollutantsScreenState extends State<PollutantsScreen> {
                       ],
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   Text(
@@ -64,7 +64,7 @@ class _PollutantsScreenState extends State<PollutantsScreen> {
                       fontSize: 14,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   Container(
@@ -85,7 +85,7 @@ class _PollutantsScreenState extends State<PollutantsScreen> {
                       },
                     ),
                   ),
-                  // SizedBox(
+                  // const SizedBox(
                   //   height: 20,
                   // ),
                   Container(
@@ -128,7 +128,7 @@ class _PollutantsScreenState extends State<PollutantsScreen> {
                                   color: Colors.black.withValues(alpha: 0.1),
                                   width: 1)),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 10,
                         ),
                         Container(
@@ -166,7 +166,7 @@ class _PollutantsScreenState extends State<PollutantsScreen> {
                       ],
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 30,
                   )
                 ],

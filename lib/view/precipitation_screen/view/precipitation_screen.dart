@@ -17,11 +17,25 @@ class PrecipitationScreen extends StatefulWidget {
 class _PrecipitationScreenState extends State<PrecipitationScreen> {
   final WeatherRepository weatherRepository = WeatherRepository();
 
+  final List<Color> color = <Color>[];
+  final List<double> stops = <double>[];
+  late LinearGradient gradientColors;
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     fetchData();
+    color.add(Color(0xff38EF7D).withValues(alpha: 0.3));
+    color.add(Color(0xff38EF7D).withValues(alpha: 0.5));
+    color.add(Color(0xff11998E).withValues(alpha: 0.4));
+
+    stops.add(0.0);
+    stops.add(0.5);
+    stops.add(1.0);
+
+    gradientColors =
+        LinearGradient(colors: color, begin: Alignment.topLeft, stops: stops);
   }
 
   void fetchData() async {
@@ -30,18 +44,6 @@ class _PrecipitationScreenState extends State<PrecipitationScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final List<Color> color = <Color>[];
-    color.add(Color(0xff38EF7D).withValues(alpha: 0.3));
-    color.add(Color(0xff38EF7D).withValues(alpha: 0.5));
-    color.add(Color(0xff11998E).withValues(alpha: 0.4));
-
-    final List<double> stops = <double>[];
-    stops.add(0.0);
-    stops.add(0.5);
-    stops.add(1.0);
-
-    final LinearGradient gradientColors =
-        LinearGradient(colors: color, begin: Alignment.topLeft, stops: stops);
     return Scaffold(
       appBar: AppbarSetting(titletext: 'Precipitation', link: '/'),
       body: BlocBuilder<AppBloc, AppState>(builder: (context, state) {
@@ -67,10 +69,11 @@ class _PrecipitationScreenState extends State<PrecipitationScreen> {
                     located: '${state.locationName}',
                     time: latestTime,
                     textunit: 'mm'),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 Container(
+                  padding: EdgeInsets.symmetric(vertical: 3),
                     decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(15),
@@ -87,6 +90,7 @@ class _PrecipitationScreenState extends State<PrecipitationScreen> {
                         ),
                         primaryYAxis: syncfusion.NumericAxis(
                           title: syncfusion.AxisTitle(text: 'Mm'),
+                          maximum: (state.chartData.map((data) => data.yvalue).reduce((a, b) => a > b ? a : b) * 1.3),
                         ),
                         series: <syncfusion.CartesianSeries>[
                           syncfusion.SplineAreaSeries<ChartData, String>(
@@ -101,12 +105,12 @@ class _PrecipitationScreenState extends State<PrecipitationScreen> {
                               isVisible: true,
                               shape: syncfusion.DataMarkerType.circle,
                               borderWidth: 1,
-                              borderColor: Colors.red,
+                              borderColor: Colors.blue,
                             ),
                             dataLabelSettings: syncfusion.DataLabelSettings(
                               isVisible: true,
                               labelAlignment:
-                                  syncfusion.ChartDataLabelAlignment.top,
+                                  syncfusion.ChartDataLabelAlignment.auto,
                             ),
                             gradient: gradientColors,
                           )

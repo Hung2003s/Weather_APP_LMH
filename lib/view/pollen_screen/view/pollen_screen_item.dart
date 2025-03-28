@@ -44,7 +44,7 @@ class _OneElementPollenState extends State<OneElementPollen> {
                   child: Image(
                       image: AssetImage(widget.pollen.image)),
                   ),
-                SizedBox(height: 15,),
+                const SizedBox(height: 15,),
                 Container(
                   child: Text(widget.pollen.name, style: TextStyle(
                     color: Color(0xff12203ABF).withValues(alpha: 0.75),
@@ -56,7 +56,7 @@ class _OneElementPollenState extends State<OneElementPollen> {
               ],
             ),
           ),
-          SizedBox(height: 20,),
+          const SizedBox(height: 20,),
           Container(
             height: 1,
             decoration: BoxDecoration(
@@ -64,7 +64,7 @@ class _OneElementPollenState extends State<OneElementPollen> {
               color: Color(0xff000000).withValues(alpha: 0.1),
             ),
           ),
-          SizedBox(height: 20,),
+          const SizedBox(height: 20,),
           Container(
             padding: EdgeInsets.only(left: 20,),
             child: Text('No Data',style: TextStyle(

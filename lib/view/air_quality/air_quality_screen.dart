@@ -15,20 +15,16 @@ class AirQualityScreen extends StatefulWidget {
 class _AirQualityScreenState extends State<AirQualityScreen> {
   double textParameter = 30;
   WeatherRepository weatherRepository = WeatherRepository();
-
+  late  Color color1;
+  late Color color2;
+  late String textAirQuality;
+  late String textState;
   // late Future<Weather?> _current;
 
   @override
   void initState() {
     super.initState();
-  }
 
-  @override
-  Widget build(BuildContext context) {
-    Color color1;
-    Color color2;
-    String textAirQuality;
-    String textState;
 
     if (textParameter > 0 && textParameter <= 50) {
       color1 = Color(0xff038603);
@@ -46,7 +42,10 @@ class _AirQualityScreenState extends State<AirQualityScreen> {
       textAirQuality = 'High';
       textState = 'Unhealthy';
     }
+  }
 
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppbarSetting(titletext: 'Air Quality', link: '/'),
       backgroundColor: Color(0xffF5F6FC),

@@ -112,7 +112,7 @@ class _HomepageState extends State<Homepage> {
                 'Check your internet connection and try again.',
                 style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -205,7 +205,7 @@ class _HomepageState extends State<Homepage> {
                               )
                             ],
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 5,
                           ),
                           CustomAppButton(
@@ -342,7 +342,7 @@ class _HomepageState extends State<Homepage> {
                                             color: Color(0xff0A2958),
                                             size: 14,
                                           ),
-                                          SizedBox(width: 5),
+                                          const SizedBox(width: 5),
                                           Text(
                                             '${state.locationName}',
                                             style: TextStyle(
@@ -373,7 +373,7 @@ class _HomepageState extends State<Homepage> {
                                 ],
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 30,
                             ),
                             Container(
@@ -494,7 +494,7 @@ class _HomepageState extends State<Homepage> {
                                                             image: AssetImage(
                                                                 'assets/images/homepageimage/uvlogo.png'))),
                                                   ),
-                                                  SizedBox(
+                                                  const SizedBox(
                                                     width: 10,
                                                   ),
                                                   Container(
@@ -535,7 +535,7 @@ class _HomepageState extends State<Homepage> {
                                                 ],
                                               ),
                                             ),
-                                            SizedBox(
+                                            const SizedBox(
                                               width: 15,
                                             ),
                                             Container(
@@ -546,7 +546,7 @@ class _HomepageState extends State<Homepage> {
                                                 color: Color(0xffCED9DC),
                                               ),
                                             ),
-                                            SizedBox(
+                                            const SizedBox(
                                               width: 15,
                                             ),
                                             Container(
@@ -560,7 +560,7 @@ class _HomepageState extends State<Homepage> {
                                                             image: AssetImage(
                                                                 'assets/images/homepageimage/humiditylogo.png'))),
                                                   ),
-                                                  SizedBox(
+                                                  const SizedBox(
                                                     width: 10,
                                                   ),
                                                   Container(
@@ -611,7 +611,7 @@ class _HomepageState extends State<Homepage> {
                                 ],
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 50,
                             ),
                             Container(

@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 
-class WeatherItem2 extends StatelessWidget {
+class HourlyWeatherItems extends StatelessWidget {
   final String weathercode;
   final String daytime;
 
-  const WeatherItem2(
+  const HourlyWeatherItems(
       {super.key, required this.weathercode, required this.daytime});
 
   @override

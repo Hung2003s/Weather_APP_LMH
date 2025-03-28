@@ -54,7 +54,7 @@ class _OneElementSettingScreenState extends State<OneElementSettingScreen> {
                             image: DecorationImage(
                                 image: AssetImage(widget.settingItem.image))),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 16,
                       ),
                       Text(
@@ -68,7 +68,7 @@ class _OneElementSettingScreenState extends State<OneElementSettingScreen> {
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 width: 40,
               ),
               Row(
@@ -117,7 +117,7 @@ class _OneElementSettingScreenState extends State<OneElementSettingScreen> {
                             ),
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 5,
                         ),
                         GestureDetector(
@@ -173,7 +173,7 @@ class _OneElementSettingScreenState extends State<OneElementSettingScreen> {
                         : Container(),
                   ),
                 ),
-                SizedBox(width: 20,)
+                const SizedBox(width: 20,)
               ],)
             ],
           ),

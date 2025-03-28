@@ -37,7 +37,7 @@ class IntroItem extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(height: 30),
+            const SizedBox(height: 30),
             Text(
               text1,
               textAlign: TextAlign.center,
@@ -52,7 +52,7 @@ class IntroItem extends StatelessWidget {
                 color: Color(0xff12203A).withValues(alpha: 0.5),
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
           ],
         ),
       ),

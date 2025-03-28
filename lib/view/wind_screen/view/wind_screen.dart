@@ -16,12 +16,26 @@ class WindScreen extends StatefulWidget {
 
 class _WindScreenState extends State<WindScreen> {
   final WeatherRepository weatherRepository = WeatherRepository();
+  final List<Color> color = <Color>[];
+  final List<double> stops = <double>[];
+  late LinearGradient gradientColors ;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     fetchData();
+
+    color.add(Colors.blue[50]!);
+    color.add(Colors.blue[200]!);
+    color.add(Colors.blue);
+
+    stops.add(0.0);
+    stops.add(0.5);
+    stops.add(1.0);
+
+
+    gradientColors = LinearGradient(colors: color, stops: stops);
   }
 
   void fetchData() async {
@@ -30,18 +44,13 @@ class _WindScreenState extends State<WindScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final List<Color> color = <Color>[];
-    color.add(Colors.blue[50]!);
-    color.add(Colors.blue[200]!);
-    color.add(Colors.blue);
 
-    final List<double> stops = <double>[];
-    stops.add(0.0);
-    stops.add(0.5);
-    stops.add(1.0);
 
-    final LinearGradient gradientColors =
-        LinearGradient(colors: color, stops: stops);
+
+
+
+
+
     return Scaffold(
       appBar: AppbarSetting(titletext: 'Wind', link: '/'),
       body: BlocBuilder<AppBloc, AppState>(builder: (context, state) {
@@ -67,7 +76,7 @@ class _WindScreenState extends State<WindScreen> {
                     located: '${state.locationName}',
                     time: latestTime,
                     textunit: 'Km/h'),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 Container(

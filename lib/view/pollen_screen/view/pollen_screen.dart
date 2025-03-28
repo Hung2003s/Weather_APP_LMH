@@ -38,7 +38,7 @@ class _PollenScreenState extends State<PollenScreen> {
                           color: Color(0xff12203A),
                           size: 13,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 5,
                         ),
                         Text(
@@ -52,7 +52,7 @@ class _PollenScreenState extends State<PollenScreen> {
                       ],
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   Text(
@@ -63,7 +63,7 @@ class _PollenScreenState extends State<PollenScreen> {
                       fontSize: 14,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   Container(

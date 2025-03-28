@@ -68,7 +68,7 @@ class _SnowFallScreenState extends State<SnowFallScreen> {
                     located: '${state.locationName}',
                     time: latestTime,
                     textunit: 'cm'),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 Container(

@@ -43,7 +43,7 @@ class _CompassScreenState extends State<CompassScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Image.asset('assets/images/locationicon.png'),
-                      SizedBox(
+                      const SizedBox(
                         width: 5,
                       ),
                       Center(
@@ -83,7 +83,7 @@ class _CompassScreenState extends State<CompassScreen> {
                     fontWeight: FontWeight.w600,
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 40,
                 ),
               ],

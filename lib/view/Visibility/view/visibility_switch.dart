@@ -72,7 +72,7 @@ class _VisibilitySwitchState extends State<VisibilitySwitch>
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text('Km'),
-        SizedBox(width: 10),
+        const SizedBox(width: 10),
         BlocBuilder<AppBloc, AppState>(
           builder: (context, state) {
             return AnimatedBuilder(
@@ -144,7 +144,7 @@ class _VisibilitySwitchState extends State<VisibilitySwitch>
             );
           },
         ),
-        SizedBox(width: 10),
+        const SizedBox(width: 10),
         Text('Mi'),
       ],
     );

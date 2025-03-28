@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class WeatherforecastItem extends StatelessWidget {
+class DailyWeatherItems extends StatelessWidget {
   final String day;
   final String weathercode;
   final String temp1;
   final String temp2;
   final String weatherState;
 
-  const WeatherforecastItem({super.key, required this.day, required this.weathercode, required this.weatherState, required this.temp1, required this.temp2});
+  const DailyWeatherItems({super.key, required this.day, required this.weathercode, required this.weatherState, required this.temp1, required this.temp2});
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +47,7 @@ class WeatherforecastItem extends StatelessWidget {
                       fontWeight: FontWeight.w700,
                       fontSize: 14
                   ),),
-                  SizedBox(width: 4,),
+                  const SizedBox(width: 4,),
                   Text('$temp2°', style: TextStyle(
                       color: Color(0xff12203A).withValues(alpha: 0.54),
                       fontWeight: FontWeight.w400,
@@ -56,7 +56,7 @@ class WeatherforecastItem extends StatelessWidget {
                 ],
               ),
             ),
-            SizedBox(width: 40,),
+            const SizedBox(width: 40,),
             Container(
               child: Row(
                 children: [
@@ -74,7 +74,7 @@ class WeatherforecastItem extends StatelessWidget {
                 ],
               ),
             ),
-            SizedBox(width: 20,),
+            const SizedBox(width: 20,),
           ],
         ),
       ),

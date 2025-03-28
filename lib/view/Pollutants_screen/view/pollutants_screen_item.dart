@@ -55,7 +55,7 @@ class _OneElementPollutantState extends State<OneElementPollutant> {
                     ),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 15,
                 ),
               ],
@@ -74,7 +74,7 @@ class _OneElementPollutantState extends State<OneElementPollutant> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 Container(
@@ -87,7 +87,7 @@ class _OneElementPollutantState extends State<OneElementPollutant> {
                     ),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 Container(

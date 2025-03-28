@@ -32,7 +32,7 @@ class CirclePage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset('assets/images/locationicon.png'),
-            SizedBox(
+            const SizedBox(
               width: 5,
             ),
             Center(
@@ -43,7 +43,7 @@ class CirclePage extends StatelessWidget {
             ),
           ],
         ),
-        SizedBox(height: 31),
+        const SizedBox(height: 31),
         Center(
           child: Text(
             textAlign: TextAlign.center,
@@ -51,7 +51,7 @@ class CirclePage extends StatelessWidget {
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
           ),
         ),
-        SizedBox(height: 34),
+        const SizedBox(height: 34),
         Container(
           height: 282,
           width: 282,
@@ -103,7 +103,7 @@ class CirclePage extends StatelessWidget {
             ),
           ),
         ),
-        SizedBox(height: 32),
+        const SizedBox(height: 32),
         // classVisibility is VisibilityView
         //     ? Visibility_button()
         //     :

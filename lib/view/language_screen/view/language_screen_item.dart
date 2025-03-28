@@ -51,7 +51,7 @@ class OneElementLanguageScreen extends StatelessWidget {
                           image: DecorationImage(
                               image: AssetImage(language.logo))),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 16,
                     ),
                     Text(

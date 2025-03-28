@@ -24,7 +24,7 @@ class DiagramPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset('assets/images/locationicon.png'),
-            SizedBox(width: 5,),
+            const SizedBox(width: 5,),
             Center(
               child: Text(
                 located,
@@ -33,7 +33,7 @@ class DiagramPage extends StatelessWidget {
             ),
           ],
         ),
-        SizedBox(height: 15),
+        const SizedBox(height: 15),
         Center(
           child: Text(
             textAlign: TextAlign.center,
@@ -45,7 +45,7 @@ class DiagramPage extends StatelessWidget {
             ),
           ),
         ),
-        SizedBox(height: 15),
+        const SizedBox(height: 15),
         Center(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -61,7 +61,7 @@ class DiagramPage extends StatelessWidget {
                       color: Color(0xff12203A),
                     ),
                   ),
-                  SizedBox(width: 5,),
+                  const SizedBox(width: 5,),
                   Text(
                     textAlign: TextAlign.center,
                     textunit,

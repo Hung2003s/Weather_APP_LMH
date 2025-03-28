@@ -77,7 +77,7 @@ class _VisibilityScreenState extends State<VisibilityScreen> {
                             return const Text('No data');
                           }
                         }),
-                    SizedBox(
+                    const SizedBox(
                       height: 30,
                     ),
                     VisibilitySwitch(
