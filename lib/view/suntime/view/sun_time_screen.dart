@@ -34,76 +34,78 @@ class _SunTimeScreenState extends State<SunTimeScreen> {
             return Text('Error: ');
           } else if (state.loadingState == LoadingState.finished) {
             return Container(
-              child: Column(
-                children: <Widget>[
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Image.asset('assets/images/locationicon.png'),
-                      const SizedBox(
-                        width: 5,
-                      ),
-                      Center(
-                        child: Text(
-                          '${state.locationName}',
-                          style: TextStyle(
-                              fontWeight: FontWeight.w400, fontSize: 14),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Container(
-                    child: Column(
+              child: SingleChildScrollView(
+                child: Column(
+                  children: <Widget>[
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Container(
-                          child: Image(
-                              image: AssetImage(
-                                  'assets/images/suntimeimage/sunrise.png')),
+                        Image.asset('assets/images/locationicon.png'),
+                        const SizedBox(
+                          width: 5,
                         ),
-                        Text(
-                          'Sun Rise',
-                          style: TextStyle(
-                              color: Color(0xff12203A).withValues(alpha: 0.54),
-                              fontWeight: FontWeight.w500,
-                              fontSize: 17),
+                        Center(
+                          child: Text(
+                            '${state.locationName}',
+                            style: TextStyle(
+                                fontWeight: FontWeight.w400, fontSize: 14),
+                          ),
                         ),
-                        Text(
-                          '${formatTime(state.weather!.daily!.sunrise.first)} AM ',
-                          style: TextStyle(
-                              color: Color(0xff12203A),
-                              fontWeight: FontWeight.w500,
-                              fontSize: 17),
-                        )
                       ],
                     ),
-                  ),
-                  Container(
-                    child: Column(
-                      children: [
-                        Container(
-                          child: Image(
-                              image: AssetImage(
-                                  'assets/images/suntimeimage/sunset.png')),
-                        ),
-                        Text(
-                          'Sun Set',
-                          style: TextStyle(
-                              color: Color(0xff12203A).withValues(alpha: 0.54),
-                              fontWeight: FontWeight.w500,
-                              fontSize: 17),
-                        ),
-                        Text(
-                          '${formatTime(state.weather!.daily!.sunset.first)} PM ',
-                          style: TextStyle(
-                              color: Color(0xff12203A),
-                              fontWeight: FontWeight.w500,
-                              fontSize: 17),
-                        )
-                      ],
+                    Container(
+                      child: Column(
+                        children: [
+                          Container(
+                            child: Image(
+                                image: AssetImage(
+                                    'assets/images/suntimeimage/sunrise.png')),
+                          ),
+                          Text(
+                            'Sun Rise',
+                            style: TextStyle(
+                                color: Color(0xff12203A).withValues(alpha: 0.54),
+                                fontWeight: FontWeight.w500,
+                                fontSize: 17),
+                          ),
+                          Text(
+                            '${formatTime(state.weather!.daily!.sunrise.first)} AM ',
+                            style: TextStyle(
+                                color: Color(0xff12203A),
+                                fontWeight: FontWeight.w500,
+                                fontSize: 17),
+                          )
+                        ],
+                      ),
                     ),
-                  ),
-                  Container(height: 20,)
-                ],
+                    Container(
+                      child: Column(
+                        children: [
+                          Container(
+                            child: Image(
+                                image: AssetImage(
+                                    'assets/images/suntimeimage/sunset.png')),
+                          ),
+                          Text(
+                            'Sun Set',
+                            style: TextStyle(
+                                color: Color(0xff12203A).withValues(alpha: 0.54),
+                                fontWeight: FontWeight.w500,
+                                fontSize: 17),
+                          ),
+                          Text(
+                            '${formatTime(state.weather!.daily!.sunset.first)} PM ',
+                            style: TextStyle(
+                                color: Color(0xff12203A),
+                                fontWeight: FontWeight.w500,
+                                fontSize: 17),
+                          )
+                        ],
+                      ),
+                    ),
+                    Container(height: 20,)
+                  ],
+                ),
               ),
             );
           } else {

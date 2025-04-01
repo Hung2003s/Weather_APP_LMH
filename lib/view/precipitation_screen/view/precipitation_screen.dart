@@ -15,8 +15,6 @@ class PrecipitationScreen extends StatefulWidget {
 }
 
 class _PrecipitationScreenState extends State<PrecipitationScreen> {
-  final WeatherRepository weatherRepository = WeatherRepository();
-
   final List<Color> color = <Color>[];
   final List<double> stops = <double>[];
   late LinearGradient gradientColors;
@@ -25,7 +23,7 @@ class _PrecipitationScreenState extends State<PrecipitationScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    fetchData();
+    context.read<AppBloc>().add(SetDataToChartEvent('precipitation'));
     color.add(Color(0xff38EF7D).withValues(alpha: 0.3));
     color.add(Color(0xff38EF7D).withValues(alpha: 0.5));
     color.add(Color(0xff11998E).withValues(alpha: 0.4));
@@ -38,28 +36,26 @@ class _PrecipitationScreenState extends State<PrecipitationScreen> {
         LinearGradient(colors: color, begin: Alignment.topLeft, stops: stops);
   }
 
-  void fetchData() async {
-    context.read<AppBloc>().add(SetDataToChartEvent('precipitation'));
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppbarSetting(titletext: 'Precipitation', link: '/'),
-      body: BlocBuilder<AppBloc, AppState>(builder: (context, state) {
+      body: BlocBuilder<AppBloc, AppState>(
+          builder: (context, state) {
         if (state.loadingState == LoadingState.loading) {
           return Center(child: CircularProgressIndicator());
         } else if (state.loadingState == LoadingState.error) {
           return Text('Error: ');
         } else if (state.loadingState == LoadingState.finished) {
           if (state.chartData.isEmpty) {
-            return const Center(child: Text('Không có dữ liệu gió'));
+            return const Center(child: Text('Không có dữ liệu '));
           }
           print('----check chartdata: ${state.chartData.length}');
           final latestPrecipitation =
-              state.chartData.isNotEmpty ? state.chartData.last.yvalue : 0;
+              state.chartData.isNotEmpty ? state.chartData.last.yValue : 0;
           final latestTime =
-              state.chartData.isNotEmpty ? state.chartData.last.xvalue : '';
+              state.chartData.isNotEmpty ? state.chartData.last.xValue : '';
           return Container(
             padding: EdgeInsets.all(20),
             child: Column(
@@ -90,7 +86,7 @@ class _PrecipitationScreenState extends State<PrecipitationScreen> {
                         ),
                         primaryYAxis: syncfusion.NumericAxis(
                           title: syncfusion.AxisTitle(text: 'Mm'),
-                          maximum: (state.chartData.map((data) => data.yvalue).reduce((a, b) => a > b ? a : b) * 1.3),
+                        //  maximum: state.chartData.isNotEmpty ? (state.chartData.map((data) => data.yValue as num).reduce((a, b) => a > b ? a : b) * 1.3) : 1.0,
                         ),
                         series: <syncfusion.CartesianSeries>[
                           syncfusion.SplineAreaSeries<ChartData, String>(
@@ -98,8 +94,8 @@ class _PrecipitationScreenState extends State<PrecipitationScreen> {
 
                             // Bind the color for all the data points from the data source
                             // pointColorMapper:(ChartData data, _) => data.color,
-                            xValueMapper: (ChartData data, _) => data.xvalue,
-                            yValueMapper: (ChartData data, _) => data.yvalue,
+                            xValueMapper: (ChartData data, _) => data.xValue,
+                            yValueMapper: (ChartData data, _) => data.yValue,
                             dashArray: [5, 2],
                             markerSettings: syncfusion.MarkerSettings(
                               isVisible: true,

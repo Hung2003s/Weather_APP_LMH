@@ -15,7 +15,6 @@ class WindScreen extends StatefulWidget {
 }
 
 class _WindScreenState extends State<WindScreen> {
-  final WeatherRepository weatherRepository = WeatherRepository();
   final List<Color> color = <Color>[];
   final List<double> stops = <double>[];
   late LinearGradient gradientColors ;
@@ -24,8 +23,7 @@ class _WindScreenState extends State<WindScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    fetchData();
-
+    context.read<AppBloc>().add(SetDataToChartEvent('windSpeed10M'));
     color.add(Colors.blue[50]!);
     color.add(Colors.blue[200]!);
     color.add(Colors.blue);
@@ -38,22 +36,13 @@ class _WindScreenState extends State<WindScreen> {
     gradientColors = LinearGradient(colors: color, stops: stops);
   }
 
-  void fetchData() async {
-    context.read<AppBloc>().add(SetDataToChartEvent('windSpeed10M'));
-  }
 
   @override
   Widget build(BuildContext context) {
-
-
-
-
-
-
-
     return Scaffold(
       appBar: AppbarSetting(titletext: 'Wind', link: '/'),
-      body: BlocBuilder<AppBloc, AppState>(builder: (context, state) {
+      body: BlocBuilder<AppBloc, AppState>(
+          builder: (context, state) {
         if (state.loadingState == LoadingState.loading) {
           return Center(child: CircularProgressIndicator());
         } else if (state.loadingState == LoadingState.error) {
@@ -64,9 +53,9 @@ class _WindScreenState extends State<WindScreen> {
           }
           print('----check chartdata: ${state.chartData.length}');
           final latestWindSpeed =
-              state.chartData.isNotEmpty ? state.chartData.last.yvalue : 0;
+              state.chartData.isNotEmpty ? state.chartData.last.yValue : 0;
           final latestTime =
-              state.chartData.isNotEmpty ? state.chartData.last.xvalue : '';
+              state.chartData.isNotEmpty ? state.chartData.last.xValue : '';
           return Container(
             padding: EdgeInsets.all(20),
             child: Column(
@@ -102,8 +91,8 @@ class _WindScreenState extends State<WindScreen> {
                             dataSource: state.chartData,
                             // Bind the color for all the data points from the data source
                             //pointColorMapper:(ChartData data, _) => data.color,
-                            xValueMapper: (ChartData data, _) => data.xvalue,
-                            yValueMapper: (ChartData data, _) => data.yvalue,
+                            xValueMapper: (ChartData data, _) => data.xValue,
+                            yValueMapper: (ChartData data, _) => data.yValue,
                             dashArray: [5, 2],
                             markerSettings: syncfusion.MarkerSettings(
                               isVisible: false,

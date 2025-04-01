@@ -56,9 +56,9 @@ class _SnowFallScreenState extends State<SnowFallScreen> {
           }
           print('----check chartdata: ${state.chartData.length}');
           final latestSnowfall =
-              state.chartData.isNotEmpty ? state.chartData.last.yvalue : 0;
+              state.chartData.isNotEmpty ? state.chartData.last.yValue : 0;
           final latestTime =
-              state.chartData.isNotEmpty ? state.chartData.last.xvalue : '';
+              state.chartData.isNotEmpty ? state.chartData.last.xValue : '';
           return Container(
             padding: EdgeInsets.all(20),
             child: Column(
@@ -94,8 +94,8 @@ class _SnowFallScreenState extends State<SnowFallScreen> {
                             dataSource: state.chartData,
                             // Bind the color for all the data points from the data source
                             //pointColorMapper:(ChartData data, _) => data.color,
-                            xValueMapper: (ChartData data, _) => data.xvalue,
-                            yValueMapper: (ChartData data, _) => data.yvalue,
+                            xValueMapper: (ChartData data, _) => data.xValue,
+                            yValueMapper: (ChartData data, _) => data.yValue,
                             dashArray: [5, 2],
                             markerSettings: syncfusion.MarkerSettings(
                               isVisible: true,

@@ -67,22 +67,25 @@ class _PollutantsScreenState extends State<PollutantsScreen> {
                   const SizedBox(
                     height: 20,
                   ),
-                  Expanded(
-                    child: GridView.builder(
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          mainAxisSpacing: 20,
-                          crossAxisSpacing: 20,
-                          childAspectRatio: 1 / 1),
-                      physics: NeverScrollableScrollPhysics(),
-                      itemCount: listPollutants.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return OneElementPollutant(
-                          pollutants:
-                             listPollutants[index],
-                        );
-                      },
-                    ),
+                  Column(
+                    children: [
+                      GridView.builder(
+                        shrinkWrap: true,
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            mainAxisSpacing: 20,
+                            crossAxisSpacing: 20,
+                            childAspectRatio: 1 / 1),
+                        physics: NeverScrollableScrollPhysics(),
+                        itemCount: listPollutants.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return OneElementPollutant(
+                            pollutants:
+                               listPollutants[index],
+                          );
+                        },
+                      ),
+                    ],
                   ),
                   // const SizedBox(
                   //   height: 20,

@@ -59,21 +59,23 @@ class PollenScreen extends StatelessWidget {
                   const SizedBox(
                     height: 20,
                   ),
-                  Container(
-                    height: MediaQuery.of(context).size.height,
-                    child: GridView.builder(
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          mainAxisSpacing: 20,
-                          crossAxisSpacing: 20,
-                          childAspectRatio: 1 / 1),
-                      physics: NeverScrollableScrollPhysics(),
-                      itemCount: listPollen.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return OneElementPollen(
-                            pollen: listPollen[index]);
-                      },
-                    ),
+                  Column(
+                    children: [
+                      GridView.builder(
+                        shrinkWrap: true,
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            mainAxisSpacing: 20,
+                            crossAxisSpacing: 20,
+                            childAspectRatio: 1 / 1),
+                        physics: NeverScrollableScrollPhysics(),
+                        itemCount: listPollen.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return OneElementPollen(
+                              pollen: listPollen[index]);
+                        },
+                      ),
+                    ],
                   )
                 ],
               ),

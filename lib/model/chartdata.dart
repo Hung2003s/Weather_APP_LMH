@@ -7,15 +7,15 @@ class ChartData {
     this._yValue,
   );
 
-  double get yvalue => _yValue;
+  double get yValue => _yValue;
 
-  set yvalue(double value) {
+  set yValue(double value) {
     _yValue = value;
   }
 
-  String get xvalue => _xValue;
+  String get xValue => _xValue;
 
-  set xvalue(String value) {
+  set xValue(String value) {
     _xValue = value;
   }
 }

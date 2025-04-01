@@ -312,24 +312,24 @@ class _WeatherforecastScreenState extends State<WeatherforecastScreen> {
                                 .height,
                             child: ListView.builder(
                                 physics: NeverScrollableScrollPhysics(),
-                                itemCount: state.weekTimeData.length,
+                                itemCount: state.weekTimeData.length - 1,
                                 itemBuilder: (context, index) {
                                   return DailyWeatherItems(
-                                    day: '${state.weekTimeData[index]}',
+                                    day: '${(state.weekTimeData[index + 1]) }',
                                     weathercode:
                                     'assets/images/weathercode/weather_${state
-                                        .weather?.daily?.weatherCode[index]}.png',
+                                        .weather?.daily?.weatherCode[index + 1]}.png',
                                     weatherState: 'SUN',
                                     temp1:
                                     '${state.tempunit == TemperatureUnit.celsius ?
-                                    state.weather?.daily?.temperature2MMax[index]
-                                        :  ((state.weather?.daily?.temperature2MMax[index])! * 1.8 + 32)
+                                    state.weather?.daily?.temperature2MMax[index + 1]
+                                        :  ((state.weather?.daily?.temperature2MMax[index + 1])! * 1.8 + 32)
                                         .toStringAsFixed(2)
                                     }',
                                     temp2:
                                     '${state.tempunit == TemperatureUnit.celsius ?
-                                    state.weather?.daily?.temperature2MMin[index]
-                                        :  ((state.weather?.daily?.temperature2MMin[index])! * 1.8 + 32)
+                                    state.weather?.daily?.temperature2MMin[index + 1]
+                                        :  ((state.weather?.daily?.temperature2MMin[index + 1])! * 1.8 + 32)
                                         .toStringAsFixed(2)}',
                                   );
                                 }),
