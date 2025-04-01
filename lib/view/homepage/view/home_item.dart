@@ -9,7 +9,7 @@ class OneeElementService extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-
+      padding: EdgeInsets.symmetric(horizontal: 4, vertical: 4),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,

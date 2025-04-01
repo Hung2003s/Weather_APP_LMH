@@ -1,21 +1,21 @@
 class ChartData {
-  String _xvalue;
-  double _yvalue;
+  String _xValue;
+  double _yValue;
 
   ChartData(
-    this._xvalue,
-    this._yvalue,
+    this._xValue,
+    this._yValue,
   );
 
-  double get yvalue => _yvalue;
+  double get yvalue => _yValue;
 
   set yvalue(double value) {
-    _yvalue = value;
+    _yValue = value;
   }
 
-  String get xvalue => _xvalue;
+  String get xvalue => _xValue;
 
   set xvalue(String value) {
-    _xvalue = value;
+    _xValue = value;
   }
 }

@@ -5,15 +5,8 @@ import '../../../util/pollent_data.dart';
 import '../../../widget/appbar_setting.dart';
 import 'pollen_screen_item.dart';
 
-class PollenScreen extends StatefulWidget {
+class PollenScreen extends StatelessWidget {
   const PollenScreen({super.key});
-
-  @override
-  State<PollenScreen> createState() => _PollenScreenState();
-}
-
-class _PollenScreenState extends State<PollenScreen> {
-
 
   @override
   Widget build(BuildContext context) {

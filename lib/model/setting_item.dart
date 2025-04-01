@@ -2,17 +2,17 @@ class SettingItem {
    String _title;
    String _image;
    bool _acronym;
-   bool _isCelcius;
-   bool _istemper;
-   String _linksetting;
+   bool _isCelsius;
+   bool _isTemper;
+   String _linkSetting;
 
 
-   SettingItem(this._title, this._image, this._istemper,this._acronym, this._isCelcius,this._linksetting );
+   SettingItem(this._title, this._image, this._isTemper,this._acronym, this._isCelsius,this._linkSetting );
 
-   bool get isCelcius => _isCelcius;
+   bool get isCelcius => _isCelsius;
 
   set isCelcius(bool value) {
-    _isCelcius = value;
+    _isCelsius = value;
   }
 
   bool get acronym => _acronym;
@@ -33,15 +33,15 @@ class SettingItem {
     _title = value;
   }
 
-   bool get istemper => _istemper;
+   bool get istemper => _isTemper;
 
   set istemper(bool value) {
-    _istemper = value;
+    _isTemper = value;
   }
 
-   String get linksetting => _linksetting;
+   String get linksetting => _linkSetting;
 
   set linksetting(String value) {
-    _linksetting = value;
+    _linkSetting = value;
   }
 }

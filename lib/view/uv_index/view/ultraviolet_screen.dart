@@ -40,17 +40,28 @@ class _UltravioletScreenState extends State<UltravioletScreen> {
                     builder: (context, state) {
                       print('---------------ok: ${state.weather.toString()}');
                       return CirclePage(
-                        color1: Color(0xffF36253),
+                        color1: (state.weather?.daily!.uvIndexMax.first)! < 3 ? Color(0xff038603)
+                            : (state.weather?.daily!.uvIndexMax.first)! < 6 ? Color(0xffB18B01)
+                            : (state.weather?.daily!.uvIndexMax.first)! < 6 ? Color(0xffB53600) : Color(0xffA00000),
+
                         parameter: state.weather?.daily?.uvIndexMax.first.toString(),
-                        color2: Color(0xffF9ED4B),
+
+                        color2:(state.weather?.daily!.uvIndexMax.first)! < 3 ? Color(0xff00E400)
+                            : (state.weather?.daily!.uvIndexMax.first)! < 6 ? Color(0xffFFFF00)
+                            : (state.weather?.daily!.uvIndexMax.first)! < 6 ? Color(0xffFF7E00) : Color(0xffD94F4F),
+
                         located:
                             '${state.locationName}',
+
                         textAirQuality:
                             '${(state.weather?.daily!.uvIndexMax.first)! < 3 ? 'Low'
                                 : (state.weather?.daily!.uvIndexMax.first)! < 6 ? 'Moderate'
                                 : (state.weather?.daily!.uvIndexMax.first)! < 8 ? 'Very High' : 'Extreme'}',
+
                         // _getUVIndexCategory(currentUVIndex),
-                        textState: 'Good',
+                        textState:  '${(state.weather?.daily!.uvIndexMax.first)! < 3 ? 'Good'
+                            : (state.weather?.daily!.uvIndexMax.first)! < 6 ? 'Moderate'
+                            : (state.weather?.daily!.uvIndexMax.first)! < 8 ? 'Very High' : 'Extreme'}',
                         unit: '',
                         isUnit: false,
                       );

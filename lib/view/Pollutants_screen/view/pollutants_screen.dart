@@ -67,8 +67,7 @@ class _PollutantsScreenState extends State<PollutantsScreen> {
                   const SizedBox(
                     height: 20,
                   ),
-                  Container(
-                    height: 630,
+                  Expanded(
                     child: GridView.builder(
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 2,

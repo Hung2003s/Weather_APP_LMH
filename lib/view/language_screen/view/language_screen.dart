@@ -6,22 +6,8 @@ import '../../../widget/appbar_setting.dart';
 import 'language_screen_item.dart';
 
 
-class LanguageScreen extends StatefulWidget {
+class LanguageScreen extends StatelessWidget {
   const LanguageScreen({super.key});
-
-  @override
-  State<LanguageScreen> createState() => _LanguageScreenState();
-}
-
-class _LanguageScreenState extends State<LanguageScreen> {
-
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-  }
-
 
   @override
   Widget build(BuildContext context) {

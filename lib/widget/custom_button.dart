@@ -66,7 +66,6 @@ class _CustomAppButtonState extends State<CustomAppButton>
         lowerBound: 0.0,
         upperBound: 0.1,
       )..addListener(() {
-          setState(() {});
         });
     }
     super.initState();

@@ -16,7 +16,7 @@ final class AppState extends Equatable {
   final String locationName;
   final Weather? weather;
   LoadingState loadingState;
-
+  bool checkPermission;
   // language
   final String acronym;
   final AppLanguage selectedLanguage;
@@ -48,6 +48,7 @@ final class AppState extends Equatable {
     required this.longitude,
     this.weather,
     required this.locationName,
+    required this.checkPermission,
 
     //language
     required this.acronym,
@@ -101,6 +102,7 @@ final class AppState extends Equatable {
         weekTimeData: [],
         locationName: '',
       selectedLanguage: AppLanguage.ENG,
+      checkPermission: false,
     );
   }
 
@@ -110,6 +112,7 @@ final class AppState extends Equatable {
     LoadingState? loadingState,
     Weather? weather,
     String? locationName,
+    bool? checkPermission,
 
     // language
     String? acronym,
@@ -159,6 +162,7 @@ final class AppState extends Equatable {
       weekTimeData: weekTimeData ?? this.weekTimeData,
       locationName: locationName ?? this.locationName,
       selectedLanguage: selectedLanguage ?? this.selectedLanguage,
+      checkPermission: checkPermission ?? this.checkPermission,
     );
   }
 
@@ -166,7 +170,7 @@ final class AppState extends Equatable {
   List<Object?> get props =>
       [
         //app
-        latitude, longitude, loadingState, weather, locationName,
+        latitude, longitude, loadingState, weather, locationName,checkPermission,
         //language
         acronym,selectedLanguage
         ,

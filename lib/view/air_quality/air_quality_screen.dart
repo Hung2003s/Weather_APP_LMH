@@ -24,24 +24,6 @@ class _AirQualityScreenState extends State<AirQualityScreen> {
   @override
   void initState() {
     super.initState();
-
-
-    if (textParameter > 0 && textParameter <= 50) {
-      color1 = Color(0xff038603);
-      color2 = Color(0xff0EE400);
-      textAirQuality = 'Low';
-      textState = 'Good';
-    } else if (textParameter > 50 && textParameter <= 100) {
-      color1 = Color(0xffB18B01);
-      color2 = Color(0xffFFFF00);
-      textAirQuality = 'Moderate';
-      textState = 'Moderate';
-    } else {
-      color1 = Color(0xffB53600);
-      color2 = Color(0xffFF7EFF);
-      textAirQuality = 'High';
-      textState = 'Unhealthy';
-    }
   }
 
   @override
@@ -59,13 +41,26 @@ class _AirQualityScreenState extends State<AirQualityScreen> {
               return Text('Error: ');
             } else if (state.loadingState == LoadingState.finished) {
               return CirclePage(
-                color1: color1,
+                color1: (state.weather?.current?.windSpeed10M)! < 50 ? Color(0xff038603)
+                : (state.weather?.current?.windSpeed10M)! < 100 ? Color(0xffB18B01) : Color(0xffB53600),
+
                 parameter: state.weather?.current?.windSpeed10M,
-                color2: color2,
+
+                color2:  (state.weather?.current?.windSpeed10M)! < 50 ? Color(0xff0EE400)
+                    : (state.weather?.current?.windSpeed10M)! < 100 ? Color(0xffFFFF00) : Color(0xffFF7EFF),
+
                 located: '${state.locationName}',
-                textAirQuality: textAirQuality,
-                textState: textState,
+
+                textAirQuality: '${((state.weather?.current?.windSpeed10M)! < 50) ? 'Low'
+                    : ( state.weather?.current?.windSpeed10M)! < 100 ? 'Moderate'
+                    :  'High'}',
+
+                textState: '${((state.weather?.current?.windSpeed10M)! < 50) ? 'Good'
+                    : ( state.weather?.current?.windSpeed10M)! < 100 ? 'Moderate'
+                    :  'Unhealthy'}',
+
                 unit: '',
+
                 isUnit: false,
               );
             } else {

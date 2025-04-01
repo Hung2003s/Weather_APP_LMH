@@ -68,6 +68,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
       emit(state.copyWith(
         latitude: position.latitude,
         longitude: position.longitude,
+        checkPermission: true
       ));
     } catch (e) {
       print("Error getting location or weather: $e");
@@ -80,7 +81,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
 
 
     final String url =
-        "${baseUrl}?latitude=${state.latitude}&longitude=${state.longitude}&daily=weather_code,sunset,temperature_2m_max,temperature_2m_min,uv_index_max,rain_sum,precipitation_hours,snowfall_sum,precipitation_sum,precipitation_probability_max,apparent_temperature_max,wind_speed_10m_max,sunrise&hourly=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation_probability,rain,snowfall,wind_speed_10m,visibility,weather_code,temperature_80m,uv_index,relative_humidity_1000hPa&models=best_match&current=temperature_2m,apparent_temperature,precipitation,relative_humidity_2m,weather_code,wind_direction_10m,snowfall,wind_speed_10m,rain&timezone=Asia%2FBangkok&fbclid=IwY2xjawIfhCpleHRuA2FlbQIxMAABHU_l6AU1rH2_R4tzELC_mWSMt_WAySH-hh5btYTDw_iP0RMmAPbhj5jG0A_aem_qnm23evz_D-4tp0sHLqbPw&forecast_hours=6&past_hours=6";
+        "${baseUrl}?latitude=${state.latitude}&longitude=${state.longitude}&daily=weather_code,sunrise,sunset,uv_index_max,rain_sum,snowfall_sum,precipitation_sum,precipitation_hours,precipitation_probability_max,wind_speed_10m_max,temperature_2m_max,temperature_2m_min,apparent_temperature_max&hourly=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation_probability,rain,snowfall,wind_speed_10m,visibility,weather_code,temperature_80m,uv_index,relative_humidity_1000hPa&current=temperature_2m,relative_humidity_2m,apparent_temperature,wind_speed_10m,wind_direction_10m,precipitation,rain,snowfall,weather_code&timezone=Asia%2FBangkok&fbclid=IwY2xjawIfhCpleHRuA2FlbQIxMAABHU_l6AU1rH2_R4tzELC_mWSMt_WAySH-hh5btYTDw_iP0RMmAPbhj5jG0A_aem_qnm23evz_D-4tp0sHLqbPw&forecast_hours=6&past_hours=6";
     try {
       final jsonData = await weatherRepository.callAPI(url);
       print('Data fetched successfully: $jsonData');
@@ -104,10 +105,10 @@ class AppBloc extends Bloc<AppEvent, AppState> {
 
   void _onSetLocationName(SetLocationName event, Emitter<AppState> emit)  async {
     try {
-      List<Placemark> placemarks = await placemarkFromCoordinates(state.latitude, state.longitude);
+      List<Placemark> placeMarks = await placemarkFromCoordinates(state.latitude, state.longitude);
 
-      if (placemarks.isNotEmpty) {
-        Placemark place = placemarks[0];
+      if (placeMarks.isNotEmpty) {
+        Placemark place = placeMarks[0];
           emit(state.copyWith(
             //${place.street}, ${place.locality},
               locationName:  "${place.administrativeArea}, ${place.country}"
